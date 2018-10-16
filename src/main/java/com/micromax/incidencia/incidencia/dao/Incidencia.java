@@ -1,14 +1,16 @@
 package com.micromax.incidencia.incidencia.dao;
 
 import com.micromax.incidencia.incidencia.Status;
-import com.micromax.incidencia.incidencia.User;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 @Entity
-public class Incidencia {
+public class Incidencia implements Serializable {
+
+    private static final long serialVersionUID = 1905122041950251207L;
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

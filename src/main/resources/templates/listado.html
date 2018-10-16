@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <h1>Hola <span th:text="${nombre}"></span></h1>
+    <span ></span>
+    <table>
+        <thead>
+        <tr>
+            <th> Id </th>
+            <th> Titulo </th>
+            <th> Status </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${incidencias.empty}">
+            <td colspan="2"> No hay incidencias </td>
+        </tr>
+        <tr th:each="incidencia: ${incidencias}">
+            <td><span th:text="${incidencia.id}"> Id </span></td>
+            <td><span th:text="${incidencia.titulo}"> Titulo </span></td>
+            <td><span th:text="${incidencia.status}"> Status </span></td>
+        </tr>
+        </tbody>
+    </table>
+</head>
+<body>
+
+</body>
+</html>
