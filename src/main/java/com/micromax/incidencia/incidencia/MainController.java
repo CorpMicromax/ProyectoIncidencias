@@ -1,12 +1,14 @@
 package com.micromax.incidencia.incidencia;
 
-import com.micromax.incidencia.incidencia.Services.IncidenciaService;
-import com.micromax.incidencia.incidencia.dao.Incidencia;
+import com.micromax.incidencia.incidencia.domain.Incidencia;
+import com.micromax.incidencia.incidencia.service.IncidenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
 
@@ -26,14 +28,19 @@ public class MainController {
         return "home";
     }
 
-    @GetMapping("/createIncidencia")
-    public String crearIncidencia(@RequestParam String titulo, @RequestParam int status){
-
-        Incidencia incidencia = new Incidencia();
-        incidencia.setTitulo(titulo);
-        incidencia.setStatus(Status.values()[status]);
+    @PostMapping("/crearIncidencia")
+    public String crearIncidencia(@ModelAttribute Incidencia incidencia, BindingResult errors, Model model){
         service.createIncidencia(incidencia);
-        return "home";
+        model.addAttribute(new Incidencia());
+        model.addAttribute("success", "success");
+        return "crearIncidencia";
+    }
+
+    @GetMapping("/crear")
+    public String crearIncidencia2(Model model){
+
+        model.addAttribute(new Incidencia());
+        return "crearIncidencia";
     }
 
     @GetMapping("/listar")

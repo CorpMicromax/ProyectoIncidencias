@@ -1,4 +1,4 @@
-package com.micromax.incidencia.incidencia.dao;
+package com.micromax.incidencia.incidencia.domain;
 
 import com.micromax.incidencia.incidencia.Status;
 import lombok.Data;

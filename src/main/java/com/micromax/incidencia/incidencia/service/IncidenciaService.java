@@ -1,6 +1,6 @@
-package com.micromax.incidencia.incidencia.Services;
+package com.micromax.incidencia.incidencia.service;
 
-import com.micromax.incidencia.incidencia.dao.Incidencia;
+import com.micromax.incidencia.incidencia.domain.Incidencia;
 
 import java.util.List;
 
