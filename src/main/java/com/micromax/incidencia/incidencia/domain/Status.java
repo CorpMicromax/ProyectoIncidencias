@@ -1,4 +1,4 @@
-package com.micromax.incidencia.incidencia;
+package com.micromax.incidencia.incidencia.domain;
 
 import org.springframework.util.StringUtils;
 

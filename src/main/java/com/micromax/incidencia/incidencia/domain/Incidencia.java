@@ -1,10 +1,10 @@
 package com.micromax.incidencia.incidencia.domain;
 
-import com.micromax.incidencia.incidencia.Status;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Data
@@ -20,6 +20,15 @@ public class Incidencia implements Serializable {
     private String titulo;
     private String descripcion;
     private Status status;
+    private LocalDateTime creacion;
+    private LocalDateTime resolucion;
+    private int peso;
+
+    @OneToOne
+    private Usuario creador;
+
+
+    private String tiempoEstimado;
 
     @OneToMany
     @JoinTable(
