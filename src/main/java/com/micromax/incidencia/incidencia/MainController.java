@@ -1,6 +1,8 @@
 package com.micromax.incidencia.incidencia;
 
 import com.micromax.incidencia.incidencia.domain.Incidencia;
+import com.micromax.incidencia.incidencia.domain.Usuario;
+import com.micromax.incidencia.incidencia.dto.UserLoginDTO;
 import com.micromax.incidencia.incidencia.service.IncidenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,8 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.time.LocalDateTime;
 
 @Controller
 public class MainController {
@@ -24,8 +24,9 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String rootRoute(){
-        return "home";
+    public String rootRoute(Model model){
+        model.addAttribute("usuario", new UserLoginDTO());
+        return "login";
     }
 
     @PostMapping("/crearIncidencia")
@@ -43,10 +44,13 @@ public class MainController {
         return "crearIncidencia";
     }
 
+    @PostMapping("/ingresar")
+    public String ingresar(@ModelAttribute Usuario dto, BindingResult errors, Model model){
+        return "home";
+    }
+
     @GetMapping("/listar")
     public String listar(Model model){
-        model.addAttribute("nombre", "Javier");
-        model.addAttribute("serverTime", LocalDateTime.now());
         model.addAttribute("incidencias", service.getIncidencias());
         return "listado";
     }

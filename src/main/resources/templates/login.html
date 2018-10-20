@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+
+    <form class="form-horizontal" th:action="@{/ingresar}" th:object="${usuario}" method="post">
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend>Ingresar</legend>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="username">Usuario</label>
+                <div class="col-md-4">
+                    <input id="username" name="username" type="text" th:field="*{username}" placeholder="" class="form-control input-md" required="">
+
+                </div>
+            </div>
+
+            <!-- Password input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="password">Contraseña</label>
+                <div class="col-md-4">
+                    <input id="password" name="password" type="password" th:field="*{password}" placeholder="" class="form-control input-md" required="">
+
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="login"></label>
+                <div class="col-md-4">
+                    <button onclick="submit()" id="login" name="login" class="btn btn-success">Ingresar</button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+</body>
+</html>

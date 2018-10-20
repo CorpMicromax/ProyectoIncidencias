@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 
 @Data
 @Entity
@@ -20,7 +21,15 @@ public class Incidencia implements Serializable {
     private String descripcion;
     private Status status;
 
-    @OneToOne
-    private User asignado;
+    @OneToMany
+    @JoinTable(
+            name = "incidencia_asignado",
+            joinColumns = @JoinColumn(
+                    name = "id_incidencia", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "id_asignado", referencedColumnName = "id"))
+    private Collection<Usuario> asignado;
 
+    @OneToOne
+    private TipoIncidencia tipo;
 }

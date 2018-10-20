@@ -1,12 +1,14 @@
 package com.micromax.incidencia.incidencia;
 
+import org.springframework.util.StringUtils;
+
 public enum Status {
-    NEW, CLOSED, IN_PROGRESS, ASSIGNED;
+    NUEVA, ABIERTA, CERRADA, PROGRESO, ASIGNADA, REABIERTA, PAUSADA;
 
 
 
     @Override
     public String toString() {
-        return super.toString().toLowerCase();
+        return StringUtils.capitalize(super.toString().replace("_"," "));
     }
 }

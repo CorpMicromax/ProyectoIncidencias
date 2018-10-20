@@ -6,45 +6,45 @@
     <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
 </head>
 <body>
-<form action="#" th:action="@{/crearIncidencia}" th:object="${incidencia}" method="post" class="form-horizontal">
+    <form action="#" th:action="@{/crearIncidencia}" th:object="${incidencia}" method="post" class="form-horizontal">
 
-    <span th:text="${success != null} ? ${success} : ''"></span>
-    <form class="form-horizontal">
-        <fieldset>
+        <span th:text="${success != null} ? ${success} : ''"></span>
+        <form class="form-horizontal">
+            <fieldset>
 
-            <!-- Form Name -->
-            <legend>Crear Incidencia</legend>
+                <!-- Form Name -->
+                <legend>Crear Incidencia</legend>
 
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="title">Titulo</label>
-                <div class="col-md-4">
-                    <input id="title" name="title" th:field="*{titulo}" type="text" placeholder="Unas 5 o 6 palabras..." class="form-control input-md" required="">
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="title">Titulo</label>
+                    <div class="col-md-4">
+                        <input id="title" name="title" th:field="*{titulo}" type="text" placeholder="Unas 5 o 6 palabras..." class="form-control input-md" required="">
+                    </div>
                 </div>
-            </div>
 
-            <!-- Textarea -->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="desc">Descripción</label>
-                <div class="col-md-4">
-                    <textarea class="form-control" id="desc" name="desc" th:field="*{descripcion}">Escriba aquí...</textarea>
+                <!-- Textarea -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="desc">Descripción</label>
+                    <div class="col-md-4">
+                        <textarea class="form-control" id="desc" name="desc" th:field="*{descripcion}">Escriba aquí...</textarea>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Button (Double) -->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="submit"></label>
-                <div class="col-md-8">
-                    <button onclick="submit()" id="submit" name="submit" class="btn btn-success">Crear</button>
-                    <button id="cancel" name="cancel" class="btn btn-danger">Cancelar</button>
+                <!-- Button (Double) -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="submit"></label>
+                    <div class="col-md-8">
+                        <button onclick="submit()" id="submit" name="submit" class="btn btn-success">Crear</button>
+                        <button id="cancel" name="cancel" class="btn btn-danger">Cancelar</button>
+                    </div>
                 </div>
-            </div>
 
-        </fieldset>
+            </fieldset>
+        </form>
     </form>
 
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+    <script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
 </body>
 </html>

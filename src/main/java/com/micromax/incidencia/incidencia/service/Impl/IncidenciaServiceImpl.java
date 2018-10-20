@@ -34,7 +34,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
 
     @Override
     public void createIncidencia(Incidencia i){
-        i.setStatus(Status.NEW);
+        i.setStatus(Status.NUEVA);
         repository.save(i);
     }
 }
