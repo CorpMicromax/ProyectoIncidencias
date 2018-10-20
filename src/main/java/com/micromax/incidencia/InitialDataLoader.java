@@ -1,8 +1,10 @@
 package com.micromax.incidencia;
 
+import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import com.micromax.incidencia.domain.entities.users.Privilegio;
 import com.micromax.incidencia.domain.entities.users.Rol;
 import com.micromax.incidencia.domain.entities.users.Usuario;
+import com.micromax.incidencia.repository.CategoriaRepository;
 import com.micromax.incidencia.repository.PrivilegioRepository;
 import com.micromax.incidencia.repository.RolRepository;
 import com.micromax.incidencia.repository.UsuarioRepository;
@@ -32,6 +34,9 @@ public class InitialDataLoader implements
 
     @Autowired
     private PrivilegioRepository privilegioRepository;
+
+    @Autowired
+    private CategoriaRepository categoriaRepository;
 
     private PasswordEncoder passwordEncoder = new Pbkdf2PasswordEncoder();
 
@@ -70,7 +75,16 @@ public class InitialDataLoader implements
         userRepository.save(usuario2);
         alreadySetup = true;
 
-
+        Categoria dad = createCategoriaIfNotFound("Problema",0,null);
+        Categoria hard = createCategoriaIfNotFound("Hardware",1,dad);
+        Categoria soft = createCategoriaIfNotFound("Software", 1,dad);
+        Categoria otro = createCategoriaIfNotFound("Otro", 1,dad);
+        createCategoriaIfNotFound("Impresora",2, hard);
+        createCategoriaIfNotFound("Computadora",2, hard);
+        createCategoriaIfNotFound("Sistema Operativo", 2, soft);
+        createCategoriaIfNotFound("Office", 2, soft);
+        createCategoriaIfNotFound("Cableado de Red", 2, otro);
+        createCategoriaIfNotFound("Exorcismo de fotocopiadora", 2, otro);
     }
 
     @Transactional
@@ -83,6 +97,20 @@ public class InitialDataLoader implements
             privilegioRepository.save(privilegio);
         }
         return privilegio;
+    }
+
+    @Transactional
+    private Categoria createCategoriaIfNotFound(String name, int nivel, Categoria padre) {
+
+        Categoria categoria = categoriaRepository.findByNombre(name);
+        if (categoria == null) {
+            categoria = new Categoria();
+            categoria.setNivel(nivel);
+            categoria.setPadre(padre);
+            categoria.setNombre(name);
+            categoriaRepository.save(categoria);
+        }
+        return categoria;
     }
 
     @Transactional

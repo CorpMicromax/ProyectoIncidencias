@@ -17,6 +17,7 @@ public class IncidenciaRestController {
 
     @GetMapping("/rest/incidencia/getCategoriasDos")
     public List<Categoria> categoriasDos(@RequestParam int id) {
+
         return itemListService.getCategoriasNivelDos((long)id);
     }
 

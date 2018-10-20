@@ -2,6 +2,7 @@ package com.micromax.incidencia.controller;
 
 import com.micromax.incidencia.dto.IncidenciaDTO;
 import com.micromax.incidencia.service.IncidenciaService;
+import com.micromax.incidencia.service.ItemListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,8 @@ public class IncidenciaController {
 
     @Autowired
     private IncidenciaService incidenciaService;
+    @Autowired
+    private ItemListService itemListService;
 
     @PostMapping("/incidenciaC")
     public String crearIncidencia(@ModelAttribute IncidenciaDTO incidencia, BindingResult errors, Model model){
@@ -26,6 +29,7 @@ public class IncidenciaController {
 
     @GetMapping("/incidenciaC")
     public String formularioCrear(Model model){
+        model.addAttribute("categoriasUno", itemListService.getCategoriasNivelUno());
         model.addAttribute("incidencia", new IncidenciaDTO());
         return "incidencia/crear";
     }

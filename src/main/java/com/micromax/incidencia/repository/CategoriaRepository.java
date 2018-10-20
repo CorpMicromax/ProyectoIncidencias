@@ -10,4 +10,6 @@ public interface CategoriaRepository extends CrudRepository<Categoria, Long> {
     Iterable<Categoria> findByPadre(Categoria padre);
 
     Iterable<Categoria> findByNivel(int nivel);
+
+    Categoria findByNombre(String name);
 }

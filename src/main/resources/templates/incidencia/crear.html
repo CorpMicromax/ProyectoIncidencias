@@ -35,10 +35,9 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="categoriaUno">Categoria</label>
                     <div class="col-md-4">
-                        <select id="categoriaUno" name="categoriaUno" class="form-control">
+                        <select id="categoriaUno" name="categoriaUno"  class="form-control">
                             <option value="0">--- Seleccione una ---</option>
-                            <option value="1">Hardware</option>
-                            <option value="2">Software</option>
+                            <option th:each="cat : ${categoriasUno}" th:value="${cat.id}" th:text="${cat.nombre}" ></option>
                         </select>
                     </div>
                 </div>
@@ -47,7 +46,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="categoriaDos">Categoria Específica</label>
                     <div class="col-md-4">
-                        <select id="categoriaDos" name="categoriaDos" class="form-control">
+                        <select id="categoriaDos" name="categoriaDos" class="form-control" th:field="*{categoria}">
                             <option value="">--- Seleccione una ---</option>
                         </select>
                     </div>

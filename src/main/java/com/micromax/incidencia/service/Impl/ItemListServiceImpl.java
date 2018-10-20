@@ -23,6 +23,8 @@ public class ItemListServiceImpl implements ItemListService {
 
     @Override
     public List<Categoria> getCategoriasNivelDos(long idPadre) {
+        Categoria padre = getCategoria(idPadre);
+        if(padre.getNivel()!=1)return new ArrayList<>();
         return (ArrayList<Categoria>) categoriaRepository.findByPadre(getCategoria(idPadre));
     }
 
