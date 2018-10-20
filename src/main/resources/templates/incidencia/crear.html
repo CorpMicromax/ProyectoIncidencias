@@ -38,7 +38,7 @@
                         <select id="categoriaUno" name="categoriaUno" class="form-control">
                             <option value="0">--- Seleccione una ---</option>
                             <option value="1">Hardware</option>
-                            <option value="">Software</option>
+                            <option value="2">Software</option>
                         </select>
                     </div>
                 </div>
@@ -66,6 +66,22 @@
         </form>
     </form>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+    <script th:src="@{/js/bootstrap.js}" th:href="@{/js/bootstrap.js}"></script>
+    <script>
+        $("#categoriaUno").change(function(){
+		$.ajax({
+			type: "GET",
+			url: "/rest/incidencia/getCategoriasDos",
+			data:  {id:$("#categoriaUno").val()},
+			success: function(response){
+			    $("#categoriaDos").empty();
+			    $("#categoriaDos").append('<option value=0>---Seleccione una opcion---</option>');
+			    $.each(response, function(i){
+                    $("#categoriaDos").append('<option value="' + response[i].id + '">' + response[i].nombre + '</option>');
+			    })}
+            });
+	    });
+
+    </script>
 </body>
 </html>
