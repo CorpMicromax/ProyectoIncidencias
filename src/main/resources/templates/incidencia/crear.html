@@ -5,21 +5,21 @@
     <title>Crear Incidencia</title>
     <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
 </head>
-<body>
-    <form action="#" th:action="@{/crearIncidencia}" th:object="${incidencia}" method="post" class="form-horizontal">
 
-        <span th:text="${success != null} ? ${success} : ''"></span>
+<body>
+    <span th:text="${success != null} ? ${success} : ''"></span>
+    <form action="#" th:action="@{/crearIncidencia}" th:object="${incidencia}" method="post" class="form-horizontal">
         <form class="form-horizontal">
             <fieldset>
 
                 <!-- Form Name -->
-                <legend>Crear Incidencia</legend>
+                <legend>Nueva Incidencia</legend>
 
                 <!-- Text input-->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="title">Titulo</label>
                     <div class="col-md-4">
-                        <input id="title" name="title" th:field="*{titulo}" type="text" placeholder="Unas 5 o 6 palabras..." class="form-control input-md" required="">
+                        <input id="title" name="title" th:field="*{titulo}" type="text" class="form-control input-md" required="required">
                     </div>
                 </div>
 
@@ -27,7 +27,29 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="desc">Descripción</label>
                     <div class="col-md-4">
-                        <textarea class="form-control" id="desc" name="desc" th:field="*{descripcion}">Escriba aquí...</textarea>
+                        <textarea class="form-control" id="desc" name="desc" th:field="*{descripcion}"></textarea>
+                    </div>
+                </div>
+
+                <!-- Select Basic -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="categoriaUno">Categoria</label>
+                    <div class="col-md-4">
+                        <select id="categoriaUno" name="categoriaUno" class="form-control">
+                            <option value="0">--- Seleccione una ---</option>
+                            <option value="1">Hardware</option>
+                            <option value="">Software</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Select Basic -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="categoriaDos">Categoria Específica</label>
+                    <div class="col-md-4">
+                        <select id="categoriaDos" name="categoriaDos" class="form-control">
+                            <option value="">--- Seleccione una ---</option>
+                        </select>
                     </div>
                 </div>
 
@@ -43,7 +65,6 @@
             </fieldset>
         </form>
     </form>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
 </body>

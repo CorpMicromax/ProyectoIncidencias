@@ -1,11 +1,8 @@
-package com.micromax.incidencia.incidencia.domain;
+package com.micromax.incidencia.incidencia.domain.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
@@ -14,7 +11,8 @@ public class Tarea {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
-    private long id;
+    @Column(name = "id_tarea")
+    private long idTarea;
 
     private String descripcion;
     private LocalDateTime inicio;

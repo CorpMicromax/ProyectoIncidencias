@@ -1,7 +1,8 @@
 package com.micromax.incidencia.incidencia.service.Impl;
 
-import com.micromax.incidencia.incidencia.domain.Incidencia;
 import com.micromax.incidencia.incidencia.domain.Status;
+import com.micromax.incidencia.incidencia.domain.entities.incidencias.Incidencia;
+import com.micromax.incidencia.incidencia.dto.IncidenciaDTO;
 import com.micromax.incidencia.incidencia.repository.IncidenciaRepository;
 import com.micromax.incidencia.incidencia.service.IncidenciaService;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +34,10 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     }
 
     @Override
-    public void createIncidencia(Incidencia i){
-        i.setStatus(Status.NUEVA);
-        repository.save(i);
+    public void createIncidencia(IncidenciaDTO i){
+        Incidencia incidencia = new Incidencia(i);
+        incidencia.setStatus(Status.NUEVA);
+
+        repository.save(incidencia);
     }
 }

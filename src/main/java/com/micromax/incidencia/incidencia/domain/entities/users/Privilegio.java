@@ -1,17 +1,19 @@
-package com.micromax.incidencia.incidencia.domain;
+package com.micromax.incidencia.incidencia.domain.entities.users;
 
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
 @Data
-public class Privilegio {
+public class Privilegio implements Serializable {
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        private Long id;
+        @Column(name = "id_privilegio")
+        private Integer idPrivilegio;
 
         private String nombre;
 

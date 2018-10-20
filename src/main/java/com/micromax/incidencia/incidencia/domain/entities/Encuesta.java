@@ -1,5 +1,6 @@
-package com.micromax.incidencia.incidencia.domain;
+package com.micromax.incidencia.incidencia.domain.entities;
 
+import com.micromax.incidencia.incidencia.domain.entities.incidencias.Incidencia;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,7 +11,8 @@ public class Encuesta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @Column(name = "id_encuesta")
+    private long idEncuesta;
     private byte puntaje;
     private String mensaje;
 

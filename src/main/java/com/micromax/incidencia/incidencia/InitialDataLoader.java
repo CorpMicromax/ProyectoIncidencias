@@ -1,8 +1,8 @@
 package com.micromax.incidencia.incidencia;
 
-import com.micromax.incidencia.incidencia.domain.Privilegio;
-import com.micromax.incidencia.incidencia.domain.Rol;
-import com.micromax.incidencia.incidencia.domain.Usuario;
+import com.micromax.incidencia.incidencia.domain.entities.users.Privilegio;
+import com.micromax.incidencia.incidencia.domain.entities.users.Rol;
+import com.micromax.incidencia.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.incidencia.repository.PrivilegioRepository;
 import com.micromax.incidencia.incidencia.repository.RolRepository;
 import com.micromax.incidencia.incidencia.repository.UsuarioRepository;

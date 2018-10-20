@@ -1,16 +1,18 @@
-package com.micromax.incidencia.incidencia.domain;
+package com.micromax.incidencia.incidencia.domain.entities.users;
 
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
 @Data
-public class Rol {
+public class Rol implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name = "id_rol")
+    private Integer idRol;
 
     private String nombre;
     @ManyToMany(mappedBy = "roles")
@@ -20,8 +22,8 @@ public class Rol {
     @JoinTable(
             name = "roles_privilegios",
             joinColumns = @JoinColumn(
-                    name = "id_rol", referencedColumnName = "id"),
+                    name = "id_rol", referencedColumnName = "id_Rol"),
             inverseJoinColumns = @JoinColumn(
-                    name = "id_privilegio", referencedColumnName = "id"))
+                    name = "id_privilegio", referencedColumnName = "id_Privilegio"))
     private Collection<Privilegio> privilegios;
 }
