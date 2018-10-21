@@ -1,6 +1,7 @@
 package com.micromax.incidencia.service.impl;
 
 import com.micromax.incidencia.domain.entities.incidencias.Categoria;
+import com.micromax.incidencia.dto.CategoriaDTO;
 import com.micromax.incidencia.repository.CategoriaRepository;
 import com.micromax.incidencia.service.ItemListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,8 @@ public class ItemListServiceImpl implements ItemListService {
     }
 
     @Override
-    public Categoria guardar(Categoria cat) {
-        return categoriaRepository.save(cat);
+    public Categoria guardar(CategoriaDTO categoriaDTO) {
+        return categoriaRepository.save(new Categoria(categoriaDTO));
     }
 
     @Override

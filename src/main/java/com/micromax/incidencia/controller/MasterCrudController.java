@@ -1,6 +1,6 @@
 package com.micromax.incidencia.controller;
 
-import com.micromax.incidencia.domain.entities.incidencias.Categoria;
+import com.micromax.incidencia.dto.CategoriaDTO;
 import com.micromax.incidencia.dto.IncidenciaDTO;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.ItemListService;
@@ -39,7 +39,7 @@ public class MasterCrudController {
 
     @GetMapping("/categoriaC")
     public String crearCategoria(Model model){
-        model.addAttribute("categoria", new Categoria());
+        model.addAttribute("categoria", new CategoriaDTO());
         model.addAttribute("categorias", itemListService.getCategoriaByNivel(1));
         return "master/crearCat";
     }
@@ -51,7 +51,7 @@ public class MasterCrudController {
     }
 
     @PostMapping("/categoriaC")
-    public String crearCategoria(@ModelAttribute Categoria cat, BindingResult errors, Model model){
+    public String crearCategoria(@ModelAttribute CategoriaDTO cat, BindingResult errors, Model model){
         itemListService.guardar(cat);
         return crearCategoria(model);
     }

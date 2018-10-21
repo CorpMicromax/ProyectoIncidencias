@@ -14,7 +14,6 @@ public class LoginController {
 
     @GetMapping(value="/login")
     public String login(Model model){
-        //model.addAttribute("usuario", new UserLoginDTO());
         return "login";
     }
 

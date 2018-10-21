@@ -1,5 +1,6 @@
 package com.micromax.incidencia.domain.entities.incidencias;
 
+import com.micromax.incidencia.dto.CategoriaDTO;
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
@@ -26,4 +27,10 @@ public class Categoria implements Serializable {
     @OneToOne
     @Nullable
     private Categoria padre;
+
+    public Categoria(CategoriaDTO cat){
+        setNombre(cat.getNombre());
+        setPadre(cat.getPadre());
+        setNivel(cat.getPadre().nivel + 1);
+    }
 }
