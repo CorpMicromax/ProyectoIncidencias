@@ -7,8 +7,8 @@
 </head>
 
 <body>
-    <span th:text="${success != null} ? ${success} : ''"></span>
-    <form action="#" th:action="@{/crearIncidencia}" th:object="${incidencia}" method="post" class="form-horizontal">
+    <span th:text="${message != null} ? ${message} : ''"></span>
+    <form action="#" th:action="@{/incidenciaC}" th:object="${incidencia}" method="post" class="form-horizontal">
         <form class="form-horizontal">
             <fieldset>
 

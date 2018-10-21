@@ -41,6 +41,7 @@ public class Incidencia implements Serializable {
     private Usuario creador;
 
     @OneToOne
+
     private TipoIncidencia tipoIncidencia;
 
     private String tiempoEstimado;
@@ -65,12 +66,12 @@ public class Incidencia implements Serializable {
 
     public Incidencia(IncidenciaDTO dto){
         super();
-        setTitulo(dto.titulo);
-        setDescripcion(dto.descripcion);
-        setCreador(dto.creador);
-        setCategoria(dto.categoria);
-        setCreacion(dto.creacion);
-        setStatus(dto.status);
+        setTitulo(dto.getTitulo());
+        setDescripcion(dto.getDescripcion());
+        setCreador(dto.getCreador());
+        setCategoria(dto.getCategoria());
+        setCreacion(dto.getCreacion());
+        setStatus(dto.getStatus());
     }
 
 }

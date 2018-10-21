@@ -7,17 +7,17 @@
     </head>
     <body>
 
-        <form class="form-horizontal" th:action="@{/ingresar}" th:object="${usuario}" method="post">
+        <form class="form-signin" th:action="@{/login}" method="post">
             <fieldset>
 
                 <!-- Form Name -->
-                <legend>Ingresar</legend>
+                <h3 class="form-signin-heading" th:text="Ingresar"></h3>
 
                 <!-- Text input-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="username">Usuario</label>
+                    <label class="col-md-4 control-label" for="username" >Usuario</label>
                     <div class="col-md-4">
-                        <input id="username" name="username" type="text" th:field="*{username}" placeholder="" class="form-control input-md" required="">
+                        <input id="username" name="username" type="text" placeholder="" class="form-control input-md" required="required">
 
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="password">Contraseña</label>
                     <div class="col-md-4">
-                        <input id="password" name="password" type="password" th:field="*{password}" placeholder="" class="form-control input-md" required="">
+                        <input id="password" name="password" type="password" placeholder="" class="form-control input-md" required="required">
 
                     </div>
                 </div>
@@ -42,6 +42,6 @@
             </fieldset>
         </form>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+        <script src="@{/js/bootstrap.js}" th:href="@{/js/bootstrap.js}"></script>
     </body>
 </html>

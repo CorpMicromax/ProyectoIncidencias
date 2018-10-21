@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 @Data
 public class IncidenciaDTO {
 
-    public String titulo;
-    public String descripcion;
-    public Status status;
-    public Categoria categoria;
-    public LocalDateTime creacion;
-    public Usuario creador;
+    private String titulo;
+    private String descripcion;
+    private Status status;
+    private Categoria categoria;
+    private LocalDateTime creacion;
+    private Usuario creador;
 }

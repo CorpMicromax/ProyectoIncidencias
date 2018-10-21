@@ -1,4 +1,4 @@
-package com.micromax.incidencia.service.Impl;
+package com.micromax.incidencia.service.impl;
 
 import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import com.micromax.incidencia.repository.CategoriaRepository;

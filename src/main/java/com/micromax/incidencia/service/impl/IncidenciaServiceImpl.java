@@ -1,14 +1,16 @@
-package com.micromax.incidencia.service.Impl;
+package com.micromax.incidencia.service.impl;
 
 import com.micromax.incidencia.domain.Status;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.dto.IncidenciaDTO;
 import com.micromax.incidencia.repository.IncidenciaRepository;
 import com.micromax.incidencia.service.IncidenciaService;
+import com.micromax.incidencia.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +21,9 @@ public class IncidenciaServiceImpl implements IncidenciaService {
 
     @Autowired
     private IncidenciaRepository repository;
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     @Override
     public List<Incidencia> getIncidencias() {
@@ -34,10 +39,11 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     }
 
     @Override
-    public void createIncidencia(IncidenciaDTO i){
+    public void createIncidencia(IncidenciaDTO i, String username){
         Incidencia incidencia = new Incidencia(i);
+        incidencia.setCreador(usuarioService.getUsuarioByUsername(username));
+        incidencia.setCreacion(LocalDateTime.now());
         incidencia.setStatus(Status.NUEVA);
-
         repository.save(incidencia);
     }
 }

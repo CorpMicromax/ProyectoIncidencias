@@ -11,18 +11,17 @@ import com.micromax.incidencia.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Component
-public class InitialDataLoader implements
-        ApplicationListener<ContextRefreshedEvent> {
+public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     private boolean alreadySetup = false;
 
@@ -38,7 +37,8 @@ public class InitialDataLoader implements
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-    private PasswordEncoder passwordEncoder = new Pbkdf2PasswordEncoder();
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -50,30 +50,29 @@ public class InitialDataLoader implements
         Privilegio writePrivilegio = createPrivilegioIfNotFound("WRITE_Privilegio");
 
         List<Privilegio> adminPrivilegios = Arrays.asList(readPrivilegio, writePrivilegio);
-        createRoleIfNotFound("ROLE_ADMIN", adminPrivilegios);
-        createRoleIfNotFound("ROLE_USER", Arrays.asList(readPrivilegio));
+        Rol adminRole = createRoleIfNotFound("ROLE_ADMIN", adminPrivilegios);
+        createRoleIfNotFound("ROLE_USER", Collections.singletonList(readPrivilegio));
 
-        Rol adminRole = roleRepository.findByNombre("ROLE_ADMIN");
         Usuario usuario = new Usuario();
         usuario.setNombres("Javier");
         usuario.setApellidos("Letterer");
         usuario.setUsername("JLetterer");
-        usuario.setPassword(passwordEncoder.encode("test"));
+        usuario.setPassword(passwordEncoder.encode("admin"));
         usuario.setEmail("javier.letterer@micromax.com");
-        usuario.setRoles(Arrays.asList(adminRole));
+        usuario.setRoles(Collections.singletonList(adminRole));
         usuario.setEnabled(true);
-        userRepository.save(usuario);
+        createUsuarioIfNotFound(usuario);
 
         Usuario usuario2 = new Usuario();
         usuario2.setNombres("Karelis");
         usuario2.setApellidos("Ramirez");
         usuario2.setUsername("KRamirez");
-        usuario2.setPassword(passwordEncoder.encode("holamundo0"));
+        usuario2.setPassword(passwordEncoder.encode("admin"));
         usuario2.setEmail("karelis.ramirez@micromax.com");
-        usuario2.setRoles(Arrays.asList(adminRole));
+        usuario2.setRoles(Collections.singletonList(adminRole));
         usuario2.setEnabled(true);
-        userRepository.save(usuario2);
-        alreadySetup = true;
+        createUsuarioIfNotFound(usuario2);
+
 
         Categoria dad = createCategoriaIfNotFound("Problema",0,null);
         Categoria hard = createCategoriaIfNotFound("Hardware",1,dad);
@@ -85,6 +84,8 @@ public class InitialDataLoader implements
         createCategoriaIfNotFound("Office", 2, soft);
         createCategoriaIfNotFound("Cableado de Red", 2, otro);
         createCategoriaIfNotFound("Exorcismo de fotocopiadora", 2, otro);
+
+        alreadySetup = true;
     }
 
     @Transactional
@@ -97,6 +98,13 @@ public class InitialDataLoader implements
             privilegioRepository.save(privilegio);
         }
         return privilegio;
+    }
+
+    @Transactional
+    private void createUsuarioIfNotFound(Usuario usuario){
+        if(!userRepository.findByUsername(usuario.getUsername()).isPresent()){
+            userRepository.save(usuario);
+        }
     }
 
     @Transactional
