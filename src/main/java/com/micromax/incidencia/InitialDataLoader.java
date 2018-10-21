@@ -110,7 +110,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     @Transactional
     private Categoria createCategoriaIfNotFound(String name, int nivel, Categoria padre) {
 
-        Categoria categoria = categoriaRepository.findByNombre(name);
+        Categoria categoria = categoriaRepository.findByNombreAndActiva(name, true);
         if (categoria == null) {
             categoria = new Categoria();
             categoria.setNivel(nivel);

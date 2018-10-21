@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 
 @Service
@@ -35,8 +35,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void saveUser(Usuario user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
-        Rol userRole = rolRepository.findByNombre("USER");
-        user.setRoles(new HashSet<Rol>(Arrays.asList(userRole)));
+        Rol userRole = rolRepository.findByNombre("ROLE_USER");
+        user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
         usuarioRepository.save(user);
     }
 

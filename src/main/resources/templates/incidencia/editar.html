@@ -1,10 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Crear Incidencia</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
 </head>
-<body>
 
+<body>
+<span th:text="${message != null} ? ${message} : ''"></span>
+<form action="#" th:action="@{/incidenciaE}" th:object="${incidencia}" method="post" class="form-horizontal">
+    <form class="form-horizontal">
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend>Nueva Incidencia</legend>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="title">Titulo</label>
+                <div class="col-md-4">
+                    <input id="title" name="title" th:field="*{titulo}" type="text" class="form-control input-md" required="required">
+                </div>
+            </div>
+
+            <!-- Textarea -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="desc">Descripción</label>
+                <div class="col-md-4">
+                    <textarea class="form-control" id="desc" name="desc" th:field="*{descripcion}"></textarea>
+                </div>
+            </div>
+
+            <!-- Select Basic -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="categoriaUno">Categoria</label>
+                <div class="col-md-4">
+                    <select id="categoriaUno" name="categoriaUno"  class="form-control">
+                        <option value="0">--- Seleccione una ---</option>
+                        <option th:each="cat : ${categoriasUno}" th:value="${cat.id}" th:text="${cat.nombre}" ></option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Select Basic -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="categoriaDos">Categoria Específica</label>
+                <div class="col-md-4">
+                    <select id="categoriaDos" name="categoriaDos" class="form-control" th:field="*{categoria}">
+                        <option value="">--- Seleccione una ---</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Button (Double) -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="submit"></label>
+                <div class="col-md-8">
+                    <button onclick="submit()" id="submit" name="submit" class="btn btn-success">Crear</button>
+                    <button id="cancel" name="cancel" class="btn btn-danger">Cancelar</button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script th:src="@{/js/bootstrap.js}" th:href="@{/js/bootstrap.js}"></script>
+<script>
+        $("#categoriaUno").change(function(){
+		$.ajax({
+			type: "GET",
+			url: "/rest/incidencia/getCategoriasDos",
+			data:  {id:$("#categoriaUno").val()},
+			success: function(response){
+			    $("#categoriaDos").empty();
+			    $("#categoriaDos").append('<option value=0>---Seleccione una opcion---</option>');
+			    $.each(response, function(i){
+                    $("#categoriaDos").append('<option value="' + response[i].id + '">' + response[i].nombre + '</option>');
+			    })}
+            });
+	    });
+
+    </script>
 </body>
 </html>

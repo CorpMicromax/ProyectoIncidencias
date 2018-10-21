@@ -39,7 +39,7 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-            .antMatchers("/login","/js/**","/img/**","/webjars/**","/static/**").permitAll()
+            .antMatchers("/login","/img/**","/webjars/**","/static/**").permitAll()
             .antMatchers("/css/**").permitAll()
             .antMatchers("/js/**").permitAll()
             .antMatchers("/admin/**").hasAuthority("ADMIN")
@@ -73,7 +73,7 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
                 .usersByUsernameQuery(usersQuery)
                 .authoritiesByUsernameQuery(rolesQuery)
                 .passwordEncoder(passwordEncoder)
-                .rolePrefix("ROL_");
+                .rolePrefix("ROLE_");
     }
 
     @Override

@@ -21,6 +21,8 @@ public class Categoria implements Serializable {
 
     private int nivel;
 
+    private boolean activa = true;
+
     @OneToOne
     @Nullable
     private Categoria padre;

@@ -24,8 +24,6 @@ public class Incidencia implements Serializable {
 
     private String titulo;
     private String descripcion;
-
-
     private LocalDateTime creacion;
     private LocalDateTime resolucion;
     private int peso;
@@ -41,7 +39,6 @@ public class Incidencia implements Serializable {
     private Usuario creador;
 
     @OneToOne
-
     private TipoIncidencia tipoIncidencia;
 
     private String tiempoEstimado;

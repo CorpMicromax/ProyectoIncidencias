@@ -12,4 +12,12 @@ public interface ItemListService {
     List<Categoria> getCategoriasNivelDos(long idPadre);
 
     Categoria getCategoria(long id);
+
+    List<Categoria> getAllCategorias();
+
+    List<Categoria> getCategoriaByNivel(int nivel);
+
+    Categoria guardar(Categoria cat);
+
+    boolean eliminarCategoria(Categoria id);
 }

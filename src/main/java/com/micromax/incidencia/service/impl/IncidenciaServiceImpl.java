@@ -39,8 +39,8 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     }
 
     @Override
-    public void createIncidencia(IncidenciaDTO i, String username){
-        Incidencia incidencia = new Incidencia(i);
+    public void createIncidencia(IncidenciaDTO incidenciaDTO, String username){
+        Incidencia incidencia = new Incidencia(incidenciaDTO);
         incidencia.setCreador(usuarioService.getUsuarioByUsername(username));
         incidencia.setCreacion(LocalDateTime.now());
         incidencia.setStatus(Status.NUEVA);

@@ -5,9 +5,10 @@ import org.springframework.util.StringUtils;
 public enum Status {
 
     NUEVA, ABIERTA, ASIGNADA, PROGRESO, CERRADA, REABIERTA, PAUSADA;
+
     @Override
     public String toString() {
-        return StringUtils.capitalize(super.toString().replace("_"," "));
+        return StringUtils.capitalize(super.toString());
     }
 
 }

@@ -9,5 +9,6 @@ import javax.persistence.Entity;
 @DiscriminatorValue("T")
 @Entity
 public class Tecnico extends Usuario {
+
     private int capacidad;
 }
