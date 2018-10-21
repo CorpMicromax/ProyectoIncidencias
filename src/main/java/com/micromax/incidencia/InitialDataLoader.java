@@ -4,6 +4,7 @@ import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import com.micromax.incidencia.domain.entities.users.Privilegio;
 import com.micromax.incidencia.domain.entities.users.Rol;
 import com.micromax.incidencia.domain.entities.users.Usuario;
+import com.micromax.incidencia.dto.CategoriaDTO;
 import com.micromax.incidencia.repository.CategoriaRepository;
 import com.micromax.incidencia.repository.PrivilegioRepository;
 import com.micromax.incidencia.repository.RolRepository;
@@ -112,10 +113,10 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
         Categoria categoria = categoriaRepository.findByNombreAndActiva(name, true);
         if (categoria == null) {
-            categoria = new Categoria();
-            categoria.setNivel(nivel);
-            categoria.setPadre(padre);
-            categoria.setNombre(name);
+            CategoriaDTO categoriaDTO = new CategoriaDTO();
+            categoriaDTO.setPadre(padre);
+            categoriaDTO.setNombre(name);
+            categoria = new Categoria(categoriaDTO);
             categoriaRepository.save(categoria);
         }
         return categoria;
