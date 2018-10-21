@@ -1,10 +1,8 @@
 package com.micromax.incidencia;
 
-import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import com.micromax.incidencia.domain.entities.users.Privilegio;
 import com.micromax.incidencia.domain.entities.users.Rol;
 import com.micromax.incidencia.domain.entities.users.Usuario;
-import com.micromax.incidencia.dto.CategoriaDTO;
 import com.micromax.incidencia.repository.CategoriaRepository;
 import com.micromax.incidencia.repository.PrivilegioRepository;
 import com.micromax.incidencia.repository.RolRepository;
@@ -74,18 +72,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         usuario2.setEnabled(true);
         createUsuarioIfNotFound(usuario2);
 
-
-        Categoria dad = createCategoriaIfNotFound("Problema",0,null);
-        Categoria hard = createCategoriaIfNotFound("Hardware",1,dad);
-        Categoria soft = createCategoriaIfNotFound("Software", 1,dad);
-        Categoria otro = createCategoriaIfNotFound("Otro", 1,dad);
-        createCategoriaIfNotFound("Impresora",2, hard);
-        createCategoriaIfNotFound("Computadora",2, hard);
-        createCategoriaIfNotFound("Sistema Operativo", 2, soft);
-        createCategoriaIfNotFound("Office", 2, soft);
-        createCategoriaIfNotFound("Cableado de Red", 2, otro);
-        createCategoriaIfNotFound("Exorcismo de fotocopiadora", 2, otro);
-
         alreadySetup = true;
     }
 
@@ -106,20 +92,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         if(!userRepository.findByUsername(usuario.getUsername()).isPresent()){
             userRepository.save(usuario);
         }
-    }
-
-    @Transactional
-    private Categoria createCategoriaIfNotFound(String name, int nivel, Categoria padre) {
-
-        Categoria categoria = categoriaRepository.findByNombreAndActiva(name, true);
-        if (categoria == null) {
-            CategoriaDTO categoriaDTO = new CategoriaDTO();
-            categoriaDTO.setPadre(padre);
-            categoriaDTO.setNombre(name);
-            categoria = new Categoria(categoriaDTO);
-            categoriaRepository.save(categoria);
-        }
-        return categoria;
     }
 
     @Transactional

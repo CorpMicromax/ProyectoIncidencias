@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <th:block th:include="/fragmentos/header"></th:block>
 </head>
 <body>
-<h1>Welcome <span th:text="${nombre}"></span></h1>
+<div th:replace="/fragmentos/navbar::navbar(nombre = ${nombre})"></div>
 
-<a th:href="@{/incidenciaC}" >Crear Incidencia</a>
+<div th:if="${template}">
+    <div  th:replace="@{${location} + ${template}} :: ${template}" ></div>
+</div>
+<div th:replace="/fragmentos/footer"></div>
 </body>
 </html>

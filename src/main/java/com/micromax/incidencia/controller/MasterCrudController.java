@@ -4,6 +4,7 @@ import com.micromax.incidencia.dto.CategoriaDTO;
 import com.micromax.incidencia.dto.IncidenciaDTO;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.ItemListService;
+import com.micromax.incidencia.viewmodel.IncidenciaViewmodel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,22 +20,28 @@ public class MasterCrudController {
     @Autowired
     private IncidenciaService incidenciaService;
 
+
+    @Autowired
+    private MainController mainController;
+
     @Autowired
     private ItemListService itemListService;
 
     /*===================== GETS ================================*/
     @GetMapping("/incidenciaC")
     public String formularioCrear(Model model){
-        model.addAttribute("categoriasUno", itemListService.getCategoriasNivelUno());
-        model.addAttribute("incidencia", new IncidenciaDTO());
-        model.addAttribute("message","Incidencia Creada");
-        return "incidencia/crear";
+        model = setTemplateToModel(model,"/incidencia/","incidenciaC")
+                .addAttribute("data", new IncidenciaViewmodel(new IncidenciaDTO(), "",itemListService.getCategoriasNivelUno() ))
+                .addAttribute("title","Crear Incidencia");
+        return mainController.homeRoute(model);
     }
 
     @GetMapping("/incidenciaL")
     public String listar(Model model){
-        model.addAttribute("incidencias", incidenciaService.getIncidencias());
-        return "incidencia/listar";
+        model = setTemplateToModel(model,"/incidencia/","incidenciaL")
+                .addAttribute("incidencias", incidenciaService.getIncidencias())
+                .addAttribute("title","Ver incidencias");
+        return mainController.homeRoute(model);
     }
 
     @GetMapping("/categoriaC")
@@ -54,5 +61,9 @@ public class MasterCrudController {
     public String crearCategoria(@ModelAttribute CategoriaDTO cat, BindingResult errors, Model model){
         itemListService.guardar(cat);
         return crearCategoria(model);
+    }
+
+    private Model setTemplateToModel(Model model, String location, String template){
+        return model.addAttribute("location", location).addAttribute("template", template);
     }
 }
