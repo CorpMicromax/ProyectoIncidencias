@@ -1,28 +1,39 @@
 <div th:fragment="incidenciaL" xmlns:th="http://www.w3.org/1999/xhtml">
     <h4 class="my-4 h-4 font-weight-bold">Incidencias</h4>
-<table class="table table-hover table-striped">
-    <thead>
-    <tr>
-        <th> Id </th>
-        <th> Titulo </th>
-        <th> Categoria </th>
-        <th> Creador </th>
-        <th> Fecha y Hora de Creacion </th>
-        <th> Status </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${incidencias.empty}">
-        <td colspan="2"> No hay incidencias </td>
-    </tr>
-    <tr th:each="incidencia: ${incidencias}">
-        <td><span th:text="${incidencia.idIncidencia}"> Id </span></td>
-        <td><span th:text="${incidencia.titulo}"> Titulo </span></td>
-        <td><span th:text="${incidencia.categoria.nombre}"> Categoria </span></td>
-        <td><span th:text="${incidencia.creador.nombres}"> Nombre creador </span></td>
-        <td><span th:text="${incidencia.creacion}"> creacion </span></td>
-        <td><span th:text="${incidencia.status}"> Status </span></td>
-    </tr>
-    </tbody>
-</table>
+    <table id="datatable" class="datatable table-hover table-striped">
+        <thead>
+        <tr>
+            <th> Id </th>
+            <th> Titulo </th>
+            <th> Categoria </th>
+            <th> Creador </th>
+            <th> Fecha y Hora de Creacion </th>
+            <th> Status </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${incidencias.empty}">
+            <td colspan="2"> No hay incidencias </td>
+        </tr>
+        <tr th:each="incidencia: ${incidencias}">
+            <td><span th:text="${incidencia.idIncidencia}"> Id </span></td>
+            <td><span th:text="${incidencia.titulo}"> Titulo </span></td>
+            <td><span th:text="${incidencia.categoria.nombre}"> Categoria </span></td>
+            <td><span th:text="${incidencia.creador.nombres}"> Nombre creador </span></td>
+            <td><span th:text="${incidencia.creacion}"> creacion </span></td>
+            <td><span th:text="${incidencia.status}"> Status </span></td>
+        </tr>
+        </tbody>
+    </table>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+        $(document).ready( function () {
+            $('#datatable').DataTable({
+                "language": {
+                    "url": /*[[@{/js/spanish.json}]]*/ "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+                }
+            });
+        });
+    /*<![CDATA[*/
+    </script>
 </div>

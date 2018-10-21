@@ -1,12 +1,12 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaC">
-    <title>Crear Incidencia</title>
     <span th:text="${message != null} ? ${message} : ''"></span>
     <form action="#" th:action="@{/incidenciaC}" th:object="${data.incidencia}" method="post" class="form-horizontal">
         <form class="form-horizontal">
             <fieldset>
 
                 <!-- Form Name -->
-                <legend>Nueva Incidencia</legend>
+                <div class="panel-heading"><legend>Nueva Incidencia</legend></div>
+
 
                 <!-- Text input-->
                 <div class="form-group">
@@ -50,7 +50,7 @@
                     <label class="col-md-4 control-label" for="submit"></label>
                     <div class="col-md-8">
                         <button onclick="submit()" id="submit" name="submit" class="btn btn-success">Crear</button>
-                        <button id="cancel" name="cancel" class="btn btn-danger">Cancelar</button>
+                        <button onclick="/home" id="cancel" name="cancel" class="btn btn-danger">Cancelar</button>
                     </div>
                 </div>
 

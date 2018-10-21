@@ -1,7 +1,7 @@
 package com.micromax.incidencia.controller;
 
+import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.dto.CategoriaDTO;
-import com.micromax.incidencia.dto.IncidenciaDTO;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.ItemListService;
 import com.micromax.incidencia.viewmodel.IncidenciaViewmodel;
@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MasterCrudController {
@@ -27,23 +28,46 @@ public class MasterCrudController {
     @Autowired
     private ItemListService itemListService;
 
-    /*===================== GETS ================================*/
+    /*======================================= GETS ========================================*/
+
+
+    /*-------------- INCIDENCIA -------------*/
     @GetMapping("/incidenciaC")
-    public String formularioCrear(Model model){
+    public String incidenciaC(Model model){
+        IncidenciaViewmodel viewmodel = new IncidenciaViewmodel();
+        viewmodel.setIncidencia(new Incidencia());
+        viewmodel.setMessage("");
+        viewmodel.setCategorias(itemListService.getCategoriasNivelUno());
+
         model = setTemplateToModel(model,"/incidencia/","incidenciaC")
-                .addAttribute("data", new IncidenciaViewmodel(new IncidenciaDTO(), "",itemListService.getCategoriasNivelUno() ))
+                .addAttribute("data", viewmodel)
                 .addAttribute("title","Crear Incidencia");
         return mainController.homeRoute(model);
     }
 
     @GetMapping("/incidenciaL")
-    public String listar(Model model){
+    public String incidenciaL(Model model){
         model = setTemplateToModel(model,"/incidencia/","incidenciaL")
                 .addAttribute("incidencias", incidenciaService.getIncidencias())
                 .addAttribute("title","Ver incidencias");
         return mainController.homeRoute(model);
     }
 
+    @GetMapping("/incidenciaE")
+    public String incidenciaE(@RequestParam long idIncidencia, Model model){
+
+        IncidenciaViewmodel viewmodel = new IncidenciaViewmodel();
+        viewmodel.setIncidencia(incidenciaService.getIncidenciaById(idIncidencia));
+        viewmodel.setMessage("");
+        viewmodel.setCategorias(itemListService.getCategoriasNivelUno());
+
+        model = setTemplateToModel(model,"/incidencia/","incidenciaE")
+                .addAttribute("data", viewmodel)
+                .addAttribute("title","Crear Incidencia");
+        return mainController.homeRoute(model);
+    }
+
+    /*-------------- CATEGORIA -------------*/
     @GetMapping("/categoriaC")
     public String crearCategoria(Model model){
         model.addAttribute("categoria", new CategoriaDTO());
@@ -51,10 +75,13 @@ public class MasterCrudController {
         return "master/crearCat";
     }
 
+
+    /*======================================= POSTS ========================================*/
     @PostMapping("/incidenciaC")
-    public String crearIncidencia(@ModelAttribute IncidenciaDTO incidencia, BindingResult errors, Model model){
-        incidenciaService.createIncidencia(incidencia, SecurityContextHolder.getContext().getAuthentication().getName());
-        return formularioCrear(model);
+    public String crearIncidencia(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
+        incidenciaService.createIncidencia(viewmodel.getIncidencia(), SecurityContextHolder.getContext().getAuthentication().getName());
+
+        return incidenciaC(model);
     }
 
     @PostMapping("/categoriaC")
