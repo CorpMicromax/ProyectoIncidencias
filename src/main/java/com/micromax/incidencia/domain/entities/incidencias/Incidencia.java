@@ -3,7 +3,6 @@ package com.micromax.incidencia.domain.entities.incidencias;
 import com.micromax.incidencia.domain.Status;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
-import com.micromax.incidencia.dto.IncidenciaDTO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -61,14 +60,5 @@ public class Incidencia implements Serializable {
                     name = "id_comentario", referencedColumnName = "id_comentario"))
     private Collection<Comentario> comentarios;
 
-    public Incidencia(IncidenciaDTO dto){
-        super();
-        setTitulo(dto.getTitulo());
-        setDescripcion(dto.getDescripcion());
-        setCreador(dto.getCreador());
-        setCategoria(dto.getCategoria());
-        setCreacion(dto.getCreacion());
-        setStatus(dto.getStatus());
-    }
 
 }

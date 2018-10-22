@@ -2,7 +2,6 @@ package com.micromax.incidencia.service.impl;
 
 import com.micromax.incidencia.domain.Status;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
-import com.micromax.incidencia.dto.IncidenciaDTO;
 import com.micromax.incidencia.repository.IncidenciaRepository;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.UsuarioService;
@@ -39,11 +38,15 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     }
 
     @Override
-    public void createIncidencia(IncidenciaDTO incidenciaDTO, String username){
-        Incidencia incidencia = new Incidencia(incidenciaDTO);
+    public void createIncidencia(Incidencia incidencia, String username){
         incidencia.setCreador(usuarioService.getUsuarioByUsername(username));
         incidencia.setCreacion(LocalDateTime.now());
         incidencia.setStatus(Status.NUEVA);
         repository.save(incidencia);
+    }
+
+    @Override
+    public Incidencia getIncidenciaById(long id) {
+        return repository.findById(id).orElse(null);
     }
 }
