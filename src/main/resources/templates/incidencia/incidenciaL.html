@@ -9,6 +9,7 @@
             <th> Creador </th>
             <th> Fecha y Hora de Creacion </th>
             <th> Status </th>
+            <th>Editar Incidencia</th>
         </tr>
         </thead>
         <tbody>
@@ -18,22 +19,28 @@
         <tr th:each="incidencia: ${incidencias}">
             <td><span th:text="${incidencia.idIncidencia}"> Id </span></td>
             <td><span th:text="${incidencia.titulo}"> Titulo </span></td>
-            <td><span th:text="${incidencia.categoria.nombre}"> Categoria </span></td>
+            <td><span th:if="${incidencia.categoria}" th:text="${incidencia.categoria.nombre}"></span></td>
             <td><span th:text="${incidencia.creador.nombres}"> Nombre creador </span></td>
             <td><span th:text="${incidencia.creacion}"> creacion </span></td>
             <td><span th:text="${incidencia.status}"> Status </span></td>
+            <td><button type="button" class="editButton btn btn-info btn-rounded btn-sm" th:id="${incidencia.idIncidencia}" th:text="Editar"></button></td>
         </tr>
         </tbody>
     </table>
     <script th:inline="javascript">
     /*<![CDATA[*/
+        var relevant = /*[[${relevant}]]*/ "none";
         $(document).ready( function () {
             $('#datatable').DataTable({
                 "language": {
-                    "url": /*[[@{/js/spanish.json}]]*/ "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+                    "url": /*[[@{/js/localization/spanish.json}]]*/ "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
                 }
             });
         });
-    /*<![CDATA[*/
+
+        $('.editButton').click(function() {
+           window.location = "/incidenciaE?id=" + this.id;
+        });
+    /*]]>*/
     </script>
 </div>

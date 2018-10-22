@@ -1,6 +1,6 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaC">
     <span th:text="${message != null} ? ${message} : ''"></span>
-    <form action="#" th:action="@{/incidenciaC}" th:object="${data.incidencia}" method="post" class="form-horizontal">
+    <form id="crearForm" action="#" th:action="@{/incidenciaC}" th:object="${data.incidencia}" method="post" class="form-horizontal">
         <form class="form-horizontal">
             <fieldset>
 
@@ -12,7 +12,12 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="title">Titulo</label>
                     <div class="col-md-4">
-                        <input id="title" name="title" th:field="*{titulo}" type="text" class="form-control input-md" required="required">
+                        <input th:field="*{titulo}"
+                               id="title" name="title"
+                               type="text" class="form-control input-md"
+                               required="required" maxlength="50"
+                               data-rule-required="true"
+                               data-rule-maxlength="50"   >
                     </div>
                 </div>
 
@@ -20,16 +25,22 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="desc">Descripción</label>
                     <div class="col-md-4">
-                        <textarea class="form-control" id="desc" name="desc" th:field="*{descripcion}"></textarea>
+                        <textarea th:field="*{descripcion}"
+                                  id="desc" name="desc"
+                                  class="form-control"   rows="3"
+                                  data-rule-maxlength="4000"
+                                  data-rule-minlength="10"
+                                  data-rule-required="true"></textarea>
                     </div>
                 </div>
+
 
                 <!-- Select Basic -->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="categoriaUno">Categoria</label>
                     <div class="col-md-4">
-                        <select id="categoriaUno" name="categoriaUno"  class="form-control">
-                            <option value="0">--- Seleccione una ---</option>
+                        <select id="categoriaUno" name="categoriaUno" class="form-control" required="required">
+                            <option value="">--- Seleccione una ---</option>
                             <option th:each="cat : ${data.categorias}" th:value="${cat.id}" th:text="${cat.nombre}" ></option>
                         </select>
                     </div>
@@ -39,7 +50,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="categoriaDos">Categoria Específica</label>
                     <div class="col-md-4">
-                        <select id="categoriaDos" name="categoriaDos" class="form-control" th:field="*{categoria}">
+                        <select id="categoriaDos" name="categoriaDos" class="form-control" th:field="*{categoria}" required="required">
                             <option value="">--- Seleccione una ---</option>
                         </select>
                     </div>
@@ -49,27 +60,33 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="submit"></label>
                     <div class="col-md-8">
-                        <button onclick="submit()" id="submit" name="submit" class="btn btn-success">Crear</button>
-                        <button onclick="/home" id="cancel" name="cancel" class="btn btn-danger">Cancelar</button>
+                        <button type="submit" id="submit" name="submit" class="btn btn-success">Crear</button>
+                        <button id="cancel" name="cancel" class="btn btn-danger">Cancelar</button>
                     </div>
                 </div>
 
             </fieldset>
         </form>
     </form>
-    <script>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
         $("#categoriaUno").change(function(){
 		$.ajax({
 			type: "GET",
-			url: "/rest/incidencia/getCategoriasDos",
+			url: /*[[@{/rest/incidencia/getCategoriasDos}]]*/"/rest/incidencia/getCategoriasDos",
 			data:  {id:$("#categoriaUno").val()},
 			success: function(response){
 			    $("#categoriaDos").empty();
-			    $("#categoriaDos").append('<option value=0>---Seleccione una opcion---</option>');
+			    $("#categoriaDos").append('<option value="">---Seleccione una opcion---</option>');
 			    $.each(response, function(i){
                     $("#categoriaDos").append('<option value="' + response[i].id + '">' + response[i].nombre + '</option>');
 			    })}
             });
 	    });
+	    $('#cancel').click(function(event) {
+	        event.stopPropagation();
+           window.location = "/home";
+        });
+        /*]]>*/
     </script>
 </div>

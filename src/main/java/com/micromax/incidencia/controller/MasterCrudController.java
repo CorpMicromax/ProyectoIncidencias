@@ -46,24 +46,27 @@ public class MasterCrudController {
     }
 
     @GetMapping("/incidenciaL")
-    public String incidenciaL(Model model){
+    public String incidenciaL(@RequestParam(value = "id", required = false) Long id, Model model){
         model = setTemplateToModel(model,"/incidencia/","incidenciaL")
                 .addAttribute("incidencias", incidenciaService.getIncidencias())
                 .addAttribute("title","Ver incidencias");
+        if(id != null){
+            model.addAttribute("relevant", id);
+        }
         return mainController.homeRoute(model);
     }
 
     @GetMapping("/incidenciaE")
-    public String incidenciaE(@RequestParam long idIncidencia, Model model){
+    public String incidenciaE(@RequestParam long id, Model model){
 
         IncidenciaViewmodel viewmodel = new IncidenciaViewmodel();
-        viewmodel.setIncidencia(incidenciaService.getIncidenciaById(idIncidencia));
+        viewmodel.setIncidencia(incidenciaService.getIncidenciaById(id));
         viewmodel.setMessage("");
         viewmodel.setCategorias(itemListService.getCategoriasNivelUno());
 
         model = setTemplateToModel(model,"/incidencia/","incidenciaE")
                 .addAttribute("data", viewmodel)
-                .addAttribute("title","Crear Incidencia");
+                .addAttribute("title","Editar Incidencia");
         return mainController.homeRoute(model);
     }
 
@@ -80,8 +83,7 @@ public class MasterCrudController {
     @PostMapping("/incidenciaC")
     public String crearIncidencia(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
         incidenciaService.createIncidencia(viewmodel.getIncidencia(), SecurityContextHolder.getContext().getAuthentication().getName());
-
-        return incidenciaC(model);
+        return "redirect:/incidenciaL?=" + viewmodel.getIncidencia().getIdIncidencia();
     }
 
     @PostMapping("/categoriaC")
