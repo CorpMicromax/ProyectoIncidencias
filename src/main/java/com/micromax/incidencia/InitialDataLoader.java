@@ -76,7 +76,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     }
 
     @Transactional
-    private Privilegio createPrivilegioIfNotFound(String name) {
+    public Privilegio createPrivilegioIfNotFound(String name) {
 
         Privilegio privilegio = privilegioRepository.findByNombre(name);
         if (privilegio == null) {
@@ -88,14 +88,14 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     }
 
     @Transactional
-    private void createUsuarioIfNotFound(Usuario usuario){
+    public void createUsuarioIfNotFound(Usuario usuario){
         if(!userRepository.findByUsername(usuario.getUsername()).isPresent()){
             userRepository.save(usuario);
         }
     }
 
     @Transactional
-    private Rol createRoleIfNotFound(
+    public Rol createRoleIfNotFound(
             String nombre, Collection<Privilegio> privilegios) {
 
         Rol rol = roleRepository.findByNombre(nombre);
@@ -107,4 +107,5 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         }
         return rol;
     }
+
 }

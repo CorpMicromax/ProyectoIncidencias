@@ -1,14 +1,14 @@
 package com.micromax.incidencia.domain.entities.users;
 
+import com.micromax.incidencia.domain.Desactivable;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
 @Data
-public class Privilegio implements Serializable {
+public class Privilegio extends Desactivable {
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,7 +1,7 @@
 package com.micromax.incidencia.controller;
 
-import com.micromax.incidencia.domain.entities.incidencias.TipoIncidencia;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
+import com.micromax.incidencia.domain.entities.incidencias.TipoIncidencia;
 import com.micromax.incidencia.dto.CategoriaDTO;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.ItemListService;
@@ -57,6 +57,8 @@ public class MasterCrudController {
         return mainController.homeRoute(model);
     }
 
+
+
     @GetMapping("/incidenciaE")
     public String incidenciaE(@RequestParam long id, Model model){
 
@@ -89,7 +91,7 @@ public class MasterCrudController {
     /*======================================= POSTS ========================================*/
     @PostMapping("/incidenciaC")
     public String crearIncidencia(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
-        incidenciaService.createIncidencia(viewmodel.getIncidencia(), SecurityContextHolder.getContext().getAuthentication().getName());
+        incidenciaService.guardarIncidencia(viewmodel.getIncidencia(), SecurityContextHolder.getContext().getAuthentication().getName());
         return "redirect:/incidenciaL?=" + viewmodel.getIncidencia().getIdIncidencia();
     }
 

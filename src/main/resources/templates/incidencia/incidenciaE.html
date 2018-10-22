@@ -6,6 +6,13 @@
                 <!-- Form Name -->
                 <legend>Editar Incidencia</legend>
 
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="title">Id: <span th:text="*{idIncidencia}"></span></label>
+                    <div class="col-md-4">
+                        <input id="id" name="id" th:field="*{idIncidencia}" type="hidden" class="form-control input-md">
+                    </div>
+                </div>
+
                 <!-- Text input-->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="title">Titulo</label>

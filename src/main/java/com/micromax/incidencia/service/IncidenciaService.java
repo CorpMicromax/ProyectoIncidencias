@@ -9,9 +9,10 @@ public interface IncidenciaService {
 
     List<Incidencia> getIncidencias();
 
-    Incidencia getIncidencia(long id);
-
-    void createIncidencia(Incidencia i, String username);
+    void guardarIncidencia(Incidencia i, String username);
 
     Incidencia getIncidenciaById(long id);
+
+    boolean borrarIncidencia(Long id);
 }
+

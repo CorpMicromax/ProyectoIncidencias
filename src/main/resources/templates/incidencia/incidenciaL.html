@@ -9,7 +9,8 @@
             <th> Creador </th>
             <th> Fecha y Hora de Creacion </th>
             <th> Status </th>
-            <th>Editar Incidencia</th>
+            <th> Editar </th>
+            <th> Eliminar </th>
         </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
             <td><span th:text="${incidencia.creacion}"> creacion </span></td>
             <td><span th:text="${incidencia.status}"> Status </span></td>
             <td><button type="button" class="editButton btn btn-info btn-rounded btn-sm" th:id="${incidencia.idIncidencia}" th:text="Editar"></button></td>
+            <td><button type="button" class="deleteButton btn btn-danger btn-rounded btn-sm" th:id="${incidencia.idIncidencia}" th:text="Eliminar"></button></td>
         </tr>
         </tbody>
     </table>
@@ -41,6 +43,16 @@
         $('.editButton').click(function() {
            window.location = "/incidenciaE?id=" + this.id;
         });
+
+
+        $('.deleteButton').click(function() {
+            var id = $(this).attr('id');
+            $.get("/rest/incidencia/incidenciaD", {id: id}, function(response) {
+                alert(response);
+                window.location = "/incidenciaL";
+            });
+        });
+
     /*]]>*/
     </script>
 </div>

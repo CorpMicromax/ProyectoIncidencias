@@ -1,12 +1,12 @@
 package com.micromax.incidencia.domain.entities.users;
 
+import com.micromax.incidencia.domain.Desactivable;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 import java.util.Collection;
 
 
@@ -14,7 +14,7 @@ import java.util.Collection;
 @Entity
 @Inheritance
 @DiscriminatorColumn(name = "tipo_usuario")
-public class Usuario implements Serializable {
+public class Usuario extends Desactivable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

@@ -1,15 +1,15 @@
 package com.micromax.incidencia.domain.entities.incidencias;
 
+import com.micromax.incidencia.domain.Desactivable;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
-public class Comentario implements Serializable {
+public class Comentario extends Desactivable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
