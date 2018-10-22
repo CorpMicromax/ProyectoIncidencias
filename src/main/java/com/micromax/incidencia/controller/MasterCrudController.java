@@ -1,5 +1,6 @@
 package com.micromax.incidencia.controller;
 
+import com.micromax.incidencia.domain.entities.incidencias.TipoIncidencia;
 import com.micromax.incidencia.dto.CategoriaDTO;
 import com.micromax.incidencia.dto.IncidenciaDTO;
 import com.micromax.incidencia.service.IncidenciaService;
@@ -44,6 +45,12 @@ public class MasterCrudController {
         return "master/crearCat";
     }
 
+    @GetMapping("/tipoIncidenciaC")
+    public String crearTipoIncidencia(Model model){
+        model.addAttribute("tipoIncidencia",new TipoIncidencia());
+        return "incidencia/crearTipIncid";
+    }
+
     @PostMapping("/incidenciaC")
     public String crearIncidencia(@ModelAttribute IncidenciaDTO incidencia, BindingResult errors, Model model){
         incidenciaService.createIncidencia(incidencia, SecurityContextHolder.getContext().getAuthentication().getName());
@@ -54,5 +61,11 @@ public class MasterCrudController {
     public String crearCategoria(@ModelAttribute CategoriaDTO cat, BindingResult errors, Model model){
         itemListService.guardar(cat);
         return crearCategoria(model);
+    }
+
+    @PostMapping("/tipoIncidenciaC")
+    public String crearTipoIncidencia(@ModelAttribute TipoIncidencia tipoIncid, BindingResult errors, Model model){
+        itemListService.guardar(tipoIncid);
+        return crearTipoIncidencia(model);
     }
 }

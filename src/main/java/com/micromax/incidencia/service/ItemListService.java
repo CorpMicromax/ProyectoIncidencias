@@ -1,6 +1,7 @@
 package com.micromax.incidencia.service;
 
 import com.micromax.incidencia.domain.entities.incidencias.Categoria;
+import com.micromax.incidencia.domain.entities.incidencias.TipoIncidencia;
 import com.micromax.incidencia.dto.CategoriaDTO;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 
 public interface ItemListService {
 
+    // Servicios para la Clase Categoria
     List<Categoria> getCategoriasNivelUno();
 
     List<Categoria> getCategoriasNivelDos(long idPadre);
@@ -21,4 +23,18 @@ public interface ItemListService {
     Categoria guardar(CategoriaDTO cat);
 
     boolean eliminarCategoria(Categoria id);
+
+    // Servicios para la Clase TipoIncidencia
+
+    TipoIncidencia getTipoIncidencia(long id);
+
+    List<TipoIncidencia> getAllTipoIncidencias();
+
+    TipoIncidencia guardar (TipoIncidencia tipoIncid);
+
+    boolean eliminarTipoIncidencia(TipoIncidencia tipoIncid);
+
+
+
+
 }

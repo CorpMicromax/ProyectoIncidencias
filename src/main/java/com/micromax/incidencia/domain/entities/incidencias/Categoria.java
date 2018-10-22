@@ -2,6 +2,7 @@ package com.micromax.incidencia.domain.entities.incidencias;
 
 import com.micromax.incidencia.dto.CategoriaDTO;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.io.Serializable;
 
 @Data
 @Entity
+
 public class Categoria implements Serializable {
 
     @Transient

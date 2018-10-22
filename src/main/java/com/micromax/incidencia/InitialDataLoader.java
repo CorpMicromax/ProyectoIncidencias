@@ -75,16 +75,16 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         createUsuarioIfNotFound(usuario2);
 
 
-        Categoria dad = createCategoriaIfNotFound("Problema",0,null);
-        Categoria hard = createCategoriaIfNotFound("Hardware",1,dad);
-        Categoria soft = createCategoriaIfNotFound("Software", 1,dad);
-        Categoria otro = createCategoriaIfNotFound("Otro", 1,dad);
-        createCategoriaIfNotFound("Impresora",2, hard);
-        createCategoriaIfNotFound("Computadora",2, hard);
-        createCategoriaIfNotFound("Sistema Operativo", 2, soft);
-        createCategoriaIfNotFound("Office", 2, soft);
-        createCategoriaIfNotFound("Cableado de Red", 2, otro);
-        createCategoriaIfNotFound("Exorcismo de fotocopiadora", 2, otro);
+//        Categoria dad = createCategoriaIfNotFound("Problema",0,null);
+//        Categoria hard = createCategoriaIfNotFound("Hardware",1,dad);
+//        Categoria soft = createCategoriaIfNotFound("Software", 1,dad);
+//        Categoria otro = createCategoriaIfNotFound("Otro", 1,dad);
+//        createCategoriaIfNotFound("Impresora",2, hard);
+//        createCategoriaIfNotFound("Computadora",2, hard);
+//        createCategoriaIfNotFound("Sistema Operativo", 2, soft);
+//        createCategoriaIfNotFound("Office", 2, soft);
+//        createCategoriaIfNotFound("Cableado de Red", 2, otro);
+//        createCategoriaIfNotFound("Exorcismo de fotocopiadora", 2, otro);
 
         alreadySetup = true;
     }
@@ -117,7 +117,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
             categoriaDTO.setPadre(padre);
             categoriaDTO.setNombre(name);
             categoria = new Categoria(categoriaDTO);
-            categoriaRepository.save(categoria);
+            categoria = categoriaRepository.save(categoria);
         }
         return categoria;
     }
