@@ -10,6 +10,7 @@ import java.util.List;
 public interface ItemListService {
 
     // Servicios para la Clase Categoria
+
     List<Categoria> getCategoriasNivelUno();
 
     List<Categoria> getCategoriasNivelDos(long idPadre);

@@ -22,7 +22,6 @@ public class MasterCrudController {
     @Autowired
     private IncidenciaService incidenciaService;
 
-
     @Autowired
     private MainController mainController;
 

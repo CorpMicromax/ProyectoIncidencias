@@ -8,11 +8,11 @@ import java.util.Optional;
 
 @Repository
 
-public interface TipoIncidenciaRepository extends CrudRepository<TipoIncidencia, Integer> {
+public interface TipoIncidenciaRepository extends CrudRepository<TipoIncidencia,Long> {
 
-    Iterable<TipoIncidencia> findAllById(long id);
+ //   Iterable<TipoIncidencia> findAllById(long id);
 
-    Optional<TipoIncidencia> findById(long id);
+ //   Optional<TipoIncidencia> findById(long id);
 
 
 }
