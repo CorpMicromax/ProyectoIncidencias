@@ -169,6 +169,14 @@ public class MasterCrudController {
         return "redirect:/incidenciaL?=" + viewmodel.getIncidencia().getIdIncidencia();
     }
 
+    @PostMapping("/incidenciaE")
+    public String postIncidenciaE(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
+        viewmodel.getIncidencia().setCreador(usuarioService.getUsuarioByUsername(viewmodel.getIncidencia().getCreador().getUsername()));
+        incidenciaService.actualizarIncidencia(viewmodel.getIncidencia());
+
+        return "redirect:/incidenciaL?=" + viewmodel.getIncidencia().getIdIncidencia();
+    }
+
     /*CATEGORIA*/
     @PostMapping("/categoriaC")
     public String postCategoriaC(@ModelAttribute CategoriaDTO cat, BindingResult errors, Model model){

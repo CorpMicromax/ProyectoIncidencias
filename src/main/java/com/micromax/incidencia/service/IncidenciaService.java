@@ -11,6 +11,8 @@ public interface IncidenciaService {
 
     void guardarIncidencia(Incidencia i, String username);
 
+    void actualizarIncidencia(Incidencia i);
+
     Incidencia getIncidenciaById(long id);
 
     boolean borrarIncidencia(Long id);

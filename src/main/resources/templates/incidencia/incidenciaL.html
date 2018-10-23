@@ -1,4 +1,4 @@
-<div th:fragment="incidenciaL" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:fragment="incidenciaL"  xmlns:th="http://www.w3.org/1999/xhtml">
     <h4 class="my-4 h-4 font-weight-bold">Incidencias</h4>
     <table id="datatable" class="datatable table-hover table-striped">
         <thead>
@@ -19,11 +19,11 @@
         </tr>
         <tr th:each="incidencia: ${incidencias}">
             <td><span th:text="${incidencia.idIncidencia}"> Id </span></td>
-            <td><span th:text="${incidencia.titulo}"> Titulo </span></td>
+            <td><span th:if="${incidencia.titulo}" th:text="${incidencia.titulo}"> Titulo </span></td>
             <td><span th:if="${incidencia.categoria}" th:text="${incidencia.categoria.nombre}"></span></td>
-            <td><span th:text="${incidencia.creador.nombres}"> Nombre creador </span></td>
-            <td><span th:text="${incidencia.creacion}"> creacion </span></td>
-            <td><span th:text="${incidencia.status}"> Status </span></td>
+            <td><span th:if="${incidencia.creador}" th:text="${incidencia.creador.nombres}"> Nombre creador </span></td>
+            <td><span th:if="${incidencia.creacion}" th:text="${incidencia.creacion}"> creacion </span></td>
+            <td><span th:if="${incidencia.status}" th:text="${incidencia.status}"> Status </span></td>
             <p data-placement="center" data-toggle="tooltip" title="Delete">
 
             <td><p data-placement="center" data-toggle="tooltip" title="Editar"><button th:id="${incidencia.idIncidencia}" th:text="Editar" class="editButton btn btn-info btn-rounded btn-sm" data-title="Editar" data-target="#editar" ><span class="glyphicon glyphicon-trash"></span></button></p></td>

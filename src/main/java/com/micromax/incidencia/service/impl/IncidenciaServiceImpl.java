@@ -40,6 +40,12 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     }
 
     @Override
+    public void actualizarIncidencia(Incidencia i) {
+        i = repository.save(i);
+        log.info("Usuario %s ha creado una incidencia nueva con id %d", i.getIdIncidencia());
+    }
+
+    @Override
     public Incidencia getIncidenciaById(long id) {
         log.info("Buscando incidencia con id %d", id);
         return repository.findByIdIncidenciaAndActiva(id, true).orElse(null);
@@ -55,4 +61,6 @@ public class IncidenciaServiceImpl implements IncidenciaService {
         }
         return false;
     }
+
+
 }

@@ -1,44 +1,50 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaE">
-    <form action="#" th:action="@{/incidenciaC}" th:object="${data.incidencia}" method="post" class="form-horizontal">
+    <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaViewmodel"*/-->
+    <!--/*@thymesVar id="incidencia" type="com.micromax.incidencia.domain.entities.incidencias.Incidencia"*/-->
+    <form action="#" th:action="@{/incidenciaE}" th:object="${data.incidencia}" method="post" class="form-horizontal">
         <form class="form-horizontal">
             <fieldset>
 
                 <!-- Form Name -->
                 <legend>Editar Incidencia</legend>
 
+                <!-- Id -->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="title">Id: <span th:text="*{idIncidencia}"></span></label>
+                    <label class="col-md-4 control-label" for="id">Id: <span th:text="*{idIncidencia}"></span></label>
                     <div class="col-md-4">
-                        <input id="id" name="id" th:field="*{idIncidencia}" type="hidden" class="form-control input-md">
+                        <input  id="id" name="id" th:field="*{idIncidencia}" type="hidden" class="form-control input-md">
                     </div>
                 </div>
 
-                <!-- Text input-->
+                <!-- Titulo-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="title">Titulo</label>
+                    <label class="col-md-4 control-label" for="titulo">Titulo</label>
                     <div class="col-md-4">
-                        <input id="title" name="title" th:value="*{titulo}" type="text" class="form-control input-md" disabled="disabled">
+                        <input id="titulo" name="titulo" th:value="*{titulo}" type="text" class="form-control input-md" disabled="disabled">
+                        <input type="hidden" th:field="*{titulo}" />
+
                     </div>
                 </div>
 
-                <!-- Textarea -->
+                <!-- Descripcion -->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="desc">Descripción</label>
                     <div class="col-md-4">
-                        <textarea class="form-control" id="desc" name="desc" th:text="*{descripcion}" disabled="disabled" ></textarea>
+                        <textarea class="form-control" id="desc" name="desc" th:field="*{descripcion} " disabled="disabled"></textarea>
+                        <input type="hidden" th:field="*{descripcion}" />
                     </div>
                 </div>
 
 
                 <!-- Categoria input-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="title">Categoria</label>
+                    <label class="col-md-4 control-label" for="categoria">Categoria</label>
                     <div class="col-md-4">
                         <input id="categoria" name="categoria" th:value="*{categoria.nombre}"  type="text" class="form-control input-md" disabled="disabled">
                     </div>
                 </div>
 
-                <!-- Select Basic -->
+                <!-- Categoria Uno -->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="categoriaUno">Categoria</label>
                     <div class="col-md-4">
@@ -49,7 +55,7 @@
                     </div>
                 </div>
 
-                <!-- Select Basic -->
+                <!-- Categoria Dos -->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="categoriaDos">Categoria Específica</label>
                     <div class="col-md-4">
@@ -60,6 +66,9 @@
                 </div>
 
 
+                <input type="hidden" th:field="*{creador.username}" />
+                <input type="hidden" th:field="*{creacion}" />
+                <input type="hidden" th:field="*{status}" />
 
                 <!-- Button (Double) -->
                 <div class="form-group">
