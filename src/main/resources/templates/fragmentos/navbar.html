@@ -4,7 +4,7 @@
 <nav class="navbar navbar-expand-sm sticky-top navbar-dark elegant-color">
     <a class="navbar-brand" href="#"><span th:text="${nombre}"></span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span class="glyphicon navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
@@ -29,11 +29,9 @@
                 </div>
             </li>
         </ul>
-        <form class="form-inline">
-            <div class="md-form my-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            </div>
-        </form>
+        <div class="md-form my-0">
+            <a class="navbar-brand" th:href="@{/logout}"><span>Cerrar Sesión</span></a>
+        </div>
     </div>
 </nav>
 </div>
