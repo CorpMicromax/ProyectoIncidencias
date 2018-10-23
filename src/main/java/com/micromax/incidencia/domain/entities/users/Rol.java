@@ -15,8 +15,6 @@ public class Rol extends Desactivable {
     private Integer idRol;
 
     private String nombre;
-    @ManyToMany(mappedBy = "roles")
-    private Collection<Usuario> usuarios;
 
     @ManyToMany
     @JoinTable(

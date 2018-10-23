@@ -1,4 +1,4 @@
-<div  xmlns:th="http://www.w3.org/1999/xhtml" th:fragment="navbar">
+<div xmlns:th="http://www.w3.org/1999/xhtml" th:fragment="navbar">
 
 
 <nav class="navbar navbar-expand-sm sticky-top navbar-dark success-color">
@@ -22,7 +22,8 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador</a>
                 <div class="dropdown-menu dropdown-info" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item waves-effect waves-light" href="#">Usuarios</a>
+                    <a class="dropdown-item waves-effect waves-light" th:href="@{/usuarioC}">Crear Usuarios</a>
+                    <a class="dropdown-item waves-effect waves-light" th:href="@{/usuarioL}">Ver Usuarios</a>
                     <a class="dropdown-item waves-effect waves-light" href="#">Entidades de Base de datos</a>
                     <a class="dropdown-item waves-effect waves-light" href="#">Permisos</a>
                 </div>

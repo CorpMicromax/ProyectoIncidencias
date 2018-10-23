@@ -58,7 +58,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         usuario.setUsername("JLetterer");
         usuario.setPassword(passwordEncoder.encode("admin"));
         usuario.setEmail("javier.letterer@micromax.com");
-        usuario.setRoles(Collections.singletonList(adminRole));
+        usuario.setRol(adminRole);
         usuario.setEnabled(true);
         createUsuarioIfNotFound(usuario);
 
@@ -68,7 +68,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         usuario2.setUsername("KRamirez");
         usuario2.setPassword(passwordEncoder.encode("admin"));
         usuario2.setEmail("karelis.ramirez@micromax.com");
-        usuario2.setRoles(Collections.singletonList(adminRole));
+        usuario2.setRol(adminRole);
         usuario2.setEnabled(true);
         createUsuarioIfNotFound(usuario2);
 
@@ -98,7 +98,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     public Rol createRoleIfNotFound(
             String nombre, Collection<Privilegio> privilegios) {
 
-        Rol rol = roleRepository.findByNombre(nombre);
+        Rol rol = roleRepository.findByNombreAndActiva(nombre, true);
         if (rol == null) {
             rol = new Rol();
             rol.setNombre(nombre);

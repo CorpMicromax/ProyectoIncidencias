@@ -5,9 +5,9 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.util.Collection;
 
 
 @Data
@@ -39,17 +39,14 @@ public class Usuario extends Desactivable {
     private String password;
 
     private String direccion;
+
+    @Digits(integer = 12,fraction = 0)
     private String telefono;
+
     private boolean enabled;
     private boolean tokenExpired;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "usuarios_roles",
-            joinColumns = @JoinColumn(
-                    name = "id_usuario", referencedColumnName = "id_usuario"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "id_rol", referencedColumnName = "id_rol"))
-    private Collection<Rol> roles;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Rol rol;
 
 }

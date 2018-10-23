@@ -47,7 +47,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
 
     @Override
     public boolean borrarIncidencia(Long id) {
-        Incidencia i = repository.findById(id).orElse(  null);
+        Incidencia i = repository.findByIdIncidenciaAndActiva(id, true).orElse(  null);
         if(i != null) {
             i.setActiva(false);
             log.info("Eliminada incidencia con id %d", id);

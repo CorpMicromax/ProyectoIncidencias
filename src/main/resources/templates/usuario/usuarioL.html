@@ -1,0 +1,57 @@
+<div th:fragment="usuarioL" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h4 class="my-4 h-4 font-weight-bold">Usuarios</h4>
+    <table id="datatable" class="datatable table-hover table-striped">
+        <thead>
+        <tr>
+            <th> Id </th>
+            <th> Username </th>
+            <th> Nombres </th>
+            <th> Apellidos </th>
+            <th> Email </th>
+            <th> Rol </th>
+            <th> Editar </th>
+            <th> Eliminar </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${usuarios.empty}">
+            <td colspan="2"> No hay usuarios (imposible!) </td>
+        </tr>
+        <tr th:each="usuario: ${usuarios}">
+            <td><span th:text="${usuario.idUsuario}"> Id </span></td>
+            <td><span th:text="${usuario.username}"> Username </span></td>
+            <td><span th:text="${usuario.nombres}"></span> Nombres </td>
+            <td><span th:text="${usuario.apellidos}"> Apellidos </span></td>
+            <td><span th:text="${usuario.email}"> Email </span></td>
+            <td><span th:text="${usuario.rol.nombre}"> Rol </span></td>
+            <td><button type="button" class="editButton btn btn-info btn-rounded btn-sm" th:id="${usuario.idUsuario}" th:text="Editar"></button></td>
+            <td><button type="button" class="deleteButton btn btn-danger btn-rounded btn-sm" th:id="${usuario.idUsuario}" th:text="Eliminar"></button></td>
+        </tr>
+        </tbody>
+    </table>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var relevant = /*[[${relevant}]]*/ "none";
+        $(document).ready( function () {
+            $('#datatable').DataTable({
+                "language": {
+                    "url": /*[[@{/js/localization/spanish.json}]]*/ "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                }
+            });
+        });
+
+        $('.editButton').click(function() {
+            window.location = "/usuarioE?id=" + this.id;
+        });
+
+
+        $('.deleteButton').click(function() {
+            var id = $(this).attr('id');
+            $.get("/rest/incidencia/usuarioD", {id: id}, function() {
+                window.location = "/usuarioL";
+            });
+        });
+
+        /*]]>*/
+    </script>
+</div>
