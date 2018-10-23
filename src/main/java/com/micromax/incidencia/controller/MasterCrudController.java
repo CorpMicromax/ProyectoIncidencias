@@ -8,8 +8,8 @@ import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.ItemListService;
 import com.micromax.incidencia.service.UsuarioService;
 import com.micromax.incidencia.viewmodel.IncidenciaViewmodel;
-import com.micromax.incidencia.viewmodel.UsuarioViewmodel;
 import com.micromax.incidencia.viewmodel.TipoIncidenciaViewmodel;
+import com.micromax.incidencia.viewmodel.UsuarioViewmodel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -188,8 +188,7 @@ public class MasterCrudController {
         return "redirect:/tipIncidenciaL?=" + viewmodel.getTipoIncid().getId(); // pendiente con esto
     }
 
-    private Model setTemplateToModel(Model model, String location, String template){
-        return model.addAttribute("location", location).addAttribute("template", template);
+
     /*USUARIO*/
     @PostMapping("/usuarioC")
     public String postUsuarioC(@ModelAttribute UsuarioViewmodel usuarioViewmodel, BindingResult errors, Model model) {
@@ -208,11 +207,10 @@ public class MasterCrudController {
     @PostMapping("/tipoIncidenciaC")
     public String crearTipoIncidencia(@ModelAttribute TipoIncidencia tipoIncid, BindingResult errors, Model model){
         itemListService.guardar(tipoIncid);
-        return crearTipoIncidencia(model);
+        return "redirect:/home";
     }
 
-
-    private Model setTemplateToModel(Model model, String location, String template){
-        return model.addAttribute("location", "/" + location).addAttribute("template", "/" + template);
+    private Model setTemplateToModel(Model model, String location, String template) {
+        return model.addAttribute("location", location).addAttribute("template", template);
     }
 }

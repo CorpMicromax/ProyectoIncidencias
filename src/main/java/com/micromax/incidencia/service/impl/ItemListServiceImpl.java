@@ -57,6 +57,7 @@ public class ItemListServiceImpl implements ItemListService {
         return categoriaRepository.save(new Categoria(categoriaDTO));
     }
 
+
     @Override
     public boolean eliminarCategoria(Categoria cat) {
         cat.setActiva(false);
@@ -78,6 +79,12 @@ public class ItemListServiceImpl implements ItemListService {
     public List<TipoIncidencia> getAllTipoIncidencias() {
         log.info("Buscando todos los tipos de incidencias");
         return (ArrayList<TipoIncidencia>) tipoIncidenciaRepository.findAll();
+    }
+
+
+    @Override
+    public TipoIncidencia guardar(TipoIncidencia tipoIncidencia) {
+        return tipoIncidenciaRepository.save(tipoIncidencia);
     }
 
     @Override

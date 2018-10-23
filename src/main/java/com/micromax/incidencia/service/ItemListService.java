@@ -36,5 +36,7 @@ public interface ItemListService {
 
     TipoIncidencia createTipoIncidencia(TipoIncidencia tipoIncid);
 
+    TipoIncidencia guardar(TipoIncidencia tipoIncidencia);
+
 
 }
