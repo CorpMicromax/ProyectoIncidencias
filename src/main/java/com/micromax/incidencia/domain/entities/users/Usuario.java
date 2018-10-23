@@ -5,7 +5,6 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
@@ -40,7 +39,6 @@ public class Usuario extends Desactivable {
 
     private String direccion;
 
-    @Digits(integer = 12,fraction = 0)
     private String telefono;
 
     private boolean enabled;
