@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class TipoIncidenciaViewmodel {
-    private TipoIncidencia tipoIncid;
+    private TipoIncidencia tipoIncidencia;
     private String message;
 }

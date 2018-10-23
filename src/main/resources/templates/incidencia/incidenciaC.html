@@ -1,6 +1,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaC">
-    <span th:text="${message != null} ? ${message} : ''"></span>
-    <form id="crearForm" action="#" th:action="@{/incidenciaC}" th:object="${data.incidencia}" method="post" class="form-horizontal">
+    <!--/*@thymesVar id="incidencia" type="com.micromax.incidencia.domain.entities.incidencias.Incidencia"*/-->
+    <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaViewmodel"*/-->
+    <form id="crearForm" th:action="@{/incidenciaC}" th:object="${data.incidencia}" method="post" class="form-horizontal">
         <form class="form-horizontal">
             <fieldset>
 

@@ -87,27 +87,21 @@ public class MasterCrudController {
         return "master/crearCat";
     }
     /*------------- TIPO INCIDENCIA ---------*/
-//    @GetMapping("/tipoIncidenciaC")
-//    public String crearTipoIncidencia(Model model){
-//        model.addAttribute("tipoIncidencia",new TipoIncidencia());
-//        return "incidencia/crearTipIncid";
-//    }
-
-    @GetMapping("/tipIncidenciaC")
+    @GetMapping("/tipoIncidenciaC")
     public String tipoIncidenciaC(Model model){
         TipoIncidenciaViewmodel viewmodel = new TipoIncidenciaViewmodel();
-        viewmodel.setTipoIncid(new TipoIncidencia());
+        viewmodel.setTipoIncidencia(new TipoIncidencia());
         viewmodel.setMessage("");
 
-        model = setTemplateToModel(model,"/incidencia/","tipIncidenciaC")
+        model = setTemplateToModel(model,"incidencia","tipoIncidenciaC")
                 .addAttribute("data", viewmodel)
                 .addAttribute("title","Crear Tipo de Incidencia");
         return mainController.homeRoute(model);
     }
 
-    @GetMapping("/tipIncidenciaL")
+    @GetMapping("/tipoIncidenciaL")
     public String tipoIncidenciaL(@RequestParam(value = "id", required = false) Long id, Model model){
-        model = setTemplateToModel(model,"/incidencia/","tipIncidenciaL")
+        model = setTemplateToModel(model,"incidencia","tipoIncidenciaL")
                 .addAttribute("TipoIncidencias", itemListService.getAllTipoIncidencias())
                 .addAttribute("title","Ver tipo de incidencias");
         if(id != null){
@@ -155,10 +149,10 @@ public class MasterCrudController {
     public String tipoIncidenciaE(@RequestParam long id, Model model){
 
         TipoIncidenciaViewmodel viewmodel = new TipoIncidenciaViewmodel();
-        viewmodel.setTipoIncid(itemListService.getTipoIncidenciaById(id));
+        viewmodel.setTipoIncidencia(itemListService.getTipoIncidenciaById(id));
         viewmodel.setMessage("");
 
-        model = setTemplateToModel(model,"/incidencia/","tipIncidenciaE")
+        model = setTemplateToModel(model,"incidencia","tipoIncidenciaE")
                 .addAttribute("data", viewmodel)
                 .addAttribute("title","Editar Tipo de Incidencia");
         return mainController.homeRoute(model);
@@ -182,10 +176,10 @@ public class MasterCrudController {
         return crearCategoria(model);
     }
 
-    @PostMapping("/TipIncidenciaC")
+    @PostMapping("/tipIncidenciaC")
     public String crearTipoIncidencia(@ModelAttribute TipoIncidenciaViewmodel viewmodel, BindingResult errors, Model model){
-        itemListService.createTipoIncidencia(viewmodel.getTipoIncid());
-        return "redirect:/tipIncidenciaL?=" + viewmodel.getTipoIncid().getId(); // pendiente con esto
+        itemListService.createTipoIncidencia(viewmodel.getTipoIncidencia());
+        return "redirect:/tipIncidenciaL?=" + viewmodel.getTipoIncidencia().getId(); // pendiente con esto
     }
 
 
@@ -211,6 +205,6 @@ public class MasterCrudController {
     }
 
     private Model setTemplateToModel(Model model, String location, String template) {
-        return model.addAttribute("location", location).addAttribute("template", template);
+        return model.addAttribute("location", "/" + location + "/").addAttribute("template", template);
     }
 }
