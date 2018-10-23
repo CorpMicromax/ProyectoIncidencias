@@ -23,7 +23,6 @@ public class Usuario extends Desactivable {
     @NotEmpty
     private String nombres;
 
-    @NotEmpty
     private String apellidos;
 
     @Email(message = "*Por favor introduzca un email valido")

@@ -19,12 +19,15 @@ public class MainController {
     public String homeRoute(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String nombre = auth.getName();
+        String rol = "ROLE_USER";
         Usuario usr = usuarioService.getUsuarioByUsername(nombre);
         if(usr!=null){
             nombre = usr.getNombres() + " " + usr.getApellidos();
+            rol = usr.getRol().getNombre();
         }
         model.addAttribute("nombre", nombre);
         model.addAttribute("authorization", auth.isAuthenticated() );
+        model.addAttribute("user_role", rol);
         return "home";
     }
 

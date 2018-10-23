@@ -1,5 +1,6 @@
 package com.micromax.incidencia;
 
+import com.micromax.incidencia.domain.entities.users.Cliente;
 import com.micromax.incidencia.domain.entities.users.Privilegio;
 import com.micromax.incidencia.domain.entities.users.Rol;
 import com.micromax.incidencia.domain.entities.users.Usuario;
@@ -51,6 +52,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         List<Privilegio> adminPrivilegios = Arrays.asList(readPrivilegio, writePrivilegio);
         Rol adminRole = createRoleIfNotFound("ROLE_ADMIN", adminPrivilegios);
         createRoleIfNotFound("ROLE_USER", Collections.singletonList(readPrivilegio));
+        Rol cliente = createRoleIfNotFound("ROLE_CLIENT", Collections.singletonList(readPrivilegio));
 
         Usuario usuario = new Usuario();
         usuario.setNombres("Javier");
@@ -71,6 +73,15 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         usuario2.setRol(adminRole);
         usuario2.setEnabled(true);
         createUsuarioIfNotFound(usuario2);
+
+        Usuario usuario3 = new Cliente();
+        usuario3.setNombres("Empresa Cliente");
+        usuario3.setUsername("cliente");
+        usuario3.setPassword(passwordEncoder.encode("cliente"));
+        usuario3.setEmail("cliente@micromax.com");
+        usuario3.setRol(cliente);
+        usuario3.setEnabled(true);
+        createUsuarioIfNotFound(usuario3);
 
         alreadySetup = true;
     }

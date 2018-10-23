@@ -6,7 +6,7 @@
     <div th:include="/fragmentos/header" ></div>
 </head>
 <body>
-<div th:replace="/fragmentos/navbar::navbar(nombre = ${nombre})"></div>
+<div th:replace="/fragmentos/navbar::navbar(nombre = ${nombre}, rol = ${user_role})"></div>
 
 <div id="content" class="container">
     <div class="row">

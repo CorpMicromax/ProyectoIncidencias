@@ -19,7 +19,7 @@
             <li class="nav-item">
                 <a class="nav-link waves-effect waves-light" href="#">Reportes</a>
             </li>
-            <li class="nav-item dropdown">
+            <li th:if="${user_role == 'ROLE_ADMIN'}" class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador</a>
                 <div class="dropdown-menu dropdown-info" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item waves-effect waves-light" th:href="@{/usuarioC}">Crear Usuarios</a>
