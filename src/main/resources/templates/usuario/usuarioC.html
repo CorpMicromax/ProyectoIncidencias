@@ -36,7 +36,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="username">Password</label>
                 <div class="col-md-4">
-                    <input id="password" th:field="*{password}" name="password" type="text" placeholder="" class="form-control input-md" required="required">
+                    <input id="password" th:field="*{password}" name="password" type="password" placeholder="" class="form-control input-md" required="required">
                 </div>
             </div>
 
@@ -95,14 +95,14 @@
     </form>
 
     <script th:inline="javascript">
-        t1=window.setInterval(function(){foo()},100);
+      /*  t1=window.setInterval(function(){foo()},100);
         function foo()
         {
             $('#username').val($('#nombres').val().substring(0, 1) + $('#apellidos').val().substring(0, $('#apellidos').val().indexOf(" ")));
-        }
-        let r = Math.random().toString(36).substring(7);
+        }*/
+        var r = Math.random().toString(36).substring(7);
         $("#password").val(r);
-        $()
+
 
         $('#cancel').click(function(event) {
             event.stopPropagation();
