@@ -6,6 +6,7 @@ import com.micromax.incidencia.dto.CategoriaDTO;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.ItemListService;
 import com.micromax.incidencia.viewmodel.IncidenciaViewmodel;
+import com.micromax.incidencia.viewmodel.TipoIncidenciaViewmodel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -77,13 +78,48 @@ public class MasterCrudController {
         model.addAttribute("categorias", itemListService.getCategoriaByNivel(1));
         return "master/crearCat";
     }
+    /*------------- TIPO INCIDENCIA ---------*/
+//    @GetMapping("/tipoIncidenciaC")
+//    public String crearTipoIncidencia(Model model){
+//        model.addAttribute("tipoIncidencia",new TipoIncidencia());
+//        return "incidencia/crearTipIncid";
+//    }
 
-    @GetMapping("/tipoIncidenciaC")
-    public String crearTipoIncidencia(Model model){
-        model.addAttribute("tipoIncidencia",new TipoIncidencia());
-        return "incidencia/crearTipIncid";
+    @GetMapping("/tipIncidenciaC")
+    public String tipoIncidenciaC(Model model){
+        TipoIncidenciaViewmodel viewmodel = new TipoIncidenciaViewmodel();
+        viewmodel.setTipoIncid(new TipoIncidencia());
+        viewmodel.setMessage("");
+
+        model = setTemplateToModel(model,"/incidencia/","tipIncidenciaC")
+                .addAttribute("data", viewmodel)
+                .addAttribute("title","Crear Tipo de Incidencia");
+        return mainController.homeRoute(model);
     }
 
+    @GetMapping("/tipIncidenciaL")
+    public String tipoIncidenciaL(@RequestParam(value = "id", required = false) Long id, Model model){
+        model = setTemplateToModel(model,"/incidencia/","tipIncidenciaL")
+                .addAttribute("TipoIncidencias", itemListService.getAllTipoIncidencias())
+                .addAttribute("title","Ver tipo de incidencias");
+        if(id != null){
+            model.addAttribute("relevant", id);
+        }
+        return mainController.homeRoute(model);
+    }
+
+    @GetMapping("/TipIncidenciaE")
+    public String tipoIncidenciaE(@RequestParam long id, Model model){
+
+        TipoIncidenciaViewmodel viewmodel = new TipoIncidenciaViewmodel();
+        viewmodel.setTipoIncid(itemListService.getTipoIncidenciaById(id));
+        viewmodel.setMessage("");
+
+        model = setTemplateToModel(model,"/incidencia/","tipIncidenciaE")
+                .addAttribute("data", viewmodel)
+                .addAttribute("title","Editar Tipo de Incidencia");
+        return mainController.homeRoute(model);
+    }
 
     /*======================================= POSTS ========================================*/
     @PostMapping("/incidenciaC")
@@ -98,13 +134,15 @@ public class MasterCrudController {
         return crearCategoria(model);
     }
 
+    @PostMapping("/TipIncidenciaC")
+    public String crearTipoIncidencia(@ModelAttribute TipoIncidenciaViewmodel viewmodel, BindingResult errors, Model model){
+        itemListService.createTipoIncidencia(viewmodel.getTipoIncid());
+        return "redirect:/tipIncidenciaL?=" + viewmodel.getTipoIncid().getId(); // pendiente con esto
+    }
+
     private Model setTemplateToModel(Model model, String location, String template){
         return model.addAttribute("location", location).addAttribute("template", template);
     }
 
-    @PostMapping("/tipoIncidenciaC")
-    public String crearTipoIncidencia(@ModelAttribute TipoIncidencia tipoIncid, BindingResult errors, Model model){
-        itemListService.guardar(tipoIncid);
-        return crearTipoIncidencia(model);
-    }
+
 }
