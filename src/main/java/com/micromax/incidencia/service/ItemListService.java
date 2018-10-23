@@ -25,17 +25,16 @@ public interface ItemListService {
 
     boolean eliminarCategoria(Categoria id);
 
+
     // Servicios para la Clase TipoIncidencia
 
     TipoIncidencia getTipoIncidencia(long id);
 
     List<TipoIncidencia> getAllTipoIncidencias();
 
-    TipoIncidencia guardar (TipoIncidencia tipoIncid);
+    TipoIncidencia getTipoIncidenciaById(long id);
 
-    boolean eliminarTipoIncidencia(TipoIncidencia tipoIncid);
-
-
+    TipoIncidencia createTipoIncidencia(TipoIncidencia tipoIncid);
 
 
 }

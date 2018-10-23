@@ -6,13 +6,16 @@ import com.micromax.incidencia.dto.CategoriaDTO;
 import com.micromax.incidencia.repository.CategoriaRepository;
 import com.micromax.incidencia.repository.TipoIncidenciaRepository;
 import com.micromax.incidencia.service.ItemListService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@Slf4j
 public class ItemListServiceImpl implements ItemListService {
 
 
@@ -65,22 +68,25 @@ public class ItemListServiceImpl implements ItemListService {
 
     @Override
     public TipoIncidencia getTipoIncidencia(long id) {
-        return tipoIncidenciaRepository.findById(id).orElse(null);
+      //  return tipoIncidenciaRepository.findById(id).orElse(null);
+        log.info("Buscando Tipo de Incidencia por id %d", id);
+        Optional<TipoIncidencia> i = tipoIncidenciaRepository.findById(id);
+        return i.orElse(null);
     }
 
     @Override
     public List<TipoIncidencia> getAllTipoIncidencias() {
-        return (List<TipoIncidencia>) tipoIncidenciaRepository.findAll();
+        log.info("Buscando todos los tipos de incidencias");
+        return (ArrayList<TipoIncidencia>) tipoIncidenciaRepository.findAll();
     }
 
     @Override
-    public TipoIncidencia guardar(TipoIncidencia tipoIncid) {
+    public TipoIncidencia getTipoIncidenciaById(long id) {
+        return tipoIncidenciaRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public TipoIncidencia createTipoIncidencia(TipoIncidencia tipoIncid) {
         return tipoIncidenciaRepository.save(tipoIncid);
-    }
-
-    @Override
-    public boolean eliminarTipoIncidencia(TipoIncidencia tipoIncid) {
-        tipoIncidenciaRepository.delete(tipoIncid);
-        return false;
     }
 }
