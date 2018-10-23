@@ -6,14 +6,17 @@ import com.micromax.incidencia.repository.PrivilegioRepository;
 import com.micromax.incidencia.repository.RolRepository;
 import com.micromax.incidencia.repository.UsuarioRepository;
 import com.micromax.incidencia.service.UsuarioService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Service
+@Slf4j
 public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
@@ -32,11 +35,39 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.findByEmail(email).orElse(null);
     }
 
-    public void saveUser(Usuario user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    @Override
+    public List<Rol> getRoles() {
+        return (ArrayList<Rol>) rolRepository.findAllByActiva(true);
+    }
+
+    @Override
+    public Collection<Usuario> getUsuariosActivos() {
+        return usuarioRepository.findAllByActiva(true);
+    }
+
+    @Override
+    public Usuario getUsuarioById(long id) {
+        return usuarioRepository.findByIdUsuarioAndActiva(id, true);
+    }
+
+    @Override
+    public boolean borrarUsuario(Long id) {
+        Usuario u = usuarioRepository.findByIdUsuarioAndActiva(id, true);
+        if(u != null) {
+            u.setActiva(false);
+            log.info("Eliminada incidencia con id %d", id);
+            return usuarioRepository.save(u) != null;
+        }
+        return false;
+    }
+
+
+
+    public void guardarUsuario(Usuario user, boolean nuevo) {
+        if(nuevo)user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
-        Rol userRole = rolRepository.findByNombre("ROLE_USER");
-        user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
+        Rol userRole = rolRepository.findByNombreAndActiva("ROLE_USER", true);
+        user.setRol(userRole);
         usuarioRepository.save(user);
     }
 

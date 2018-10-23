@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -27,26 +26,33 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     @Override
     public List<Incidencia> getIncidencias() {
         log.info("Buscando todas las incidencias");
-        return (ArrayList<Incidencia>) repository.findAll();
+        return (ArrayList<Incidencia>) repository.findAllByActiva(true);
     }
 
     @Override
-    public Incidencia getIncidencia(long id) {
-        log.info("Buscando Incidencia por id %d", id);
-        Optional<Incidencia> i = repository.findById(id);
-        return i.orElse(null);
-    }
-
-    @Override
-    public void createIncidencia(Incidencia incidencia, String username){
+    public void guardarIncidencia(Incidencia incidencia, String username){
         incidencia.setCreador(usuarioService.getUsuarioByUsername(username));
         incidencia.setCreacion(LocalDateTime.now());
         incidencia.setStatus(Status.NUEVA);
-        repository.save(incidencia);
+
+        incidencia = repository.save(incidencia);
+        log.info("Usuario %s ha creado una incidencia nueva con id %d", incidencia.getIdIncidencia(), username);
     }
 
     @Override
     public Incidencia getIncidenciaById(long id) {
-        return repository.findById(id).orElse(null);
+        log.info("Buscando incidencia con id %d", id);
+        return repository.findByIdIncidenciaAndActiva(id, true).orElse(null);
+    }
+
+    @Override
+    public boolean borrarIncidencia(Long id) {
+        Incidencia i = repository.findByIdIncidenciaAndActiva(id, true).orElse(  null);
+        if(i != null) {
+            i.setActiva(false);
+            log.info("Eliminada incidencia con id %d", id);
+            return repository.save(i) != null;
+        }
+        return false;
     }
 }

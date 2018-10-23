@@ -1,20 +1,15 @@
 package com.micromax.incidencia.domain.entities.incidencias;
 
+import com.micromax.incidencia.domain.Desactivable;
 import com.micromax.incidencia.dto.CategoriaDTO;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Data
 @Entity
-
-public class Categoria implements Serializable {
-
-    @Transient
-    private static final long serialVersionUID = 19051213456751207L;
+public class Categoria extends Desactivable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -23,8 +18,6 @@ public class Categoria implements Serializable {
     private String nombre;
 
     private int nivel;
-
-    private boolean activa = true;
 
     @OneToOne
     @Nullable

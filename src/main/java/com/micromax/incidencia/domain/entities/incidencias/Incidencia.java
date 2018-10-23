@@ -1,20 +1,19 @@
 package com.micromax.incidencia.domain.entities.incidencias;
 
+import com.micromax.incidencia.domain.Desactivable;
 import com.micromax.incidencia.domain.Status;
+import com.micromax.incidencia.domain.entities.Encuesta;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Data
 @Entity
-public class Incidencia implements Serializable {
-
-    private static final long serialVersionUID = 1905122041950251207L;
+public class Incidencia extends Desactivable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -32,7 +31,6 @@ public class Incidencia implements Serializable {
 
     @OneToOne
     private Categoria categoria;
-
 
     @OneToOne
     private Usuario creador;
@@ -60,5 +58,7 @@ public class Incidencia implements Serializable {
                     name = "id_comentario", referencedColumnName = "id_comentario"))
     private Collection<Comentario> comentarios;
 
+    @OneToOne
+    private Encuesta encuesta;
 
 }

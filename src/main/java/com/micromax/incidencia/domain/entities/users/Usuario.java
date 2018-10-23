@@ -1,20 +1,19 @@
 package com.micromax.incidencia.domain.entities.users;
 
+import com.micromax.incidencia.domain.Desactivable;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
-import java.util.Collection;
 
 
 @Data
 @Entity
 @Inheritance
 @DiscriminatorColumn(name = "tipo_usuario")
-public class Usuario implements Serializable {
+public class Usuario extends Desactivable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -39,17 +38,13 @@ public class Usuario implements Serializable {
     private String password;
 
     private String direccion;
+
     private String telefono;
+
     private boolean enabled;
     private boolean tokenExpired;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "usuarios_roles",
-            joinColumns = @JoinColumn(
-                    name = "id_usuario", referencedColumnName = "id_usuario"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "id_rol", referencedColumnName = "id_rol"))
-    private Collection<Rol> roles;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Rol rol;
 
 }

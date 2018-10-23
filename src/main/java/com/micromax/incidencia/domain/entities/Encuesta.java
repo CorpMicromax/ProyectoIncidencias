@@ -1,13 +1,13 @@
 package com.micromax.incidencia.domain.entities;
 
-import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
+import com.micromax.incidencia.domain.Desactivable;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-public class Encuesta {
+public class Encuesta extends Desactivable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,7 +15,4 @@ public class Encuesta {
     private long idEncuesta;
     private byte puntaje;
     private String mensaje;
-
-    @OneToOne
-    private Incidencia incidencia;
 }

@@ -58,7 +58,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         usuario.setUsername("JLetterer");
         usuario.setPassword(passwordEncoder.encode("admin"));
         usuario.setEmail("javier.letterer@micromax.com");
-        usuario.setRoles(Collections.singletonList(adminRole));
+        usuario.setRol(adminRole);
         usuario.setEnabled(true);
         createUsuarioIfNotFound(usuario);
 
@@ -68,7 +68,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         usuario2.setUsername("KRamirez");
         usuario2.setPassword(passwordEncoder.encode("admin"));
         usuario2.setEmail("karelis.ramirez@micromax.com");
-        usuario2.setRoles(Collections.singletonList(adminRole));
+        usuario2.setRol(adminRole);
         usuario2.setEnabled(true);
         createUsuarioIfNotFound(usuario2);
 
@@ -76,7 +76,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     }
 
     @Transactional
-    private Privilegio createPrivilegioIfNotFound(String name) {
+    public Privilegio createPrivilegioIfNotFound(String name) {
 
         Privilegio privilegio = privilegioRepository.findByNombre(name);
         if (privilegio == null) {
@@ -88,17 +88,17 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     }
 
     @Transactional
-    private void createUsuarioIfNotFound(Usuario usuario){
+    public void createUsuarioIfNotFound(Usuario usuario){
         if(!userRepository.findByUsername(usuario.getUsername()).isPresent()){
             userRepository.save(usuario);
         }
     }
 
     @Transactional
-    private Rol createRoleIfNotFound(
+    public Rol createRoleIfNotFound(
             String nombre, Collection<Privilegio> privilegios) {
 
-        Rol rol = roleRepository.findByNombre(nombre);
+        Rol rol = roleRepository.findByNombreAndActiva(nombre, true);
         if (rol == null) {
             rol = new Rol();
             rol.setNombre(nombre);
@@ -107,4 +107,5 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         }
         return rol;
     }
+
 }

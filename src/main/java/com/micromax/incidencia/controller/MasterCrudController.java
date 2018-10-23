@@ -1,11 +1,14 @@
 package com.micromax.incidencia.controller;
 
-import com.micromax.incidencia.domain.entities.incidencias.TipoIncidencia;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
+import com.micromax.incidencia.domain.entities.incidencias.TipoIncidencia;
+import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.dto.CategoriaDTO;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.ItemListService;
+import com.micromax.incidencia.service.UsuarioService;
 import com.micromax.incidencia.viewmodel.IncidenciaViewmodel;
+import com.micromax.incidencia.viewmodel.UsuarioViewmodel;
 import com.micromax.incidencia.viewmodel.TipoIncidenciaViewmodel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +32,9 @@ public class MasterCrudController {
     @Autowired
     private ItemListService itemListService;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     /*======================================= GETS ========================================*/
 
 
@@ -40,7 +46,7 @@ public class MasterCrudController {
         viewmodel.setMessage("");
         viewmodel.setCategorias(itemListService.getCategoriasNivelUno());
 
-        model = setTemplateToModel(model,"/incidencia/","incidenciaC")
+        model = setTemplateToModel(model,"incidencia","incidenciaC")
                 .addAttribute("data", viewmodel)
                 .addAttribute("title","Crear Incidencia");
         return mainController.homeRoute(model);
@@ -48,7 +54,7 @@ public class MasterCrudController {
 
     @GetMapping("/incidenciaL")
     public String incidenciaL(@RequestParam(value = "id", required = false) Long id, Model model){
-        model = setTemplateToModel(model,"/incidencia/","incidenciaL")
+        model = setTemplateToModel(model,"incidencia","incidenciaL")
                 .addAttribute("incidencias", incidenciaService.getIncidencias())
                 .addAttribute("title","Ver incidencias");
         if(id != null){
@@ -56,6 +62,8 @@ public class MasterCrudController {
         }
         return mainController.homeRoute(model);
     }
+
+
 
     @GetMapping("/incidenciaE")
     public String incidenciaE(@RequestParam long id, Model model){
@@ -65,7 +73,7 @@ public class MasterCrudController {
         viewmodel.setMessage("");
         viewmodel.setCategorias(itemListService.getCategoriasNivelUno());
 
-        model = setTemplateToModel(model,"/incidencia/","incidenciaE")
+        model = setTemplateToModel(model,"incidencia","incidenciaE")
                 .addAttribute("data", viewmodel)
                 .addAttribute("title","Editar Incidencia");
         return mainController.homeRoute(model);
@@ -108,6 +116,41 @@ public class MasterCrudController {
         return mainController.homeRoute(model);
     }
 
+    /*-------------- USUARIO -------------*/
+    @GetMapping("/usuarioC")
+    public String usuarioC(Model model){
+        UsuarioViewmodel viewmodel = new UsuarioViewmodel();
+        viewmodel.setUsuario(new Usuario());
+        viewmodel.setRoles(usuarioService.getRoles());
+        model = setTemplateToModel(model,"usuario","usuarioC");
+        model.addAttribute("data", viewmodel);
+        model.addAttribute("title", "Crear Usuario");
+        return mainController.homeRoute(model);
+    }
+
+    @GetMapping("/usuarioE")
+    public String usuarioE(@RequestParam long id, Model model){
+
+        UsuarioViewmodel viewmodel = new UsuarioViewmodel();
+        viewmodel.setUsuario(usuarioService.getUsuarioById(id));
+        viewmodel.setRoles(usuarioService.getRoles());
+        viewmodel.setMessage("");
+
+        model = setTemplateToModel(model,"usuario","usuarioE")
+                .addAttribute("data", viewmodel)
+                .addAttribute("title","Editar Usuario");
+        return mainController.homeRoute(model);
+    }
+
+    @GetMapping("/usuarioL")
+    public String usuarioL(Model model){
+        model = setTemplateToModel(model,"usuario","usuarioL")
+                .addAttribute("usuarios", usuarioService.getUsuariosActivos())
+                .addAttribute("title","Ver incidencias");
+
+        return mainController.homeRoute(model);
+    }
+
     @GetMapping("/TipIncidenciaE")
     public String tipoIncidenciaE(@RequestParam long id, Model model){
 
@@ -122,14 +165,19 @@ public class MasterCrudController {
     }
 
     /*======================================= POSTS ========================================*/
+
+
+
+    /* INCIDENCIA */
     @PostMapping("/incidenciaC")
-    public String crearIncidencia(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
-        incidenciaService.createIncidencia(viewmodel.getIncidencia(), SecurityContextHolder.getContext().getAuthentication().getName());
+    public String postIncidenciaC(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
+        incidenciaService.guardarIncidencia(viewmodel.getIncidencia(), SecurityContextHolder.getContext().getAuthentication().getName());
         return "redirect:/incidenciaL?=" + viewmodel.getIncidencia().getIdIncidencia();
     }
 
+    /*CATEGORIA*/
     @PostMapping("/categoriaC")
-    public String crearCategoria(@ModelAttribute CategoriaDTO cat, BindingResult errors, Model model){
+    public String postCategoriaC(@ModelAttribute CategoriaDTO cat, BindingResult errors, Model model){
         itemListService.guardar(cat);
         return crearCategoria(model);
     }
@@ -142,7 +190,29 @@ public class MasterCrudController {
 
     private Model setTemplateToModel(Model model, String location, String template){
         return model.addAttribute("location", location).addAttribute("template", template);
+    /*USUARIO*/
+    @PostMapping("/usuarioC")
+    public String postUsuarioC(@ModelAttribute UsuarioViewmodel usuarioViewmodel, BindingResult errors, Model model) {
+        usuarioService.guardarUsuario(usuarioViewmodel.getUsuario(),true);
+        return "redirect:/usuarioL";
+    }
+    @PostMapping("/usuarioE")
+    public String postUsuarioE(@ModelAttribute UsuarioViewmodel usuarioViewmodel, BindingResult errors, Model model) {
+        usuarioService.guardarUsuario(usuarioViewmodel.getUsuario(),false);
+        return "redirect:/usuarioL";
     }
 
 
+
+    /*TIPO INCIDENCIA*/
+    @PostMapping("/tipoIncidenciaC")
+    public String crearTipoIncidencia(@ModelAttribute TipoIncidencia tipoIncid, BindingResult errors, Model model){
+        itemListService.guardar(tipoIncid);
+        return crearTipoIncidencia(model);
+    }
+
+
+    private Model setTemplateToModel(Model model, String location, String template){
+        return model.addAttribute("location", "/" + location).addAttribute("template", "/" + template);
+    }
 }
