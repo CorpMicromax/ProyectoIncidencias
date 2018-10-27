@@ -9,4 +9,5 @@ public class CategoriaDTO {
 
     private String nombre;
     private Categoria padre;
+    private int nivel;
 }

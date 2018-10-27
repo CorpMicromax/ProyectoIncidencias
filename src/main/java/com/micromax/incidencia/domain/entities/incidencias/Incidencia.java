@@ -17,6 +17,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
+@Table(name = "incidencia")
 public class Incidencia extends Desactivable implements Serializable {
 
     @Transient
@@ -47,9 +48,6 @@ public class Incidencia extends Desactivable implements Serializable {
     @Column(name = "fecha_creacions")
     private Date creacion;
 
-    @Column(name = "peso", precision = 2)
-    private byte peso;
-
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status")
     private Status status;
@@ -78,12 +76,8 @@ public class Incidencia extends Desactivable implements Serializable {
                     name = "id_usuario_asignado", referencedColumnName = "id_usuario"))
     private Collection<Tecnico> asignados;
 
-    @OneToMany
-    @JoinTable(
-            name = "incidencia_comentario",
-            joinColumns = @JoinColumn( name = "id_incidencia", referencedColumnName = "id_incidencia"),
-            inverseJoinColumns = @JoinColumn( name = "id_comentario", referencedColumnName = "id_comentario")
-    )
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "comentario_id")
     private Collection<Comentario> comentarios;
 
     @OneToOne

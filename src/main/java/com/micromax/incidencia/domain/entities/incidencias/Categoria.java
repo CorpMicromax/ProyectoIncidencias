@@ -4,7 +4,6 @@ import com.micromax.incidencia.domain.Desactivable;
 import com.micromax.incidencia.dto.CategoriaDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,22 +29,27 @@ public class Categoria extends Desactivable implements Serializable {
     @Column(name = "nivel")
     private int nivel;
 
-    @Nullable
-    @Column(name = "padre")
+    @ManyToOne
+    @JoinColumn(name = "id_padre", referencedColumnName = "id_categoria")
     private Categoria padre;
+
+    @Column(name = "peso", precision = 3)
+    private short peso;
+
+    @Column(name = "tiempo_estimado")
+    private String tiempoEstimado;
 
     public Categoria(){}
 
+
     public Categoria(CategoriaDTO cat){
         setNombre(cat.getNombre());
-
         if(cat.getPadre() != null){
             setPadre(cat.getPadre());
             setNivel(cat.getPadre().nivel + 1);
         }else{
-            setNivel(0);
+            setNivel(cat.getNivel());
         }
-
 
     }
 }

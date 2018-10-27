@@ -25,13 +25,13 @@ public class MasterRestCrudController {
 
 
     @GetMapping("/rest/incidencia/getCategoriasDos")
-    public List<Categoria> categoriasDos(@RequestParam int id) {
-        return itemListService.getCategoriasNivelDos((long)id);
+    public List<Categoria> categoriasDos(@RequestParam long id) {
+        return itemListService.getCategoriasByPadre(id);
     }
 
     @GetMapping("/rest/incidencia/getCategoriasUno")
     public List<Categoria> categoriasUno() {
-        return itemListService.getCategoriasNivelUno();
+        return itemListService.getCategoriaByNivel(1);
     }
 
     @GetMapping("/rest/incidencia/incidenciaD")

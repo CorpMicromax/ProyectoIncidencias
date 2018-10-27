@@ -1,16 +1,19 @@
 package com.micromax.incidencia;
 
+import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import com.micromax.incidencia.domain.entities.users.Cliente;
 import com.micromax.incidencia.domain.entities.users.Permiso;
 import com.micromax.incidencia.domain.entities.users.Rol;
 import com.micromax.incidencia.domain.entities.users.Usuario;
-import com.micromax.incidencia.repository.CategoriaRepository;
+import com.micromax.incidencia.dto.CategoriaDTO;
 import com.micromax.incidencia.repository.PrivilegioRepository;
 import com.micromax.incidencia.repository.RolRepository;
+import com.micromax.incidencia.service.ItemListService;
 import com.micromax.incidencia.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.lang.Nullable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +37,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     private PrivilegioRepository privilegioRepository;
 
     @Autowired
-    private CategoriaRepository categoriaRepository;
+    private ItemListService itemListService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -118,6 +121,20 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         c.setHabilitado(true);
         createUsuarioIfNotFound(c);
 
+
+        Categoria problema = crearCategoriaSiNoExiste("Problema", 0, null);
+        Categoria hardware = crearCategoriaSiNoExiste("Hardware", 0, problema);
+        Categoria software = crearCategoriaSiNoExiste("Software", 0, problema);
+
+        crearCategoriaSiNoExiste("Disco duro", 0, hardware);
+        crearCategoriaSiNoExiste("Memorias RAM", 0, hardware);
+        crearCategoriaSiNoExiste("Encendido", 0, hardware);
+
+        crearCategoriaSiNoExiste("Sistema Operativo", 0, software);
+        crearCategoriaSiNoExiste("Office 2007", 0, software);
+        crearCategoriaSiNoExiste("Office 2010", 0, software);
+
+
         alreadySetup = true;
     }
 
@@ -131,6 +148,18 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
             privilegioRepository.save(permiso);
         }
         return permiso;
+    }
+
+    @Transactional
+    public Categoria crearCategoriaSiNoExiste(String nombre, int nivel, @Nullable Categoria padre) {
+        CategoriaDTO cat = new CategoriaDTO();
+        cat.setNombre(nombre);
+        cat.setNivel(nivel);
+        cat.setPadre(padre);
+        if(!itemListService.existeCategoria(cat.getNombre())){
+            return itemListService.guardar(cat);
+        }
+        return itemListService.getCategoria(nombre);
     }
 
     @Transactional

@@ -20,7 +20,7 @@ public class Comentario extends Desactivable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_comentario")
+    @Column(name = "id_comentario", unique = true, nullable = false, precision = 10)
     private long idComentario;
 
     @ManyToOne

@@ -1,8 +1,8 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaE">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaViewmodel"*/-->
     <!--/*@thymesVar id="incidencia" type="com.micromax.incidencia.domain.entities.incidencias.Incidencia"*/-->
-    <div class="card col-sm-6 elegant-color" >
-        <form th:action="@{/incidenciaE}" th:object="${data.incidencia}" method="post" class="card-body form-horizontal">
+    <div class="card col-sm-6 elegant-color" th:object="${data.incidencia}">
+
 
             <fieldset>
                 <!-- Form Name -->
@@ -11,29 +11,17 @@
 
                 <!-- Id -->
                 <div class="form-group">
-                    <label class=" control-label" for="id">Id: <span th:text="*{idIncidencia}"></span></label>
-                    <div class="">
-                        <input  id="id" name="id" th:field="*{idIncidencia}" type="hidden" class="form-control input-md">
-                    </div>
+                    <span class=" control-label">Id: <span th:text="*{idIncidencia}"></span></span>
                 </div>
 
                 <!-- Titulo -->
                 <div class="form-group">
-                    <label class=" control-label" for="titulo">Titulo</label>
-                    <div class="">
-                        <input id="titulo" name="titulo" th:value="*{titulo}" type="text" class="form-control input-md" disabled="disabled">
-                        <input type="hidden" th:field="*{titulo}" />
-
-                    </div>
+                    <span class=" control-label">Titulo: <span th:text="*{titulo}"></span></span>
                 </div>
 
                 <!-- Descripcion -->
                 <div class="form-group">
-                    <label class=" control-label" for="desc">Descripción</label>
-                    <div class="">
-                        <textarea class="form-control" id="desc" name="desc" th:field="*{descripcion} " disabled="disabled"></textarea>
-                        <input type="hidden" th:field="*{descripcion}" />
-                    </div>
+                    <span class=" control-label">Descripcion: <span th:text="*{descripcion}"></span></span>
                 </div>
 
 
@@ -83,7 +71,7 @@
             </fieldset>
         </form>
         <script th:inline="javascript">
-        /*<![CDATA[*/
+            /*<![CDATA[*/
             $("#categoriaUno").change(function(){
                 $.ajax({
                     type: "GET",
@@ -98,9 +86,9 @@
             });
             $('#cancel').click(function(event) {
                 event.stopPropagation();
-               window.location = "/home";
+                window.location = "/home";
             });
-        /*]]>*/
+            /*]]>*/
         </script>
     </div>
 </div>

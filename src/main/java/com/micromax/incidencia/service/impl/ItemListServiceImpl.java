@@ -21,20 +21,21 @@ public class ItemListServiceImpl implements ItemListService {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+
+    @Autowired
     private TipoIncidenciaRepository tipoIncidenciaRepository;
 
     // Implementación para los tipos de Categoría
 
+
     @Override
-    public List<Categoria> getCategoriasNivelUno() {
-        return (ArrayList<Categoria>) categoriaRepository.findByNivelAndHabilitado(1, true);
+    public List<Categoria> getCategoriasByPadre(long idPadre) {
+        return (ArrayList<Categoria>) categoriaRepository.findByPadreAndHabilitado(getCategoria(idPadre), true);
     }
 
     @Override
-    public List<Categoria> getCategoriasNivelDos(long idPadre) {
-        Categoria padre = getCategoria(idPadre);
-        if(padre.getNivel()!=1)return new ArrayList<>();
-        return (ArrayList<Categoria>) categoriaRepository.findByPadreAndHabilitado(getCategoria(idPadre), true);
+    public Categoria getCategoria(String nombre){
+        return categoriaRepository.findByNombreAndHabilitado(nombre, true);
     }
 
     @Override
@@ -57,6 +58,11 @@ public class ItemListServiceImpl implements ItemListService {
         return categoriaRepository.save(new Categoria(categoriaDTO));
     }
 
+    @Override
+    public boolean existeCategoria(String nombre){
+
+        return categoriaRepository.existsCategoriaByNombreAndHabilitado(nombre, true);
+    }
 
     @Override
     public boolean eliminarCategoria(Categoria cat) {
@@ -69,7 +75,6 @@ public class ItemListServiceImpl implements ItemListService {
 
     @Override
     public TipoIncidencia getTipoIncidencia(long id) {
-      //  return tipoIncidenciaRepository.findById(id).orElse(null);
         log.info("Buscando Tipo de Incidencia por id %d", id);
         Optional<TipoIncidencia> i = tipoIncidenciaRepository.findById(id);
         return i.orElse(null);
@@ -96,4 +101,6 @@ public class ItemListServiceImpl implements ItemListService {
     public TipoIncidencia createTipoIncidencia(TipoIncidencia tipoIncid) {
         return tipoIncidenciaRepository.save(tipoIncid);
     }
+
+
 }

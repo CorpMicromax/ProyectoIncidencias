@@ -17,17 +17,17 @@ public class MainController {
 
     @GetMapping(value = {"/home","/"})
     public String homeRoute(Model model){
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String nombre = auth.getName();
-        String rol = "ROLE_USER";
-        Usuario usr = usuarioService.getUsuarioByUsername(nombre);
-        if(usr!=null){
-            nombre = usr.getNombres() + " " + usr.getApellidos();
-            rol = usr.getRol().getNombre();
-        }
+
+        Usuario user = usuarioService.getUsuarioByUsername(nombre);
+        assert(user != null);
+
         model.addAttribute("nombre", nombre);
         model.addAttribute("authorization", auth.isAuthenticated() );
-        model.addAttribute("user_role", rol);
+        model.addAttribute("user_role", user.getRol());
+        model.addAttribute("permisos", user.getRol().getPermisos());
         return "home";
     }
 

@@ -12,7 +12,7 @@
 
             <!-- Titulo-->
             <div class="form-group">
-                <label class="control-label" for="titulo">Titulo</label>
+                <label class="col-form-label" for="titulo">Titulo</label>
                 <div class="">
                     <input th:field="*{incidencia.titulo}"
                            id="titulo" name="titulo"
@@ -25,7 +25,7 @@
 
             <!-- Textarea -->
             <div class="form-group">
-                <label class="control-label" for="descripcion">Descripción</label>
+                <label class="col-form-label" for="descripcion">Descripción</label>
                 <div class="col-sm-12">
                     <textarea th:field="*{incidencia.descripcion}"
                               id="descripcion" name="descripcion"
@@ -39,7 +39,7 @@
 
             <!-- Select Basic -->
             <div class="form-group">
-                <label class="control-label" for="categoriaUno">Categoria</label>
+                <label class="col-form-label" for="categoriaUno">Categoria</label>
                 <div class="">
                     <select id="categoriaUno" name="categoriaUno" class="form-control" required="required">
                         <option value="">--- Seleccione una ---</option>
@@ -50,7 +50,7 @@
 
             <!-- Select Basic -->
             <div class="form-group">
-                <label class="control-label" for="categoriaDos">Categoria Específica</label>
+                <label class="field-label" for="categoriaDos">Categoria Específica</label>
                 <div class="">
                     <select id="categoriaDos" name="categoriaDos" class="form-control" th:field="*{incidencia.categoria}" required="required">
                         <option value="">--- Seleccione una ---</option>
@@ -60,7 +60,6 @@
 
             <!-- Button (Double) -->
             <div class="form-group">
-                <label class=" control-label" for="submit"></label>
                 <div class="">
                     <button type="submit" id="submit" name="submit" class="btn btn-success">Crear</button>
                     <button id="cancel" name="cancel" class="btn btn-danger">Cancelar</button>
@@ -78,8 +77,7 @@
 			url: /*[[@{/rest/incidencia/getCategoriasDos}]]*/"/rest/incidencia/getCategoriasDos",
 			data:  {id:$("#categoriaUno").val()},
 			success: function(response){
-			    $("#categoriaDos").empty();
-			    $("#categoriaDos").append('<option value="">---Seleccione una opcion---</option>');
+			    $("#categoriaDos").empty().append('<option value="">---Seleccione una opcion---</option>');
 			    $.each(response, function(i){
                     $("#categoriaDos").append('<option value="' + response[i].id + '">' + response[i].nombre + '</option>');
 			    })}

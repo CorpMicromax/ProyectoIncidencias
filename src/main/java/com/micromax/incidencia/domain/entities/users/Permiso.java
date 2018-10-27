@@ -11,6 +11,7 @@ import java.util.Collection;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
+@Table(name = "permiso")
 public class Permiso extends Desactivable implements Serializable {
 
     @Transient

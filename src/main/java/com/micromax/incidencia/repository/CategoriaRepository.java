@@ -17,5 +17,9 @@ public interface CategoriaRepository extends CrudRepository<Categoria, Long> {
 
     Iterable<Categoria> findByHabilitado(boolean activa);
 
-    Optional<Categoria> findByIdAndHabilitado(long id, boolean activa);
+    Optional<Categoria> findByIdAndHabilitado(short id, boolean activa);
+
+    boolean existsCategoriaByNombreAndHabilitado(String nombre, boolean h);
+
+    Categoria findCategoriaByNombreAndHabilitado(String nombre, boolean h);
 }

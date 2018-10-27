@@ -11,9 +11,9 @@ public interface ItemListService {
 
     // Servicios para la Clase Categoria
 
-    List<Categoria> getCategoriasNivelUno();
 
-    List<Categoria> getCategoriasNivelDos(long idPadre);
+
+    List<Categoria> getCategoriasByPadre(long idPadre);
 
     Categoria getCategoria(long id);
 
@@ -25,6 +25,9 @@ public interface ItemListService {
 
     boolean eliminarCategoria(Categoria id);
 
+    boolean existeCategoria(String nombre);
+
+    Categoria getCategoria(String nombre);
 
     // Servicios para la Clase TipoIncidencia
 
