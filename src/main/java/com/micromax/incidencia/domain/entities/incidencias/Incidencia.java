@@ -6,38 +6,67 @@ import com.micromax.incidencia.domain.entities.Encuesta;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
-public class Incidencia extends Desactivable {
+public class Incidencia extends Desactivable implements Serializable {
+
+    @Transient
+    private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "id_incidencia")
-    private long idIncidencia;
+    @GenericGenerator(
+            name = "secuencia_asignada",
+            strategy = "com.micromax.incidencia.domain.GeneradorSecuencias",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(
+                            name = "sequence_name", value = "hibernate_sequence"),
+                    @org.hibernate.annotations.Parameter(
+                            name = "sequence_prefix", value = "INC_"),
+            }
+    )
+    @GeneratedValue(generator = "secuencia_asignada", strategy = GenerationType.IDENTITY)
+    @Column(name = "id_incidencia", nullable = false, unique = true, length = 12)
+    private String idIncidencia;
 
+    @Column(name = "titulo", length = 160)
     private String titulo;
+
+    @Column(name = "descripcion", length = 4000)
     private String descripcion;
-    private LocalDateTime creacion;
-    private LocalDateTime resolucion;
-    private int peso;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fecha_creacions")
+    private Date creacion;
+
+    @Column(name = "peso", precision = 2)
+    private byte peso;
 
     @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status")
     private Status status;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "id_categoria")
     private Categoria categoria;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "id_usuario_creador")
     private Usuario creador;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_incidencia")
     private TipoIncidencia tipoIncidencia;
 
+    @Column(name = "tiempo_estimado", length = 8)
     private String tiempoEstimado;
 
     @ManyToMany
@@ -46,19 +75,19 @@ public class Incidencia extends Desactivable {
             joinColumns = @JoinColumn(
                     name = "id_incidencia", referencedColumnName = "id_incidencia"),
             inverseJoinColumns = @JoinColumn(
-                    name = "id_usuario", referencedColumnName = "id_usuario"))
+                    name = "id_usuario_asignado", referencedColumnName = "id_usuario"))
     private Collection<Tecnico> asignados;
 
     @OneToMany
     @JoinTable(
             name = "incidencia_comentario",
-            joinColumns = @JoinColumn(
-                    name = "id_incidencia", referencedColumnName = "id_incidencia"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "id_comentario", referencedColumnName = "id_comentario"))
+            joinColumns = @JoinColumn( name = "id_incidencia", referencedColumnName = "id_incidencia"),
+            inverseJoinColumns = @JoinColumn( name = "id_comentario", referencedColumnName = "id_comentario")
+    )
     private Collection<Comentario> comentarios;
 
     @OneToOne
+    @JoinColumn(name = "id_encuesta")
     private Encuesta encuesta;
 
 }

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface IncidenciaRepository extends CrudRepository<Incidencia,Long> {
 
-    Collection<Incidencia> findAllByActiva(boolean activa);
+    Collection<Incidencia> findAllByHabilitado(boolean activa);
 
-    Optional<Incidencia> findByIdIncidenciaAndActiva(long id, boolean activa);
+    Optional<Incidencia> findByIdIncidenciaAndHabilitado(long id, boolean activa);
 }

@@ -27,14 +27,14 @@ public class ItemListServiceImpl implements ItemListService {
 
     @Override
     public List<Categoria> getCategoriasNivelUno() {
-        return (ArrayList<Categoria>) categoriaRepository.findByNivelAndActiva(1, true);
+        return (ArrayList<Categoria>) categoriaRepository.findByNivelAndHabilitado(1, true);
     }
 
     @Override
     public List<Categoria> getCategoriasNivelDos(long idPadre) {
         Categoria padre = getCategoria(idPadre);
         if(padre.getNivel()!=1)return new ArrayList<>();
-        return (ArrayList<Categoria>) categoriaRepository.findByPadreAndActiva(getCategoria(idPadre), true);
+        return (ArrayList<Categoria>) categoriaRepository.findByPadreAndHabilitado(getCategoria(idPadre), true);
     }
 
     @Override
@@ -44,12 +44,12 @@ public class ItemListServiceImpl implements ItemListService {
 
     @Override
     public List<Categoria> getAllCategorias() {
-        return (List<Categoria>) categoriaRepository.findByActiva(true);
+        return (List<Categoria>) categoriaRepository.findByHabilitado(true);
     }
 
     @Override
     public List<Categoria> getCategoriaByNivel(int nivel) {
-        return (List<Categoria>)categoriaRepository.findByNivelAndActiva(nivel, true);
+        return (List<Categoria>)categoriaRepository.findByNivelAndHabilitado(nivel, true);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class ItemListServiceImpl implements ItemListService {
 
     @Override
     public boolean eliminarCategoria(Categoria cat) {
-        cat.setActiva(false);
+        cat.setHabilitado(false);
         categoriaRepository.save(cat);
         return true;
     }

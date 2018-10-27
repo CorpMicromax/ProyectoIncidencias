@@ -7209,7 +7209,7 @@ module.exports = function(Chart) {
 			// Update Lifecycle - Probably don't want to ever extend or overwrite this function ;)
 			me.beforeUpdate();
 
-			// Absorb the master measurements
+			// Absorb the categoria measurements
 			me.maxWidth = maxWidth;
 			me.maxHeight = maxHeight;
 			me.margins = helpers.extend({
@@ -11490,7 +11490,7 @@ var Legend = Element.extend({
 		// Update Lifecycle - Probably don't want to ever extend or overwrite this function ;)
 		me.beforeUpdate();
 
-		// Absorb the master measurements
+		// Absorb the categoria measurements
 		me.maxWidth = maxWidth;
 		me.maxHeight = maxHeight;
 		me.margins = margins;
@@ -11989,7 +11989,7 @@ var Title = Element.extend({
 		// Update Lifecycle - Probably don't want to ever extend or overwrite this function ;)
 		me.beforeUpdate();
 
-		// Absorb the master measurements
+		// Absorb the categoria measurements
 		me.maxWidth = maxWidth;
 		me.maxHeight = maxHeight;
 		me.margins = margins;

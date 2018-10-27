@@ -8,12 +8,13 @@ import java.util.Optional;
 
 public interface UsuarioRepository extends CrudRepository<Usuario,Long> {
 
-    Optional<Usuario> findByUsername(String username);
-    Optional<Usuario> findByEmail(String email);
+    Optional<Usuario> findUsuarioByUsernameAndHabilitado(String username, boolean h);
 
-    Collection<Usuario> findAllByActiva(boolean b);
+    Optional<Usuario> findByEmailAndHabilitado(String email, boolean h);
 
-    Usuario findByIdUsuarioAndActiva(long id, boolean a);
+    Collection<Usuario> findAllByHabilitado(boolean b);
 
-    Usuario findByUsernameAndActiva(String username, boolean b);
+    Usuario findByIdUsuarioAndHabilitado(long id, boolean a);
+
+    boolean existsByUsernameAndHabilitado(String username, boolean habilitado);
 }

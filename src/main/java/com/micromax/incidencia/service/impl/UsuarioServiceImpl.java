@@ -32,47 +32,54 @@ public class UsuarioServiceImpl implements UsuarioService {
     private BCryptPasswordEncoder passwordEncoder;
 
     public Usuario findUserByEmail(String email) {
-        return usuarioRepository.findByEmail(email).orElse(null);
+        return usuarioRepository.findByEmailAndHabilitado(email, true).orElse(null);
     }
 
     @Override
     public List<Rol> getRoles() {
-        return (ArrayList<Rol>) rolRepository.findAllByActiva(true);
+        return (ArrayList<Rol>) rolRepository.findAllByHabilitado(true);
     }
 
     @Override
     public Collection<Usuario> getUsuariosActivos() {
-        return usuarioRepository.findAllByActiva(true);
+        return usuarioRepository.findAllByHabilitado(true);
     }
 
     @Override
     public Usuario getUsuarioById(long id) {
-        return usuarioRepository.findByIdUsuarioAndActiva(id, true);
+        return usuarioRepository.findByIdUsuarioAndHabilitado(id, true);
     }
 
     @Override
     public boolean borrarUsuario(Long id) {
-        Usuario u = usuarioRepository.findByIdUsuarioAndActiva(id, true);
+        Usuario u = usuarioRepository.findByIdUsuarioAndHabilitado(id, true);
         if(u != null) {
-            u.setActiva(false);
+            u.setHabilitado(false);
             log.info("Eliminada incidencia con id %d", id);
             return usuarioRepository.save(u) != null;
         }
         return false;
     }
 
+    @Override
+    public Usuario findUsuarioByUsername(String username) {
+        return usuarioRepository.findUsuarioByUsernameAndHabilitado(username, true).orElse(null);
+    }
+
+    @Override
+    public boolean existeUsuario(String username) {
+        return usuarioRepository.existsByUsernameAndHabilitado(username, true);
+    }
 
 
     public void guardarUsuario(Usuario user, boolean nuevo) {
         if(nuevo)user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(true);
-        Rol userRole = rolRepository.findByNombreAndActiva("ROLE_USER", true);
-        user.setRol(userRole);
+        user.setHabilitado(true);
         usuarioRepository.save(user);
     }
 
     public Usuario getUsuarioByUsername(String username){
-        return usuarioRepository.findByUsername(username).orElse(null);
+        return usuarioRepository.findUsuarioByUsernameAndHabilitado(username, true).orElse(null);
     }
 
 }

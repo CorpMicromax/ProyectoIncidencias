@@ -6,8 +6,8 @@ import javax.persistence.MappedSuperclass;
 
 @Data
 @MappedSuperclass
-public abstract class Desactivable {
+public class Desactivable {
 
-    boolean activa = true;
+    boolean habilitado = true;
 
 }

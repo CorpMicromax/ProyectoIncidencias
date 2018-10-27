@@ -9,13 +9,13 @@ import java.util.Optional;
 @Repository
 public interface CategoriaRepository extends CrudRepository<Categoria, Long> {
 
-    Iterable<Categoria> findByPadreAndActiva(Categoria padre, boolean activa);
+    Iterable<Categoria> findByPadreAndHabilitado(Categoria padre, boolean activa);
 
-    Iterable<Categoria> findByNivelAndActiva(int nivel, boolean activa);
+    Iterable<Categoria> findByNivelAndHabilitado(int nivel, boolean activa);
 
-    Categoria findByNombreAndActiva(String name, boolean activa);
+    Categoria findByNombreAndHabilitado(String name, boolean activa);
 
-    Iterable<Categoria> findByActiva(boolean activa);
+    Iterable<Categoria> findByHabilitado(boolean activa);
 
-    Optional<Categoria> findByIdAndActiva(long id, boolean activa);
+    Optional<Categoria> findByIdAndHabilitado(long id, boolean activa);
 }

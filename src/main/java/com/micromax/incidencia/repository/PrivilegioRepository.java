@@ -1,9 +1,9 @@
 package com.micromax.incidencia.repository;
 
-import com.micromax.incidencia.domain.entities.users.Privilegio;
+import com.micromax.incidencia.domain.entities.users.Permiso;
 import org.springframework.data.repository.CrudRepository;
 
-public interface PrivilegioRepository extends CrudRepository<Privilegio, Long> {
+public interface PrivilegioRepository extends CrudRepository<Permiso, Long> {
 
-    public Privilegio findByNombre(String name);
+    public Permiso findByNombre(String name);
 }

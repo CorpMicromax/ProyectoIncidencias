@@ -1,13 +1,13 @@
 package com.micromax.incidencia;
 
 import com.micromax.incidencia.domain.entities.users.Cliente;
-import com.micromax.incidencia.domain.entities.users.Privilegio;
+import com.micromax.incidencia.domain.entities.users.Permiso;
 import com.micromax.incidencia.domain.entities.users.Rol;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.repository.CategoriaRepository;
 import com.micromax.incidencia.repository.PrivilegioRepository;
 import com.micromax.incidencia.repository.RolRepository;
-import com.micromax.incidencia.repository.UsuarioRepository;
+import com.micromax.incidencia.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -18,7 +18,6 @@ import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -26,7 +25,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     private boolean alreadySetup = false;
 
     @Autowired
-    private UsuarioRepository userRepository;
+    private UsuarioService usuarioService;
 
     @Autowired
     private RolRepository roleRepository;
@@ -46,77 +45,124 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
         if (alreadySetup)
             return;
-        Privilegio readPrivilegio = createPrivilegioIfNotFound("READ_Privilegio");
-        Privilegio writePrivilegio = createPrivilegioIfNotFound("WRITE_Privilegio");
+        Permiso admin_usuarios = crearPermisoSiNoExiste("admin_usuarios");
+        Permiso admin_mantenimiento = crearPermisoSiNoExiste("admin_mantenimiento");
+        Permiso admin_permisos = crearPermisoSiNoExiste("admin_permisos");
+        Permiso incidencia_crear = crearPermisoSiNoExiste("incidencia_crear");
+        Permiso incidencia_verPropias = crearPermisoSiNoExiste("incidencia_verPropias");
+        Permiso incidencia_verTodas = crearPermisoSiNoExiste("incidencia_verTodas");
+        Permiso incidencia_verAsignadas = crearPermisoSiNoExiste("incidencia_verAsignadas");
+        Permiso incidencia_editar = crearPermisoSiNoExiste("incidencia_editar");
+        Permiso incidencia_borrar = crearPermisoSiNoExiste("incidencia_borrar");
+        Permiso incidencia_cambiarEstado = crearPermisoSiNoExiste("incidencia_cambiarEstado");
+        Permiso incidencia_comentar = crearPermisoSiNoExiste("incidencia_comentar");
+        Permiso incidencia_asignar = crearPermisoSiNoExiste("incidencia_asignar");
+        Permiso todos = crearPermisoSiNoExiste("todos");
 
-        List<Privilegio> adminPrivilegios = Arrays.asList(readPrivilegio, writePrivilegio);
-        Rol adminRole = createRoleIfNotFound("ROLE_ADMIN", adminPrivilegios);
-        createRoleIfNotFound("ROLE_USER", Collections.singletonList(readPrivilegio));
-        Rol cliente = createRoleIfNotFound("ROLE_CLIENT", Collections.singletonList(readPrivilegio));
+        Rol adminRole = crearRolSiNoExiste("ROLE_ADMIN", Collections.singletonList(todos));
+        Rol tecnico = crearRolSiNoExiste("ROLE_TECH",
+                Arrays.asList(incidencia_crear,
+                    incidencia_editar,
+                    incidencia_verAsignadas,
+                    incidencia_verPropias)
+        );
+        Rol tecnicoAvanzado = crearRolSiNoExiste("ROLE_ADV_TECH",
+                Arrays.asList(
+                        incidencia_asignar,
+                        incidencia_cambiarEstado,
+                        incidencia_comentar,
+                        incidencia_editar,
+                        incidencia_verAsignadas,
+                        incidencia_verPropias,
+                        incidencia_verTodas)
+        );
+        Rol cliente = crearRolSiNoExiste("ROLE_CLIENT",
+                Arrays.asList(
+                        incidencia_crear,
+                        incidencia_comentar,
+                        incidencia_verPropias)
+        );
 
-        Usuario usuario = new Usuario();
-        usuario.setNombres("Javier");
-        usuario.setApellidos("Letterer");
-        usuario.setUsername("JLetterer");
-        usuario.setPassword(passwordEncoder.encode("admin"));
-        usuario.setEmail("javier.letterer@micromax.com");
-        usuario.setRol(adminRole);
-        usuario.setEnabled(true);
-        createUsuarioIfNotFound(usuario);
+        createUsuarioIfNotFound(construirUsuario(
+                "Francisco",
+                "Letterer",
+                "FLetterer",
+                "admin",
+                "Javier.Darkona@gmail.com",
+                adminRole));
 
-        Usuario usuario2 = new Usuario();
-        usuario2.setNombres("Karelis");
-        usuario2.setApellidos("Ramirez");
-        usuario2.setUsername("KRamirez");
-        usuario2.setPassword(passwordEncoder.encode("admin"));
-        usuario2.setEmail("karelis.ramirez@micromax.com");
-        usuario2.setRol(adminRole);
-        usuario2.setEnabled(true);
-        createUsuarioIfNotFound(usuario2);
+        createUsuarioIfNotFound(construirUsuario(
+                "Javier",
+                "Letterer",
+                "JLetterer",
+                "admin",
+                "Javier.Darkona@gmail.com",
+                tecnico));
 
-        Usuario usuario3 = new Cliente();
-        usuario3.setNombres("Empresa Cliente");
-        usuario3.setUsername("cliente");
-        usuario3.setPassword(passwordEncoder.encode("cliente"));
-        usuario3.setEmail("cliente@micromax.com");
-        usuario3.setRol(cliente);
-        usuario3.setEnabled(true);
-        createUsuarioIfNotFound(usuario3);
+        createUsuarioIfNotFound(construirUsuario(
+                "Karelis",
+                "Ramirez",
+                "KRamirez",
+                "admin",
+                "karelis.ramirez@micromax.com",
+                adminRole
+        ));
+
+        Usuario c = new Cliente();
+        c.setNombres("Empresa Cliente");
+        c.setApellidos("");
+        c.setUsername("cliente");
+        c.setPassword("cliente");
+        c.setEmail("cliente@micromax.com");
+        c.setRol(cliente);
+        c.setHabilitado(true);
+        createUsuarioIfNotFound(c);
 
         alreadySetup = true;
     }
 
     @Transactional
-    public Privilegio createPrivilegioIfNotFound(String name) {
+    public Permiso crearPermisoSiNoExiste(String name) {
 
-        Privilegio privilegio = privilegioRepository.findByNombre(name);
-        if (privilegio == null) {
-            privilegio = new Privilegio();
-            privilegio.setNombre(name);
-            privilegioRepository.save(privilegio);
+        Permiso permiso = privilegioRepository.findByNombre(name);
+        if (permiso == null) {
+            permiso = new Permiso();
+            permiso.setNombre(name);
+            privilegioRepository.save(permiso);
         }
-        return privilegio;
+        return permiso;
     }
 
     @Transactional
     public void createUsuarioIfNotFound(Usuario usuario){
-        if(!userRepository.findByUsername(usuario.getUsername()).isPresent()){
-            userRepository.save(usuario);
+        if(!usuarioService.existeUsuario(usuario.getUsername())){
+            usuarioService.guardarUsuario(usuario, true);
         }
     }
 
     @Transactional
-    public Rol createRoleIfNotFound(
-            String nombre, Collection<Privilegio> privilegios) {
+    public Rol crearRolSiNoExiste(
+            String nombre, Collection<Permiso> permisos) {
 
-        Rol rol = roleRepository.findByNombreAndActiva(nombre, true);
+        Rol rol = roleRepository.findByNombreAndHabilitado(nombre, true);
         if (rol == null) {
             rol = new Rol();
             rol.setNombre(nombre);
-            rol.setPrivilegios(privilegios);
+            rol.setPermisos(permisos);
             roleRepository.save(rol);
         }
         return rol;
     }
 
+    private Usuario construirUsuario(String nombre, String apellido, String username, String pass, String email, Rol rol){
+        Usuario usuario = new Usuario();
+        usuario.setNombres(nombre);
+        usuario.setApellidos(apellido);
+        usuario.setUsername(username);
+        usuario.setPassword(pass);
+        usuario.setEmail(email);
+        usuario.setRol(rol);
+        usuario.setHabilitado(true);
+        return usuario;
+    }
 }

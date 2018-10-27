@@ -1,25 +1,26 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaE">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaViewmodel"*/-->
     <!--/*@thymesVar id="incidencia" type="com.micromax.incidencia.domain.entities.incidencias.Incidencia"*/-->
-    <form action="#" th:action="@{/incidenciaE}" th:object="${data.incidencia}" method="post" class="form-horizontal">
-        <form class="form-horizontal">
+    <div class="card col-sm-6 elegant-color" >
+        <form th:action="@{/incidenciaE}" th:object="${data.incidencia}" method="post" class="card-body form-horizontal">
+
             <fieldset>
-
                 <!-- Form Name -->
-                <legend>Editar Incidencia</legend>
-
+                <div class="card-header stylish-color-dark">
+                    <legend >Editar Incidencia</legend>
+                </div>
                 <!-- Id -->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="id">Id: <span th:text="*{idIncidencia}"></span></label>
-                    <div class="col-md-4">
+                    <label class=" control-label" for="id">Id: <span th:text="*{idIncidencia}"></span></label>
+                    <div class="">
                         <input  id="id" name="id" th:field="*{idIncidencia}" type="hidden" class="form-control input-md">
                     </div>
                 </div>
 
                 <!-- Titulo-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="titulo">Titulo</label>
-                    <div class="col-md-4">
+                    <label class=" control-label" for="titulo">Titulo</label>
+                    <div class="">
                         <input id="titulo" name="titulo" th:value="*{titulo}" type="text" class="form-control input-md" disabled="disabled">
                         <input type="hidden" th:field="*{titulo}" />
 
@@ -28,8 +29,8 @@
 
                 <!-- Descripcion -->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="desc">Descripción</label>
-                    <div class="col-md-4">
+                    <label class=" control-label" for="desc">Descripción</label>
+                    <div class="">
                         <textarea class="form-control" id="desc" name="desc" th:field="*{descripcion} " disabled="disabled"></textarea>
                         <input type="hidden" th:field="*{descripcion}" />
                     </div>
@@ -38,16 +39,16 @@
 
                 <!-- Categoria input-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="categoria">Categoria</label>
-                    <div class="col-md-4">
+                    <label class=" control-label" for="categoria">Categoria</label>
+                    <div class="">
                         <input id="categoria" name="categoria" th:value="*{categoria.nombre}"  type="text" class="form-control input-md" disabled="disabled">
                     </div>
                 </div>
 
                 <!-- Categoria Uno -->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="categoriaUno">Categoria</label>
-                    <div class="col-md-4">
+                    <label class=" control-label" for="categoriaUno">Categoria</label>
+                    <div class="">
                         <select id="categoriaUno" name="categoriaUno"  class="form-control" required="required">
                             <option value="">--- Seleccione una ---</option>
                             <option th:each="cat : ${data.categorias}" th:value="${cat.id}" th:text="${cat.nombre}" ></option>
@@ -57,8 +58,8 @@
 
                 <!-- Categoria Dos -->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="categoriaDos">Categoria Específica</label>
-                    <div class="col-md-4">
+                    <label class=" control-label" for="categoriaDos">Categoria Específica</label>
+                    <div class="">
                         <select id="categoriaDos" name="categoriaDos" class="form-control" th:field="*{categoria}" required="required">
                             <option value="">--- Seleccione una ---</option>
                         </select>
@@ -71,36 +72,36 @@
                 <input type="hidden" th:field="*{status}" />
 
                 <!-- Button (Double) -->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="submit"></label>
-                    <div class="col-md-8">
-                        <button type="submit" id="submit" name="submit" class="btn btn-success">Guardar</button>
-                        <button id="cancel" name="cancel" class="btn btn-danger">Cancelar</button>
+                <div class="form-group form-row">
+                    <label class=" control-label" for="submit"></label>
+                    <div class="">
+                        <button type="submit" id="submit" name="submit" class="col-sm-6 btn btn-success">Guardar</button>
+                        <button id="cancel" name="cancel" class="col-sm-6 btn btn-danger">Cancelar</button>
                     </div>
                 </div>
 
             </fieldset>
         </form>
-    </form>
-    <script th:inline="javascript">
-    /*<![CDATA[*/
-        $("#categoriaUno").change(function(){
-            $.ajax({
-                type: "GET",
-                url: /*[[@{/rest/incidencia/getCategoriasDos}]]*/"/rest/incidencia/getCategoriasDos",
-                data:  {id:$("#categoriaUno").val()},
-                success: function(response){
-                    $("#categoriaDos").empty();
-                    $("#categoriaDos").append('<option value="">---Seleccione una opcion---</option>');
-                    $.each(response, function(i){
-                        $("#categoriaDos").append('<option value="' + response[i].id + '">' + response[i].nombre + '</option>');
-                    })}
+        <script th:inline="javascript">
+        /*<![CDATA[*/
+            $("#categoriaUno").change(function(){
+                $.ajax({
+                    type: "GET",
+                    url: /*[[@{/rest/incidencia/getCategoriasDos}]]*/"/rest/incidencia/getCategoriasDos",
+                    data:  {id:$("#categoriaUno").val()},
+                    success: function(response){
+                        $("#categoriaDos").empty();
+                        $("#categoriaDos").append('<option value="">---Seleccione una opcion---</option>');
+                        $.each(response, function(i){
+                            $("#categoriaDos").append('<option value="' + response[i].id + '">' + response[i].nombre + '</option>');
+                        })}
+                });
             });
-	    });
-        $('#cancel').click(function(event) {
-	        event.stopPropagation();
-           window.location = "/home";
-        });
-    /*]]>*/
-    </script>
+            $('#cancel').click(function(event) {
+                event.stopPropagation();
+               window.location = "/home";
+            });
+        /*]]>*/
+        </script>
+    </div>
 </div>
