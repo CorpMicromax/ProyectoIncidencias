@@ -10,9 +10,9 @@ import java.util.Optional;
 
 public interface TipoIncidenciaRepository extends CrudRepository<TipoIncidencia,Long> {
 
- //   Iterable<TipoIncidencia> findAllById(long id);
+    Iterable<TipoIncidencia> findAllByIdAndHabilitado(long id, boolean h);
 
- //   Optional<TipoIncidencia> findById(long id);
+    Optional<TipoIncidencia> findById(long id);
 
 
 }

@@ -2,7 +2,6 @@ package com.micromax.incidencia.service;
 
 import com.micromax.incidencia.domain.entities.incidencias.Comentario;
 
-
 import java.util.List;
 
 

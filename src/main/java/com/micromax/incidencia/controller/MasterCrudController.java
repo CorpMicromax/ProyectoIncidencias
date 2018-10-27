@@ -1,5 +1,6 @@
 package com.micromax.incidencia.controller;
 
+import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.incidencias.TipoIncidencia;
 import com.micromax.incidencia.domain.entities.users.Usuario;
@@ -7,6 +8,7 @@ import com.micromax.incidencia.dto.CategoriaDTO;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.ItemListService;
 import com.micromax.incidencia.service.UsuarioService;
+import com.micromax.incidencia.viewmodel.CategoriaViewmodel;
 import com.micromax.incidencia.viewmodel.IncidenciaViewmodel;
 import com.micromax.incidencia.viewmodel.TipoIncidenciaViewmodel;
 import com.micromax.incidencia.viewmodel.UsuarioViewmodel;
@@ -82,9 +84,15 @@ public class MasterCrudController {
     /*-------------- CATEGORIA -------------*/
     @GetMapping("/categoriaC")
     public String crearCategoria(Model model){
-        model.addAttribute("categoria", new CategoriaDTO());
-        model.addAttribute("categorias", itemListService.getCategoriaByNivel(1));
-        return "master/crearCat";
+        CategoriaViewmodel viewmodel = new CategoriaViewmodel();
+        viewmodel.setCategoria(new Categoria());
+        viewmodel.setCategorias(itemListService.getCategoriaByNivel(1));
+        viewmodel.setMessage("");
+
+        model = setTemplateToModel(model, "categoria", "categoriaC")
+                .addAttribute("data", viewmodel)
+                .addAttribute("title", "Crear Categoria");
+        return mainController.homeRoute(model);
     }
     /*------------- TIPO INCIDENCIA ---------*/
     @GetMapping("/tipoIncidenciaC")
@@ -179,8 +187,8 @@ public class MasterCrudController {
 
     /*CATEGORIA*/
     @PostMapping("/categoriaC")
-    public String postCategoriaC(@ModelAttribute CategoriaDTO cat, BindingResult errors, Model model){
-        itemListService.guardar(cat);
+    public String postCategoriaC(@ModelAttribute CategoriaDTO categoria, BindingResult errors, Model model){
+        itemListService.guardar(categoria);
         return crearCategoria(model);
     }
 

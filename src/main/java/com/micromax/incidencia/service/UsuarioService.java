@@ -22,4 +22,8 @@ public interface UsuarioService {
     Usuario getUsuarioById(long id);
 
     boolean borrarUsuario(Long id);
+
+    Usuario findUsuarioByUsername(String username);
+
+    boolean existeUsuario(String username);
 }

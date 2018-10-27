@@ -1,27 +1,27 @@
 
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  th:fragment="tipoIncidenciaC">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.TipoIncidenciaViewmodel"*/-->
-    <form id="crearForm" class="form-horizontal" th:object="${data.tipoIncidencia}" th:action="@{/tipoIncidenciaC}" method="post" >
-        <fieldset>
-
-            <!-- Form Name -->
-            <legend>Crear Tipo de Incidencia</legend>
-
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="TipoIncidencia">Tipo de Incidencia</label>
-                <div class="col-md-4">
-                    <input id="TipoIncidencia" th:field="*{nombre}" name="TipoIncidencia" type="text" placeholder="" class="form-control input-md" required="required">
+    <div class="card col-sm-6 elegant-color" >
+        <form id="crearForm" class="form-horizontal" th:object="${data.tipoIncidencia}" th:action="@{/tipoIncidenciaC}" method="post" >
+            <fieldset>
+                <!-- Form Name -->
+                <legend class="card-header stylish-color-dark">Crear Tipo de Incidencia</legend>
+                <!-- Nombre input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="TipoIncidencia">Tipo de Incidencia</label>
+                    <div class="col-md-4">
+                        <input id="TipoIncidencia" th:field="*{nombre}" name="TipoIncidencia" type="text" placeholder="" class="form-control input-md" required="required">
+                    </div>
                 </div>
-            </div>
 
-            <!-- Button -->
-            <div class="form-group">
-                <div class="col-md-4">
-                    <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Crear</button>
+                <!-- Button -->
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Crear</button>
+                    </div>
                 </div>
-            </div>
 
-        </fieldset>
-    </form>
+            </fieldset>
+        </form>
+    </div>
 </div>

@@ -1,6 +1,9 @@
 <div th:fragment="incidenciaL"  xmlns:th="http://www.w3.org/1999/xhtml">
     <h4 class="my-4 h-4 font-weight-bold">Incidencias</h4>
-    <table id="datatable" class="datatable table-hover table-striped">
+    <div class="row">
+    <a class="col-sm-2 btn btn-amber btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#">Crear Incidencia</a>
+    </div>
+    <table id="datatable" class="table table-hover table-striped table-bordered table-dark dt-responsive nowrap">
         <thead>
         <tr>
             <th> Id </th>

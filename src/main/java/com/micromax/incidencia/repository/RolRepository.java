@@ -7,8 +7,8 @@ import java.util.Collection;
 
 public interface RolRepository extends CrudRepository<Rol,Long> {
 
-    Rol findByNombreAndActiva(String name, boolean activa);
+    Rol findByNombreAndHabilitado(String name, boolean activa);
 
-    Collection<Rol> findAllByActiva(boolean activa);
+    Collection<Rol> findAllByHabilitado(boolean activa);
 
 }

@@ -5,10 +5,10 @@
     <title th:text="${title}"></title>
     <div th:include="/fragmentos/header" ></div>
 </head>
-<body>
+<body class="stylish-color-dark text-white">
 <div th:replace="/fragmentos/navbar::navbar(nombre = ${nombre}, rol = ${user_role})"></div>
 
-<div id="content" class="container">
+<div id="content" class="container ">
     <div class="row">
         <div th:if="${template}" class="col-sm">
             <div class="panel">
@@ -20,5 +20,5 @@
     </div>
 </div>
 <div th:replace="/fragmentos/footer"></div>
-</body>
+</bodystylish-color-dark>
 </html>
