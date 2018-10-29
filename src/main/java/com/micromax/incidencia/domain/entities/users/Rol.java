@@ -1,6 +1,7 @@
 package com.micromax.incidencia.domain.entities.users;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.util.Collection;
 @Entity
 @Data
 @Table(name = "rol")
+@ToString(exclude = {"permisos"})
 public class Rol implements Serializable {
 
     @Transient

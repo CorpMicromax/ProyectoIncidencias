@@ -29,4 +29,6 @@ public interface UsuarioService {
     Usuario findUsuarioByUsername(String username);
 
     boolean existeUsuario(String username);
+
+    void actualizarUsuario(UsuarioDTO dto);
 }

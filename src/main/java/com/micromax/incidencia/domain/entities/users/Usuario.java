@@ -5,6 +5,7 @@ import com.micromax.incidencia.domain.entities.incidencias.Comentario;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -19,6 +20,7 @@ import java.util.List;
 @Inheritance
 @DiscriminatorColumn(name = "tipo_usuario")
 @Table(name="usuario")
+@ToString(exclude = {"comentarios", "incidencias", "rol"})
 @DiscriminatorValue("U")
 public class Usuario extends Desactivable implements Serializable {
 

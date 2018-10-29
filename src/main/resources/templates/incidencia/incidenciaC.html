@@ -10,7 +10,7 @@
                 <div class="form-group row">
                     <div class="col-md-12">
                         <label class="col-form-label" for="titulo">Titulo</label>
-                        <input th:field="*{incidencia.titulo}"
+                        <input th:field="*{incidenciaDTO.titulo}"
                                id="titulo" name="titulo"
                                type="text" class="form-control input-md"
                                required="required" maxlength="50"
@@ -22,7 +22,7 @@
                 <div class="form-group row">
                     <div class="col-md-12">
                         <label class="col-form-label" for="descripcion">Descripción</label>
-                        <textarea th:field="*{incidencia.descripcion}"
+                        <textarea th:field="*{incidenciaDTO.descripcion}"
                                   id="descripcion" name="descripcion"
                                   class="form-control"   rows="3"
                                   data-rule-maxlength="4000"
@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label class="field-label" for="categoriaDos">Categoria Específica</label>
-                        <select id="categoriaDos" name="categoriaDos" class="form-control" th:field="*{incidencia.categoria}" required="required">
+                        <select id="categoriaDos" name="categoriaDos" class="form-control" th:field="*{incidenciaDTO.categoria}" required="required">
                             <option value="">--- Seleccione una ---</option>
                         </select>
                     </div>

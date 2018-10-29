@@ -40,7 +40,7 @@ public class ItemListServiceImpl implements ItemListService {
 
     @Override
     public Categoria getCategoria(long id) {
-        return categoriaRepository.findById(id).orElse(null);
+        return categoriaRepository.findById(id);
     }
 
     @Override

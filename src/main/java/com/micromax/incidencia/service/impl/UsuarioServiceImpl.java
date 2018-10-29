@@ -10,6 +10,7 @@ import com.micromax.incidencia.repository.RolRepository;
 import com.micromax.incidencia.repository.UsuarioRepository;
 import com.micromax.incidencia.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -78,6 +79,29 @@ public class UsuarioServiceImpl implements UsuarioService {
         if(bool)usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         usuarioRepository.save(usuario);
     }
+
+    public void actualizarUsuario(UsuarioDTO dto){
+        Usuario u = usuarioRepository.findByIdUsuarioAndHabilitado(dto.getId(),true);
+        u.setNombres(ObjectUtils.defaultIfNull(dto.getNombres(), u.getNombres()));
+        u.setApellidos(ObjectUtils.defaultIfNull(dto.getApellidos(), u.getApellidos()));
+        u.setDireccion(ObjectUtils.defaultIfNull(dto.getDireccion(), u.getDireccion()));
+        u.setRol(ObjectUtils.defaultIfNull(
+                rolRepository.findByIdRol(dto.getIdRol()),
+                u.getRol()));
+
+        u.setTelefono(ObjectUtils.defaultIfNull(dto.getTelefono(), u.getTelefono()));
+        u.setEmail(ObjectUtils.defaultIfNull(dto.getEmail(), u.getEmail()));
+        if(u instanceof Cliente){
+            ((Cliente) u).setRif(ObjectUtils.defaultIfNull(dto.getRif(), ((Cliente) u).getRif()));
+            ((Cliente) u).setRazonSocial(ObjectUtils.defaultIfNull(dto.getRazonSocial(), ((Cliente) u).getRazonSocial()));
+            ((Cliente) u).setDenominacionComercial(ObjectUtils.defaultIfNull(dto.getDenominacionComercial(), ((Cliente) u).getDenominacionComercial()));
+        }
+        if(u instanceof Tecnico){
+            ((Tecnico) u).setCapacidad(ObjectUtils.defaultIfNull(dto.getCapacidad(), ((Tecnico) u).getCapacidad()));
+        }
+        usuarioRepository.save(u);
+    }
+
 
     public void guardarUsuario(UsuarioDTO usuarioDTO, boolean nuevo) {
         Usuario usuario;

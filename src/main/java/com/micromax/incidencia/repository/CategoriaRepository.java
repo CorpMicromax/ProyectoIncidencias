@@ -4,8 +4,6 @@ import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
 public interface CategoriaRepository extends CrudRepository<Categoria, Long> {
 
@@ -17,7 +15,7 @@ public interface CategoriaRepository extends CrudRepository<Categoria, Long> {
 
     Iterable<Categoria> findByHabilitado(boolean activa);
 
-    Optional<Categoria> findByIdAndHabilitado(short id, boolean activa);
+    Categoria findById(long id);
 
     boolean existsCategoriaByNombreAndHabilitado(String nombre, boolean h);
 

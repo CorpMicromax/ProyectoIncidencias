@@ -21,7 +21,7 @@ public class UsuarioDTO {
     private Integer idRol;
     private String rif;
     private String direccion;
-    private Integer capacidad;
+    private int capacidad;
     private String denominacionComercial;
     private String razonSocial;
     private Integer tipoUsuario;

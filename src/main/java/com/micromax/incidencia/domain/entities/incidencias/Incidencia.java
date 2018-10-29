@@ -7,6 +7,7 @@ import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(exclude = {"asignados", "comentarios", "creador"})
 @Entity
 @Table(name = "incidencia")
 public class Incidencia extends Desactivable implements Serializable {
@@ -45,7 +47,7 @@ public class Incidencia extends Desactivable implements Serializable {
     private String descripcion;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "fecha_creacions")
+    @Column(name = "fecha_creacion")
     private Date creacion;
 
     @Enumerated(EnumType.ORDINAL)
