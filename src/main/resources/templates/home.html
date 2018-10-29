@@ -10,12 +10,8 @@
 
 <div id="content" class="container ">
     <div class="row">
-        <div th:if="${template}" class="col-sm">
-            <div class="panel">
-                <div class="panel-body">
-                    <div  th:replace="@{${location} + ${template}} :: ${template}" ></div>
-                </div>
-            </div>
+        <div th:if="${template}">
+            <div  th:replace="@{${location} + ${template}} :: ${template}" ></div>
         </div>
     </div>
 </div>
