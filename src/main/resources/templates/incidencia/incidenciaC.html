@@ -1,91 +1,74 @@
-<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaC">
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaC" class="container justify-content-center">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaViewmodel"*/-->
-    <!--/*@thymesVar id="incidencia" type="com.micromax.incidencia.domain.entities.incidencias.Incidencia"*/-->
-    <div class="card col-sm-6 elegant-color" >
-    <form id="crearForm" th:action="@{/incidenciaC}" th:object="${data}" method="post" class="card-body form-horizontal">
-        <fieldset>
-
-            <!-- Form Name -->
-            <div class="card-header stylish-color-dark">
-                <legend>Nueva Incidencia</legend>
-            </div>
-
-            <!-- Titulo-->
-            <div class="form-group">
-                <label class="col-form-label" for="titulo">Titulo</label>
-                <div class="">
-                    <input th:field="*{incidencia.titulo}"
-                           id="titulo" name="titulo"
-                           type="text" class="form-control input-md"
-                           required="required" maxlength="50"
-                           data-rule-required="true"
-                           data-rule-maxlength="50"   >
+    <div class="card offset-2 col-sm-8 elegant-color my-5" >
+        <form id="crearForm" th:action="@{/incidenciaC}" th:object="${data}" method="post" class="card-body form-horizontal">
+            <fieldset>
+                <div class="card-header">
+                    <legend class="card-title text-center my-lg-2">Nueva Incidencia</legend>
                 </div>
-            </div>
 
-            <!-- Textarea -->
-            <div class="form-group">
-                <label class="col-form-label" for="descripcion">Descripción</label>
-                <div class="col-sm-12">
-                    <textarea th:field="*{incidencia.descripcion}"
-                              id="descripcion" name="descripcion"
-                              class="form-control"   rows="3"
-                              data-rule-maxlength="4000"
-                              data-rule-minlength="10"
-                              data-rule-required="true"></textarea>
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <label class="col-form-label" for="titulo">Titulo</label>
+                        <input th:field="*{incidencia.titulo}"
+                               id="titulo" name="titulo"
+                               type="text" class="form-control input-md"
+                               required="required" maxlength="50"
+                               data-rule-required="true"
+                               data-rule-maxlength="50"
+                               autofocus>
+                    </div>
                 </div>
-            </div>
-
-
-            <!-- Select Basic -->
-            <div class="form-group">
-                <label class="col-form-label" for="categoriaUno">Categoria</label>
-                <div class="">
-                    <select id="categoriaUno" name="categoriaUno" class="form-control" required="required">
-                        <option value="">--- Seleccione una ---</option>
-                        <option th:each="cat : ${data.categorias}" th:value="${cat.id}" th:text="${cat.nombre}" ></option>
-                    </select>
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <label class="col-form-label" for="descripcion">Descripción</label>
+                        <textarea th:field="*{incidencia.descripcion}"
+                                  id="descripcion" name="descripcion"
+                                  class="form-control"   rows="3"
+                                  data-rule-maxlength="4000"
+                                  data-rule-minlength="10"
+                                  data-rule-required="true"></textarea>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Select Basic -->
-            <div class="form-group">
-                <label class="field-label" for="categoriaDos">Categoria Específica</label>
-                <div class="">
-                    <select id="categoriaDos" name="categoriaDos" class="form-control" th:field="*{incidencia.categoria}" required="required">
-                        <option value="">--- Seleccione una ---</option>
-                    </select>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="field-label" for="categoriaUno">Categoria</label>
+                        <select id="categoriaUno" name="categoriaUno" class="form-control" required="required">
+                            <option value="">--- Seleccione una ---</option>
+                            <option th:each="cat : ${data.categorias}" th:value="${cat.id}" th:text="${cat.nombre}" ></option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="field-label" for="categoriaDos">Categoria Específica</label>
+                        <select id="categoriaDos" name="categoriaDos" class="form-control" th:field="*{incidencia.categoria}" required="required">
+                            <option value="">--- Seleccione una ---</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Button (Double) -->
-            <div class="form-group">
-                <div class="">
+                <div class="form-group">
                     <button type="submit" id="submit" name="submit" class="btn btn-success">Crear</button>
                     <button id="cancel" name="cancel" class="btn btn-danger">Cancelar</button>
                 </div>
-            </div>
-
-        </fieldset>
-    </form>
+            </fieldset>
+        </form>
     </div>
     <script th:inline="javascript">
-    /*<![CDATA[*/
+        /*<![CDATA[*/
         $("#categoriaUno").change(function(){
-		$.ajax({
-			type: "GET",
-			url: /*[[@{/rest/incidencia/getCategoriasDos}]]*/"/rest/incidencia/getCategoriasDos",
-			data:  {id:$("#categoriaUno").val()},
-			success: function(response){
-			    $("#categoriaDos").empty().append('<option value="">---Seleccione una opcion---</option>');
-			    $.each(response, function(i){
-                    $("#categoriaDos").append('<option value="' + response[i].id + '">' + response[i].nombre + '</option>');
-			    })}
+            $.ajax({
+                type: "GET",
+                url: /*[[@{/rest/incidencia/getCategoriasDos}]]*/"/rest/incidencia/getCategoriasDos",
+                data:  {id:$("#categoriaUno").val()},
+                success: function(response){
+                    $("#categoriaDos").empty().append('<option value="">---Seleccione una opcion---</option>');
+                    $.each(response, function(i){
+                        $("#categoriaDos").append('<option value="' + response[i].id + '">' + response[i].nombre + '</option>');
+                    })}
             });
-	    });
-	    $('#cancel').click(function(event) {
-	        event.stopPropagation();
-           window.location = "/home";
+        });
+        $('#cancel').click(function(event) {
+            event.stopPropagation();
+            window.location = "/home";
         });
         /*]]>*/
     </script>

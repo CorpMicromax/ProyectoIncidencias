@@ -13,8 +13,8 @@ public interface IncidenciaService {
 
     void actualizarIncidencia(Incidencia i);
 
-    Incidencia getIncidenciaById(long id);
+    Incidencia getIncidenciaById(String id);
 
-    boolean borrarIncidencia(Long id);
+    boolean borrarIncidencia(String id);
 }
 

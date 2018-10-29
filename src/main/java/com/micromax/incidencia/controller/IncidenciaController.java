@@ -65,7 +65,7 @@ public class IncidenciaController {
     /*======================================= POSTS ========================================*/
 
     @GetMapping("/incidenciaE")
-    public String incidenciaE(@RequestParam long id, Model model){
+    public String incidenciaE(@RequestParam String id, Model model){
 
         IncidenciaViewmodel viewmodel = new IncidenciaViewmodel();
         viewmodel.setIncidencia(incidenciaService.getIncidenciaById(id));

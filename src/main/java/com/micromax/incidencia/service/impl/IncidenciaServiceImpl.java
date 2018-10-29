@@ -48,13 +48,13 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     }
 
     @Override
-    public Incidencia getIncidenciaById(long id) {
+    public Incidencia getIncidenciaById(String id) {
         log.info("Buscando incidencia con id %d", id);
         return repository.findByIdIncidenciaAndHabilitado(id, true).orElse(null);
     }
 
     @Override
-    public boolean borrarIncidencia(Long id) {
+    public boolean borrarIncidencia(String id) {
         Incidencia i = repository.findByIdIncidenciaAndHabilitado(id, true).orElse(  null);
         if(i != null) {
             i.setHabilitado(false);

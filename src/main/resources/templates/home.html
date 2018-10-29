@@ -10,9 +10,9 @@
 <div th:replace="/fragmentos/navbar::navbar(nombre = ${nombre}, rol = ${user_role})"></div>
 
 <div id="content" class="container justify-content-center">
-    <div class="row">
+    <div th:if="${template}" class="row">
 
-        <div th:if="${template}" th:replace="@{${location} + ${template}} :: ${template}" ></div>
+        <div th:replace="@{${location} + ${template}} :: ${template}" ></div>
 
     </div>
 </div>

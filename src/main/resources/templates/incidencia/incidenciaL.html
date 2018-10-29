@@ -1,12 +1,13 @@
 <div th:fragment="incidenciaL"  xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="container justify-content-center">
         <div class="card elegant-color my-5">
-            <div class="card-header">
+            <div class="card-header ">
                 <legend class="card-title text-center my-lg-2" >Incidencias</legend>
             </div>
             <div class="card-body">
+
                 <div class="row">
-                    <a class="btn btn-outline-amber btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#">Crear Incidencia</a>
+                    <a class="btn btn-amber btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#"><i class="float-left fa fa-star fa-sm"></i>Crear Incidencia</a>
                 </div>
 
                 <table id="datatable" class="table table-hover table-striped table-bordered table-dark table-sm nowrap">
@@ -30,16 +31,16 @@
                         <td><span th:text="${incidencia.idIncidencia}"> Id </span></td>
                         <td><span th:if="${incidencia.titulo}" th:text="${incidencia.titulo}"> Titulo </span></td>
                         <td><span th:if="${incidencia.categoria}" th:text="${incidencia.categoria.nombre}"></span></td>
-                        <td><span th:if="${incidencia.creador}" th:text="${incidencia.creador.nombres}"> Nombre creador </span></td>
+                        <td><span th:if="${incidencia.creador}" th:text="${incidencia.creador.username}"> Nombre creador </span></td>
                         <td><span th:if="${incidencia.creacion}" th:text="${incidencia.creacion}"> creacion </span></td>
                         <td><span th:if="${incidencia.status}" th:text="${incidencia.status}"> Status </span></td>
                         <td>
-                            <a th:id="${incidencia.idIncidencia}" class="editButton btn btn-outline-info btn-rounded btn-sm flex-sm-nowrap" style="padding-left:2em; padding-right: 2em;" data-target="#editar" >
+                            <a th:id="${incidencia.idIncidencia}" class="editButton btn btn-info btn-sm"  data-target="#editar" >
                                 <i class="float-left fa fa-edit fa-sm"></i>Editar
                             </a>
                         </td>
                         <td>
-                            <a th:id="${incidencia.idIncidencia}" class="deleteCall btn btn-outline-danger btn-rounded btn-sm flex-sm-nowrap" style="padding-left:2em; padding-right: 2em;" data-toggle="modal" data-target="#delete" >
+                            <a th:id="${incidencia.idIncidencia}" class="deleteCall btn btn-danger btn-sm" data-toggle="modal" data-target="#delete" >
                                 <i class="fa fa-trash fa-sm"></i>Eliminar
                             </a>
                         </td>
@@ -64,8 +65,8 @@
 
                 </div>
                 <div class="modal-footer ">
-                    <button type="button" class="deleteButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Sí</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+                    <button type="button" class="deleteButton btn btn-success btn-md" ><span class="glyphicon glyphicon-ok-sign"></span> Sí</button>
+                    <button type="button" class="btn btn-default btn-md" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
                 </div>
             </div>
             <!-- /.modal-content -->
