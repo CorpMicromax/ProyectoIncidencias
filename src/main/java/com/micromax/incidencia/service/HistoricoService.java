@@ -1,23 +1,20 @@
 package com.micromax.incidencia.service;
 
 import com.micromax.incidencia.domain.entities.Historico;
-import com.micromax.incidencia.domain.entities.TipoCambio;
+import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
+import com.micromax.incidencia.domain.entities.users.Usuario;
 
 import java.util.Collection;
-import java.util.List;
 
 public interface HistoricoService {
 
-    Historico getHistoricoByIdAndIncidencia(long id,String idIncidencia);
+    Historico getHistoricoByIdAndIncidencia(long id, Incidencia idIncidencia);
 
-    Historico findHistoricoByIncidenciaAndUsuario(long id,String idIncidencia, long idUser);
+    Historico findHistoricoByIncidenciaAndUsuario(long id,Incidencia idIncidencia, Usuario idUser);
 
-    Collection<Historico> getHistoricoByIncidencia (String idIncidencia);
+    Collection<Historico> getHistoricoByIncidencia (Incidencia idIncidencia);
 
-    Collection<Historico> getHistoricoByUsuario (long idUser, String idIncidencia);
-
-    //Pendiente
-    List<TipoCambio> getTipoCambio();
+    Collection<Historico> getHistoricoByUsuario (Usuario idUser, Incidencia idIncidencia);
 
     public void guardarHistorico (Historico historico, long idUsuario);
 

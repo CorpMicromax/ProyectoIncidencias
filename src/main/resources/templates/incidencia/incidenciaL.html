@@ -1,39 +1,47 @@
 <div th:fragment="incidenciaL"  xmlns:th="http://www.w3.org/1999/xhtml">
-    <h4 class="my-4 h-4 font-weight-bold">Incidencias</h4>
-    <div class="row">
-    <a class="col-sm-2 btn btn-amber btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#">Crear Incidencia</a>
-    </div>
-    <table id="datatable" class="table table-hover table-striped table-bordered table-dark dt-responsive nowrap">
-        <thead>
-        <tr>
-            <th> Id </th>
-            <th> Titulo </th>
-            <th> Categoria </th>
-            <th> Creador </th>
-            <th> Fecha y Hora de Creacion </th>
-            <th> Status </th>
-            <th> Editar </th>
-            <th> Eliminar </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:if="${incidencias.empty}">
-            <td colspan="2"> No hay incidencias </td>
-        </tr>
-        <tr th:each="incidencia: ${incidencias}">
-            <td><span th:text="${incidencia.idIncidencia}"> Id </span></td>
-            <td><span th:if="${incidencia.titulo}" th:text="${incidencia.titulo}"> Titulo </span></td>
-            <td><span th:if="${incidencia.categoria}" th:text="${incidencia.categoria.nombre}"></span></td>
-            <td><span th:if="${incidencia.creador}" th:text="${incidencia.creador.nombres}"> Nombre creador </span></td>
-            <td><span th:if="${incidencia.creacion}" th:text="${incidencia.creacion}"> creacion </span></td>
-            <td><span th:if="${incidencia.status}" th:text="${incidencia.status}"> Status </span></td>
-            <p data-placement="center" data-toggle="tooltip" title="Delete">
+    <div class="container justify-content-center">
+        <div class="card elegant-color my-5">
+            <div class="card-header">
+                <legend class="card-title text-center my-lg-2" >Incidencias</legend>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <a class="btn btn-amber btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#">Crear Incidencia</a>
+                </div>
 
-            <td><p data-placement="center" data-toggle="tooltip" title="Editar"><button th:id="${incidencia.idIncidencia}" th:text="Editar" class="editButton btn btn-info btn-rounded btn-sm" data-title="Editar" data-target="#editar" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-            <td><p data-placement="center" data-toggle="tooltip" title="Eliminar"><button th:id="${incidencia.idIncidencia}" th:text="Eliminar" class="deleteCall btn btn-danger btn-rounded btn-sm" data-title="Eliminar" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-        </tr>
-        </tbody>
-    </table>
+                <table id="datatable" class="table table-hover table-striped table-bordered table-dark dt-responsive nowrap">
+                    <thead>
+                    <tr>
+                        <th> Id </th>
+                        <th> Titulo </th>
+                        <th> Categoria </th>
+                        <th> Creador </th>
+                        <th> Fecha y Hora de Creacion </th>
+                        <th> Status </th>
+                        <th> Editar </th>
+                        <th> Eliminar </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${incidencias.empty}">
+                        <td colspan="2"> No hay incidencias </td>
+                    </tr>
+                    <tr th:each="incidencia: ${incidencias}">
+                        <td><span th:text="${incidencia.idIncidencia}"> Id </span></td>
+                        <td><span th:if="${incidencia.titulo}" th:text="${incidencia.titulo}"> Titulo </span></td>
+                        <td><span th:if="${incidencia.categoria}" th:text="${incidencia.categoria.nombre}"></span></td>
+                        <td><span th:if="${incidencia.creador}" th:text="${incidencia.creador.nombres}"> Nombre creador </span></td>
+                        <td><span th:if="${incidencia.creacion}" th:text="${incidencia.creacion}"> creacion </span></td>
+                        <td><span th:if="${incidencia.status}" th:text="${incidencia.status}"> Status </span></td>
+                        <td><a th:id="${incidencia.idIncidencia}" class="editButton btn btn-info btn-rounded btn-sm" data-title="Editar" data-target="#editar" >Editar<i class="fa fa-edit fa-sm"></i></a></td>
+                        <td><a th:id="${incidencia.idIncidencia}" class="deleteCall btn btn-danger btn-rounded btn-sm" data-title="Eliminar" data-toggle="modal" data-target="#delete" >Eliminar<i class="fa fa-trash fa-sm"></i></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 
     <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
         <div class="modal-dialog">
@@ -57,7 +65,7 @@
         <!-- /.modal-dialog -->
     </div>
     <script th:inline="javascript">
-    /*<![CDATA[*/
+        /*<![CDATA[*/
         var relevant = /*[[${relevant}]]*/ "none";
         $(document).ready( function () {
             $('#datatable').DataTable({
@@ -68,7 +76,7 @@
         });
 
         $('.editButton').click(function() {
-           window.location = "/incidenciaE?id=" + this.id;
+            window.location = "/incidenciaE?id=" + this.id;
         });
 
         var id = "";
@@ -82,6 +90,6 @@
                 window.location = "/incidenciaL";
             });
         });
-    /*]]>*/
+        /*]]>*/
     </script>
 </div>

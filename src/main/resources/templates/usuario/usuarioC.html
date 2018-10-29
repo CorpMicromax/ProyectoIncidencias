@@ -1,135 +1,112 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="usuarioC">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.UsuarioViewmodel"*/-->
-    <div class="card col-sm-6 elegant-color" >
-        <form id="crearForm" action="#" th:action="@{/usuarioC}" th:object="${data.usuarioDTO}" th:method="post" method="post" class="card-body form-horizontal">
-            <fieldset>
-                <!-- Form Name -->
-                <legend class="card-header stylish-color-dark">Nuevo usuario</legend>
-
-                    <!-- Nombre input-->
-                    <div class="form-group col-md-6">
-                        <label class="control-label" for="nombres">Nombres</label>
-                        <div class="">
-                            <input id="nombres" th:field="*{nombres}" name="nombres" type="text" class="form-control input-md" required="required">
-
+    <div class="container justify-content-center">
+        <div class="card offset-2 col-sm-8 elegant-color my-5" >
+            <form id="crearForm" action="#" th:action="@{/usuarioC}" th:object="${data.usuarioDTO}" th:method="post" method="post" class="card-body form-horizontal">
+                <fieldset>
+                    <div class="card-header">
+                        <legend class="card-title text-center my-lg-2">Crear usuario</legend>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6 my-2">
+                            <label class=" control-label" for="nombres">Nombres</label>
+                            <input id="nombres" th:field="*{nombres}" name="nombres" type="text" placeholder="" class="form-control input-md" required="required" autofocus>
+                        </div>
+                        <div class="form-group col-md-6 my-2">
+                            <label class=" control-label" for="apellidos">Apellidos</label>
+                            <input id="apellidos" th:field="*{apellidos}" name="apellidos" type="text" placeholder="" class="form-control input-md" required="required">
                         </div>
                     </div>
-
-                    <!-- Apellido input-->
-                    <div class="form-group col-md-6">
-                        <label class="control-label" for="apellidos">Apellidos</label>
-                        <div class="">
-                            <input id="apellidos" th:field="*{apellidos}" name="apellidos" type="text" class="form-control input-md" required="required">
-
-                        </div>
-                    </div>
-
-                    <!-- Usuario input-->
-                    <div class="form-group col-md-6">
-                        <label class="control-label" for="username">Usuario</label>
-                        <div class="">
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="username">Usuario</label>
                             <input id="username" th:field="*{username}" name="username" type="text" class="form-control input-md" required="required">
-
                         </div>
-                    </div>
-
-                    <!-- Password input-->
-                    <div class="form-group col-md-6">
-                        <label class=" control-label" for="password">Password</label>
-                        <div class="">
+                        <div class="form-group col-md-6">
+                            <label class=" control-label" for="password">Password</label>
                             <input id="password" th:field="*{password}" name="password" type="password" class="form-control input-md" required="required">
                         </div>
                     </div>
-
-                    <!-- Email input-->
-                    <div class="form-group col-md-6">
-                        <label class=" control-label" for="email">Email</label>
-                        <div class="">
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label class=" control-label" for="email">Email</label>
                             <input id="email" th:field="*{email}" name="email" type="email" class="form-control input-md" required="required">
-
                         </div>
-                    </div>
-                <!-- Telefono input-->
-                    <div class="form-group col-md-6">
-                        <label class=" control-label" for="telefono">Teléfono</label>
-                        <div class="">
+                        <div class="form-group col-md-6">
+                            <label class=" control-label" for="telefono">Teléfono</label>
                             <input id="telefono" th:field="*{telefono}" name="telefono" type="text" class="form-control input-md" >
-
                         </div>
                     </div>
-
-                    <!-- Select Basic -->
-                    <div class="form-group">
-                        <label class=" control-label" for="tipoUsuario">Tipo de Usuario</label>
-                        <div class="">
+                    <div class="form-group row">
+                        <div class="form-group col-md-6">
+                            <label class=" control-label" for="tipoUsuario">Tipo de Usuario</label>
                             <select id="tipoUsuario" th:field="*{tipoUsuario}" name="tipoUsuario" class="form-control" required="required" >
                                 <option value="1" selected="selected">Usuario</option>
                                 <option value="2">Técnico</option>
                                 <option value="3">Cliente</option>
                             </select>
                         </div>
-                    </div>
 
-                    <!-- Select Basic -->
-                    <div class="form-group">
-                        <label class=" control-label" for="idRol">Rol</label>
-                        <div class="">
+                        <div class="form-group col-md-6">
+                            <label class=" control-label" for="idRol">Rol</label>
                             <select id="idRol" name="idRol" th:field="*{idRol}" class="form-control" required="required">
                                 <option value="">--- Seleccione una ---</option>
                                 <option th:each="rol : ${data.roles}" th:value="${rol.idRol}" th:text="${rol.nombre}" ></option>
                             </select>
                         </div>
                     </div>
-
-                    <div id="tecnicoSection" class="" style="display: none">
-                        <div class="form-group">
+                    <div id="tecnicoSection" style="display: none" class="form-group row">
+                        <div class="form-group col-md-6">
                             <label class=" control-label" for="capacidad">Técnico: Capacidad</label>
-                            <div class="">
-                                <input id="capacidad" th:field="*{capacidad}" name="capacidad" type="number" class="form-control input-md" >
-
-                            </div>
+                            <input id="capacidad" th:field="*{capacidad}" name="capacidad" type="number" class="form-control input-md" >
                         </div>
                     </div>
-                    <div id="clienteSection" class="" style="display: none">
-                        <div class="form-group">
+                    <div id="clienteSection" style="display: none" class="form-group row">
+                        <div class="form-group col-md-6">
                             <label class=" control-label" for="rif">RIF</label>
-                            <div class="">
-                                <input id="rif" th:field="*{rif}" name="rif" type="text" class="form-control input-md" >
-
-                            </div>
+                            <input id="rif" th:field="*{rif}" name="rif" type="text" class="form-control input-md" >
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-6">
                             <label class=" control-label" for="razonSocial">Razon Social</label>
-                            <div class="">
-                                <input id="razonSocial" th:field="*{razonSocial}" name="razonSocial" type="text" class="form-control input-md" >
-                            </div>
+                            <input id="razonSocial" th:field="*{razonSocial}" name="razonSocial" type="text" class="form-control input-md" >
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-6">
                             <label class=" control-label" for="denominacionComercial">Denominacion Comercial</label>
-                            <div class="">
-                                <input id="denominacionComercial" th:field="*{denominacionComercial}" name="denominacionComercial" type="text" class="form-control input-md" >
-                            </div>
+                            <input id="denominacionComercial" th:field="*{denominacionComercial}" name="denominacionComercial" type="text" class="form-control input-md" >
                         </div>
                     </div>
-                <!-- Button (Double) -->
-                <div class="form-group">
-                    <label class=" control-label" for="submit"></label>
-                    <div class="">
-                        <button type="submit" id="submit" name="submit" class="btn btn-success">Crear</button>
-                        <button id="cancel" name="cancel" class="btn btn-danger">Cancelar</button>
+                    <div class="form-group">
+                        <label class=" control-label" for="submit"></label>
+                        <div class="">
+                            <button type="submit" id="submit" name="submit" class="btn btn-success">Crear</button>
+                            <button id="cancel" name="cancel" class="btn btn-danger">Cancelar</button>
+                        </div>
                     </div>
-                </div>
 
-            </fieldset>
-        </form>
+                </fieldset>
+            </form>
+        </div>
     </div>
-
     <script th:inline="javascript">
-      /*  t1=window.setInterval(function(){foo()},100);
-        function foo()
-        {
-            $('#username').val($('#nombres').val().substring(0, 1) + $('#apellidos').val().substring(0, $('#apellidos').val().indexOf(" ")));
-        }*/
+
+        $("#apellidos").on("input", function(e) {
+            var input = $(this);
+            var val = input.val();
+
+            if (input.data("lastval") !== val) {
+                input.data("lastval", val);
+
+                var primeraLetraNombre = $('#nombres').val().substring(0, 1);
+                var reg = '^([\\w\\-]+)', match = input.val().match(reg);
+                if(match){
+                    $('#username').val(primeraLetraNombre + match[0]);
+                }
+                //var primerApellido = input.val().substring(0, input.val().indexOf(" "));
+
+                console.log(input.val())
+            }
+
+        });
         var r = Math.random().toString(36).substring(8);
         $("#password").val(r);
 
@@ -138,15 +115,15 @@
             var cli = $("#clienteSection");
             switch ($('#tipoUsuario').val()) {
                 case '1':
-                    tec.fadeOut(600);
-                    cli.fadeOut(600);
+                    tec.fadeOut(200);
+                    cli.fadeOut(200);
                     break;
                 case '2':
                     tec.fadeIn(600);
-                    cli.fadeOut(600);
+                    cli.fadeOut(200);
                     break;
                 case '3':
-                    tec.fadeOut(600);
+                    tec.fadeOut(200);
                     cli.fadeIn(600);
                     break;
             }

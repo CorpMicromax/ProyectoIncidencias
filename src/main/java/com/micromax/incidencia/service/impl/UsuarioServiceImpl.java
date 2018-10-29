@@ -66,7 +66,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario findUsuarioByUsername(String username) {
-        return usuarioRepository.findUsuarioByUsernameAndHabilitado(username, true).orElse(null);
+        return usuarioRepository.findUsuarioByUsernameAndHabilitado(username, true);
     }
 
     @Override
@@ -102,8 +102,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         if(nuevo){
             usuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
         }else{
-            usuario.setPassword(usuarioDTO.getPassword());
+            Usuario u = usuarioRepository.findByIdUsuarioAndHabilitado(usuarioDTO.getId(),true);
+            usuario.setPassword(u.getPassword());
+            usuario.setIdUsuario(u.getIdUsuario());
         }
+
         usuario.setTelefono(usuarioDTO.getTelefono());
         usuario.setRol(rolRepository.findByIdRol(usuarioDTO.getIdRol()));
         usuario.setDireccion(usuarioDTO.getDireccion());
@@ -111,8 +114,9 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.save(usuario);
     }
 
+
     public Usuario getUsuarioByUsername(String username){
-        return usuarioRepository.findUsuarioByUsernameAndHabilitado(username, true).orElse(null);
+        return usuarioRepository.findUsuarioByUsernameAndHabilitado(username, true);
     }
 
 }

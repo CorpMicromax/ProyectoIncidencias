@@ -10,7 +10,7 @@ import javax.validation.constraints.Email;
 @Data
 public class UsuarioDTO {
 
-    private Integer id;
+    private Long id;
     private String username;
     private String nombres;
     private String apellidos;
@@ -29,6 +29,7 @@ public class UsuarioDTO {
     public UsuarioDTO(){};
 
     public UsuarioDTO(Usuario usuario){
+        this.id = usuario.getIdUsuario();
         this.tipoUsuario = 1;
         if(usuario instanceof Tecnico){
             this.capacidad = ((Tecnico) usuario).getCapacidad();
