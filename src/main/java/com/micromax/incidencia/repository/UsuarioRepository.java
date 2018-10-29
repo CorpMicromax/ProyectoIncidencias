@@ -17,5 +17,6 @@ public interface UsuarioRepository extends CrudRepository<Usuario,Long> {
     Usuario findByIdUsuarioAndHabilitado(long id, boolean a);
 
     boolean existsByUsernameAndHabilitado(String username, boolean habilitado);
-    
+
 }
+

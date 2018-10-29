@@ -7,6 +7,7 @@ import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.dto.UsuarioDTO;
 import com.micromax.incidencia.repository.PrivilegioRepository;
 import com.micromax.incidencia.repository.RolRepository;
+import com.micromax.incidencia.repository.TecnicoRepository;
 import com.micromax.incidencia.repository.UsuarioRepository;
 import com.micromax.incidencia.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -25,6 +27,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private TecnicoRepository tecnicoRepository;
 
     @Autowired
     private RolRepository rolRepository;
@@ -80,7 +85,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.save(usuario);
     }
 
-    public void actualizarUsuario(UsuarioDTO dto){
+    public void asignarTecnico(UsuarioDTO dto){
         Usuario u = usuarioRepository.findByIdUsuarioAndHabilitado(dto.getId(),true);
         u.setNombres(ObjectUtils.defaultIfNull(dto.getNombres(), u.getNombres()));
         u.setApellidos(ObjectUtils.defaultIfNull(dto.getApellidos(), u.getApellidos()));
@@ -100,6 +105,17 @@ public class UsuarioServiceImpl implements UsuarioService {
             ((Tecnico) u).setCapacidad(ObjectUtils.defaultIfNull(dto.getCapacidad(), ((Tecnico) u).getCapacidad()));
         }
         usuarioRepository.save(u);
+    }
+
+    @Override
+    public List<Tecnico> getTecnicos() {
+        return (List<Tecnico>) tecnicoRepository.findAllByHabilitado(true);
+    }
+
+    @Override
+    @Transactional
+    public void asignarTecnico(Tecnico t) {
+        if(t!=null)tecnicoRepository.save(t);
     }
 
 

@@ -5,35 +5,22 @@
 
 
             <fieldset>
-                <!-- Form Name -->
-
                 <legend class="card-header stylish-color-dark">Editar Incidencia</legend>
-
-                <!-- Id -->
                 <div class="form-group">
                     <span class=" control-label">Id: <span th:text="*{idIncidencia}"></span></span>
                 </div>
-
-                <!-- Titulo -->
                 <div class="form-group">
                     <span class=" control-label">Titulo: <span th:text="*{titulo}"></span></span>
                 </div>
-
-                <!-- Descripcion -->
                 <div class="form-group">
                     <span class=" control-label">Descripcion: <span th:text="*{descripcion}"></span></span>
                 </div>
-
-
-                <!-- Categoria input -->
                 <div class="form-group">
                     <label class=" control-label" for="categoria">Categoria</label>
                     <div class="">
                         <input id="categoria" name="categoria" th:value="*{categoria.nombre}"  type="text" class="form-control input-md" disabled="disabled">
                     </div>
                 </div>
-
-                <!-- Categoria Uno -->
                 <div class="form-group">
                     <label class=" control-label" for="categoriaUno">Categoria</label>
                     <div class="">
@@ -43,8 +30,6 @@
                         </select>
                     </div>
                 </div>
-
-                <!-- Categoria Dos -->
                 <div class="form-group">
                     <label class=" control-label" for="categoriaDos">Categoria Específica</label>
                     <div class="">
@@ -53,13 +38,9 @@
                         </select>
                     </div>
                 </div>
-
-
                 <input type="hidden" th:field="*{creador.username}" />
                 <input type="hidden" th:field="*{creacion}" />
                 <input type="hidden" th:field="*{status}" />
-
-                <!-- Button (Double) -->
                 <div class="form-group form-row">
                     <label class=" control-label" for="submit"></label>
                     <div class="">

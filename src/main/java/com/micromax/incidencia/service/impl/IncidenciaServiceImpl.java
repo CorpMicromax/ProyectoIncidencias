@@ -35,6 +35,10 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     @Autowired
     private UsuarioService usuarioService;
 
+
+    @Autowired
+    private EstrategiaService estrategiaService;
+
     @Override
     public List<Incidencia> getIncidencias() {
         log.info("Buscando todas las incidencias");
@@ -50,6 +54,9 @@ public class IncidenciaServiceImpl implements IncidenciaService {
         i.setCreador(usuarioService.getUsuarioByUsername(username));
         i.setCreacion(Date.from(LocalDateTime.now().toInstant(ZoneOffset.ofHours(0))));
         i.setStatus(Status.NUEVA);
+
+
+        usuarioService.asignarTecnico(estrategiaService.ejecutarEstrategia(i, usuarioService.getTecnicos()));
 
         incidenciaRepository.save(i);
         log.info("Usuario %s ha creado una incidencia nueva con id %d", i.getIdIncidencia(), username);
