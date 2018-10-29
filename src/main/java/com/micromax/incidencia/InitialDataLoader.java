@@ -173,7 +173,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     public Rol crearRolSiNoExiste(
             String nombre, Collection<Permiso> permisos) {
 
-        Rol rol = roleRepository.findByNombreAndHabilitado(nombre, true);
+        Rol rol = roleRepository.findByNombre(nombre);
         if (rol == null) {
             rol = new Rol();
             rol.setNombre(nombre);

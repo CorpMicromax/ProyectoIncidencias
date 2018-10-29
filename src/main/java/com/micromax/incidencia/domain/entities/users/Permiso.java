@@ -1,18 +1,15 @@
 package com.micromax.incidencia.domain.entities.users;
 
-import com.micromax.incidencia.domain.Desactivable;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Table(name = "permiso")
-public class Permiso extends Desactivable implements Serializable {
+public class Permiso implements Serializable {
 
     @Transient
     private static final long serialVersionUID = 7L;

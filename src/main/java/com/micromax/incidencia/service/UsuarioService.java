@@ -2,6 +2,7 @@ package com.micromax.incidencia.service;
 
 import com.micromax.incidencia.domain.entities.users.Rol;
 import com.micromax.incidencia.domain.entities.users.Usuario;
+import com.micromax.incidencia.dto.UsuarioDTO;
 
 import java.util.Collection;
 import java.util.List;
@@ -11,7 +12,9 @@ public interface UsuarioService {
 
     Usuario getUsuarioByUsername(String username);
 
-    public void guardarUsuario(Usuario user, boolean nuevo);
+    void guardarUsuario(UsuarioDTO usuarioDTO, boolean nuevo);
+
+    void guardarUsuario(Usuario usuario, boolean nuevo);
 
     Usuario findUserByEmail(String email);
 

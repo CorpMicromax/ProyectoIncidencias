@@ -1,18 +1,15 @@
 package com.micromax.incidencia.domain.entities.users;
 
-import com.micromax.incidencia.domain.Desactivable;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Table(name = "rol")
-public class Rol extends Desactivable implements Serializable {
+public class Rol implements Serializable {
 
     @Transient
     private static final long serialVersionUID = 8L;
@@ -20,7 +17,7 @@ public class Rol extends Desactivable implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_rol", unique = true, nullable = false, precision = 2)
-    private Integer idRol;
+    private int idRol;
 
     @Column(name = "nombre")
     private String nombre;
@@ -33,4 +30,10 @@ public class Rol extends Desactivable implements Serializable {
             inverseJoinColumns = @JoinColumn(
                     name = "id_permiso", referencedColumnName = "id_permiso"))
     private Collection<Permiso> permisos;
+
+    public Rol(String nombre){};
+
+    public Rol(){};
+
+    public static final Rol adminRol = new Rol("ADMIN_ROLE");
 }

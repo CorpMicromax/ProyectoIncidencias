@@ -21,6 +21,7 @@ import java.util.List;
 @Inheritance
 @DiscriminatorColumn(name = "tipo_usuario")
 @Table(name="usuario")
+@DiscriminatorValue("U")
 public class Usuario extends Desactivable implements Serializable {
 
     private static final long serialVersionUID = 10L;

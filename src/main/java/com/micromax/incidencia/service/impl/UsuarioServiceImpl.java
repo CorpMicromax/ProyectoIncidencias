@@ -1,7 +1,10 @@
 package com.micromax.incidencia.service.impl;
 
+import com.micromax.incidencia.domain.entities.users.Cliente;
 import com.micromax.incidencia.domain.entities.users.Rol;
+import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
+import com.micromax.incidencia.dto.UsuarioDTO;
 import com.micromax.incidencia.repository.PrivilegioRepository;
 import com.micromax.incidencia.repository.RolRepository;
 import com.micromax.incidencia.repository.UsuarioRepository;
@@ -37,7 +40,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<Rol> getRoles() {
-        return (ArrayList<Rol>) rolRepository.findAllByHabilitado(true);
+        return (ArrayList<Rol>) rolRepository.findAll();
     }
 
     @Override
@@ -71,11 +74,41 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.existsByUsernameAndHabilitado(username, true);
     }
 
+    public void guardarUsuario(Usuario usuario, boolean bool){
+        if(bool)usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuarioRepository.save(usuario);
+    }
 
-    public void guardarUsuario(Usuario user, boolean nuevo) {
-        if(nuevo)user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setHabilitado(true);
-        usuarioRepository.save(user);
+    public void guardarUsuario(UsuarioDTO usuarioDTO, boolean nuevo) {
+        Usuario usuario;
+        switch (usuarioDTO.getTipoUsuario()){
+            case 1: usuario = new Usuario();
+                    break;
+            case 2: usuario = new Tecnico();
+                    ((Tecnico) usuario).setCapacidad(usuarioDTO.getCapacidad());
+                    break;
+            case 3: usuario = new Cliente();
+                    ((Cliente) usuario).setRif(usuarioDTO.getRif());
+                    ((Cliente) usuario).setDenominacionComercial(usuarioDTO.getDenominacionComercial());
+                    ((Cliente) usuario).setRazonSocial(usuarioDTO.getRazonSocial());
+                    break;
+            default: usuario = new Usuario();
+                    break;
+        }
+        usuario.setNombres(usuarioDTO.getNombres());
+        usuario.setApellidos(usuarioDTO.getApellidos());
+        usuario.setUsername(usuarioDTO.getUsername());
+        usuario.setEmail(usuarioDTO.getEmail());
+        if(nuevo){
+            usuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
+        }else{
+            usuario.setPassword(usuarioDTO.getPassword());
+        }
+        usuario.setTelefono(usuarioDTO.getTelefono());
+        usuario.setRol(rolRepository.findByIdRol(usuarioDTO.getIdRol()));
+        usuario.setDireccion(usuarioDTO.getDireccion());
+        usuario.setHabilitado(true);
+        usuarioRepository.save(usuario);
     }
 
     public Usuario getUsuarioByUsername(String username){

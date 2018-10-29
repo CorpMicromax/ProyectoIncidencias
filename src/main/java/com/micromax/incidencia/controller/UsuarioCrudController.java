@@ -1,6 +1,6 @@
 package com.micromax.incidencia.controller;
 
-import com.micromax.incidencia.domain.entities.users.Usuario;
+import com.micromax.incidencia.dto.UsuarioDTO;
 import com.micromax.incidencia.service.UsuarioService;
 import com.micromax.incidencia.viewmodel.UsuarioViewmodel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class UsuarioCrudController {
     @GetMapping("/usuarioC")
     public String usuarioC(Model model){
         UsuarioViewmodel viewmodel = new UsuarioViewmodel();
-        viewmodel.setUsuario(new Usuario());
+        viewmodel.setUsuarioDTO(new UsuarioDTO());
         viewmodel.setRoles(usuarioService.getRoles());
 
         model = MasterCrudController.setTemplateToModel(model, USUARIO,"usuarioC");
@@ -39,7 +39,7 @@ public class UsuarioCrudController {
     @GetMapping("/usuarioE")
     public String usuarioE(@RequestParam long id, Model model){
         UsuarioViewmodel viewmodel = new UsuarioViewmodel();
-        viewmodel.setUsuario(usuarioService.getUsuarioById(id));
+        viewmodel.setUsuarioDTO(new UsuarioDTO(usuarioService.getUsuarioById(id)));
         viewmodel.setRoles(usuarioService.getRoles());
         viewmodel.setMessage("");
 
@@ -60,14 +60,15 @@ public class UsuarioCrudController {
 
     /*USUARIO*/
     @PostMapping("/usuarioC")
-    public String postUsuarioC(@ModelAttribute UsuarioViewmodel usuarioViewmodel, BindingResult errors, Model model) {
-        usuarioService.guardarUsuario(usuarioViewmodel.getUsuario(),true);
+    public String postUsuarioC(@ModelAttribute UsuarioViewmodel viewmodel, BindingResult errors, Model model) {
+
+        usuarioService.guardarUsuario(viewmodel.getUsuarioDTO(),true);
         return "redirect:/usuarioL";
     }
 
     @PostMapping("/usuarioE")
-    public String postUsuarioE(@ModelAttribute UsuarioViewmodel usuarioViewmodel, BindingResult errors, Model model) {
-        usuarioService.guardarUsuario(usuarioViewmodel.getUsuario(),false);
+    public String postUsuarioE(@RequestParam UsuarioViewmodel viewmodel, BindingResult errors, Model model) {
+        usuarioService.guardarUsuario(viewmodel.getUsuarioDTO(), false);
         return "redirect:/usuarioL";
     }
 }

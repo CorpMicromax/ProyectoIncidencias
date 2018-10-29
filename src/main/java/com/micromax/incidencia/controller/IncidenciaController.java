@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -81,13 +80,13 @@ public class IncidenciaController {
 
     /* INCIDENCIA */
     @PostMapping("/incidenciaC")
-    public String postIncidenciaC(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
+    public String postIncidenciaC(@RequestParam IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
         incidenciaService.guardarIncidencia(viewmodel.getIncidencia(), SecurityContextHolder.getContext().getAuthentication().getName());
         return "redirect:/incidenciaL?=" + viewmodel.getIncidencia().getIdIncidencia();
     }
 
     @PostMapping("/incidenciaE")
-    public String postIncidenciaE(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
+    public String postIncidenciaE(@RequestParam IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
         viewmodel.getIncidencia().setCreador(usuarioService.getUsuarioByUsername(viewmodel.getIncidencia().getCreador().getUsername()));
         incidenciaService.actualizarIncidencia(viewmodel.getIncidencia());
 
