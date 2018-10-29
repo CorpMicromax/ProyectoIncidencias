@@ -1,5 +1,6 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="usuarioE">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.UsuarioViewmodel"*/-->
+    <div class="card col-sm-6 elegant-color" >
     <form id="editarForm" action="#" th:action="@{/usuarioE}" th:object="${data.usuarioDTO}" method="post" class="form-horizontal">
         <fieldset>
 
@@ -57,7 +58,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="tipoUsuario">Tipo de Usuario</label>
                 <div class="col-md-4">
-                    <select id="tipoUsuario" name="tipoUsuario" class="form-control" required="required" />
+                    <select id="tipoUsuario" name="tipoUsuario" class="form-control" required="required" >
                         <option th:selected="*{tipoUsuario == 1}" value="1">Usuario</option>
                         <option th:selected="*{tipoUsuario == 2}" value="2">Técnico</option>
                         <option th:selected="*{tipoUsuario == 3}" value="3">Cliente</option>
@@ -67,11 +68,11 @@
 
             <!-- Select Basic -->
             <div class="form-group">
+                <span id="rolId" th:text="*{idRol}" style="display:none" ></span>
                 <label class="col-md-4 control-label" for="rol">Rol</label>
                 <div class="col-md-4">
-                    <select id="rol" name="categoriaUno" class="form-control" required="required">
-                        <option value="">--- Seleccione una ---</option>
-                        <option th:each="rol : ${data.roles}" th:value="${rol.idRol}" th:text="${rol.nombre}" ></option>
+                    <select id="rol" th:field="*{idRol}" name="categoriaUno" class="form-control" required="required">
+                        <option class="rolOption" th:each="rol : ${data.roles}" th:value="${rol.idRol}" th:text="${rol.nombre}" ></option>
                     </select>
                 </div>
             </div>
@@ -114,16 +115,16 @@
                 <label class="col-md-4 control-label" for="submit"></label>
                 <div class="col-md-8">
                     <button type="submit" id="submit" name="submit" class="btn btn-success">Guardar cambios</button>
-                    <button id="cancel" name="cancel" class="btn btn-danger">Cancelar</button>
+                    <a id="cancel" th:href="@{/usuarioL}" name="cancel" class="btn btn-danger">Cancelar</a>
                 </div>
             </div>
         </fieldset>
     </form>
+    </div>
     <script th:inline="javascript">
-
-        $('#cancel').click(function(event) {
-            event.stopPropagation();
-            window.location = "/home";
+        $(document).ready(function(){
+            var id = $("#roldId").text();
+            $('.rolOption option[value='+id+']').attr('selected','selected');
         });
     </script>
 </div>

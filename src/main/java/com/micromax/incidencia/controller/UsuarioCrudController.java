@@ -60,15 +60,15 @@ public class UsuarioCrudController {
 
     /*USUARIO*/
     @PostMapping("/usuarioC")
-    public String postUsuarioC(@ModelAttribute UsuarioViewmodel viewmodel, BindingResult errors, Model model) {
+    public String postUsuarioC(@ModelAttribute UsuarioDTO dto, BindingResult errors, Model model) {
 
-        usuarioService.guardarUsuario(viewmodel.getUsuarioDTO(),true);
+        usuarioService.guardarUsuario(dto,true);
         return "redirect:/usuarioL";
     }
 
     @PostMapping("/usuarioE")
-    public String postUsuarioE(@RequestParam UsuarioViewmodel viewmodel, BindingResult errors, Model model) {
-        usuarioService.guardarUsuario(viewmodel.getUsuarioDTO(), false);
+    public String postUsuarioE(@RequestParam UsuarioDTO dto, BindingResult errors, Model model) {
+        usuarioService.guardarUsuario(dto, false);
         return "redirect:/usuarioL";
     }
 }
