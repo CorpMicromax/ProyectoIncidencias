@@ -6,10 +6,10 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <a class="btn btn-amber btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#">Crear Incidencia</a>
+                    <a class="btn btn-outline-amber btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#">Crear Incidencia</a>
                 </div>
 
-                <table id="datatable" class="table table-hover table-striped table-bordered table-dark dt-responsive nowrap">
+                <table id="datatable" class="table table-hover table-striped table-bordered table-dark table-sm nowrap">
                     <thead>
                     <tr>
                         <th> Id </th>
@@ -33,8 +33,16 @@
                         <td><span th:if="${incidencia.creador}" th:text="${incidencia.creador.nombres}"> Nombre creador </span></td>
                         <td><span th:if="${incidencia.creacion}" th:text="${incidencia.creacion}"> creacion </span></td>
                         <td><span th:if="${incidencia.status}" th:text="${incidencia.status}"> Status </span></td>
-                        <td><a th:id="${incidencia.idIncidencia}" class="editButton btn btn-info btn-rounded btn-sm" data-title="Editar" data-target="#editar" >Editar<i class="fa fa-edit fa-sm"></i></a></td>
-                        <td><a th:id="${incidencia.idIncidencia}" class="deleteCall btn btn-danger btn-rounded btn-sm" data-title="Eliminar" data-toggle="modal" data-target="#delete" >Eliminar<i class="fa fa-trash fa-sm"></i></a></td>
+                        <td>
+                            <a th:id="${incidencia.idIncidencia}" class="editButton btn btn-outline-info btn-rounded btn-sm flex-sm-nowrap" style="padding-left:2em; padding-right: 2em;" data-target="#editar" >
+                                <i class="float-left fa fa-edit fa-sm"></i>Editar
+                            </a>
+                        </td>
+                        <td>
+                            <a th:id="${incidencia.idIncidencia}" class="deleteCall btn btn-outline-danger btn-rounded btn-sm flex-sm-nowrap" style="padding-left:2em; padding-right: 2em;" data-toggle="modal" data-target="#delete" >
+                                <i class="fa fa-trash fa-sm"></i>Eliminar
+                            </a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

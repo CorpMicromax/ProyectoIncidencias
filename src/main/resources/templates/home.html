@@ -6,15 +6,17 @@
     <div th:include="/fragmentos/header" ></div>
 </head>
 <body class="stylish-color-dark text-white">
+
 <div th:replace="/fragmentos/navbar::navbar(nombre = ${nombre}, rol = ${user_role})"></div>
 
-<div id="content" class="container ">
+<div id="content" class="container justify-content-center">
     <div class="row">
-        <div th:if="${template}">
-            <div  th:replace="@{${location} + ${template}} :: ${template}" ></div>
-        </div>
+
+        <div th:if="${template}" th:replace="@{${location} + ${template}} :: ${template}" ></div>
+
     </div>
 </div>
 <div th:replace="/fragmentos/footer"></div>
 </bodystylish-color-dark>
+</body>
 </html>

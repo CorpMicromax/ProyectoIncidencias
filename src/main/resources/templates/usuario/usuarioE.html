@@ -1,7 +1,6 @@
-<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="usuarioE">
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="usuarioE" class="container justify-content-center">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.UsuarioViewmodel"*/-->
-    <div class="container justify-content-center">
-        <div class="card offset-2 col-sm-8 elegant-color my-5" >
+        <div class="card elegant-color offset-2 col-md-8 my-5" >
             <form id="editarForm" action="#" th:action="@{/usuarioE}" th:object="${data.usuarioDTO}" method="post" class="form-horizontal">
                 <fieldset>
                     <div class="card-header">
@@ -75,5 +74,4 @@
                 $('.rolOption option[value='+id+']').attr('selected','selected');
             });
         </script>
-    </div>
 </div>
