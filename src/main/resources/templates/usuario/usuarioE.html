@@ -1,121 +1,67 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="usuarioE">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.UsuarioViewmodel"*/-->
     <div class="container justify-content-center">
-        <div class="card offset-3 col-sm-6 elegant-color " >
-
+        <div class="card offset-2 col-sm-8 elegant-color my-5" >
             <form id="editarForm" action="#" th:action="@{/usuarioE}" th:object="${data.usuarioDTO}" method="post" class="form-horizontal">
                 <fieldset>
-
-                    <!-- Form Name -->
-                    <legend class="card-header stylish-color-dark">Editar usuario</legend>
+                    <div class="card-header">
+                        <legend class="card-title text-center my-lg-2">Editar usuario</legend>
+                    </div>
                     <input title="id" th:type="hidden" th:field="*{id}" />
                     <input title="tipoUsuario" th:type="hidden" th:field="*{tipoUsuario}" />
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="nombres">Nombres</label>
-                        <div class="col-md-4">
+                    <div class="form-group row">
+                        <div class="form-group col-md-6 my-2">
+                            <label class=" control-label" for="nombres">Nombres</label>
                             <input id="nombres" th:field="*{nombres}" name="nombres" type="text" placeholder="" class="form-control input-md" required="required">
-
                         </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="apellidos">Apellidos</label>
-                        <div class="col-md-4">
+                        <div class="form-group col-md-6 my-2">
+                            <label class=" control-label" for="apellidos">Apellidos</label>
                             <input id="apellidos" th:field="*{apellidos}" name="apellidos" type="text" placeholder="" class="form-control input-md" required="required">
-
                         </div>
                     </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="username">Usuario</label>
-                        <div class="col-md-4">
-                            <input id="username" th:field="*{username}" name="username" type="text" class="form-control input-md" required="required">
-
-                        </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="email">Email</label>
-                        <div class="col-md-4">
+                    <div class="form-group row">
+                        <div class="form-group col-md-6 my-2">
+                            <label class=" control-label" for="email">Email</label>
                             <input id="email" th:field="*{email}" name="email" type="email" class="form-control input-md" required="required">
-
                         </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="email">Teléfono</label>
-                        <div class="col-md-4">
+                        <div class="form-group col-md-6 my-2">
+                            <label class=" control-label" for="email">Teléfono</label>
                             <input id="telefono" th:field="*{telefono}" name="telefono" type="number" placeholder="" class="form-control input-md" >
                         </div>
                     </div>
-
-
-                    <!-- Select Basic -->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="tipoUsuario">Tipo de Usuario</label>
-                        <div class="col-md-4">
-                            <select id="tipoUsuario" name="tipoUsuario" class="form-control" required="required" >
-                                <option th:selected="*{tipoUsuario == 1}" value="1">Usuario</option>
-                                <option th:selected="*{tipoUsuario == 2}" value="2">Técnico</option>
-                                <option th:selected="*{tipoUsuario == 3}" value="3">Cliente</option>
-                            </select>
+                    <div class="form-group row">
+                        <div class="form-group col-md-6 my-2">
+                            <label class=" control-label" for="username">Usuario</label>
+                            <input id="username" th:field="*{username}" name="username" type="text" class="form-control input-md" required="required">
                         </div>
-                    </div>
-
-                    <!-- Select Basic -->
-                    <div class="form-group">
-                        <span id="rolId" th:text="*{idRol}" style="display:none" ></span>
-                        <label class="col-md-4 control-label" for="rol">Rol</label>
-                        <div class="col-md-4">
+                        <div class="form-group col-md-6 my-2">
+                            <span id="rolId" th:text="*{idRol}" style="display:none" ></span>
+                            <label class="control-label" for="rol">Rol</label>
                             <select id="rol" th:field="*{idRol}" name="categoriaUno" class="form-control" required="required">
                                 <option class="rolOption" th:each="rol : ${data.roles}" th:value="${rol.idRol}" th:text="${rol.nombre}" ></option>
                             </select>
                         </div>
                     </div>
-
-
-                    <div th:if="*{tipoUsuario == 2}" id="tecnicoSection">
-                        <div class="form-group">
-                            <label class=" control-label" for="capacidad">Técnico: Capacidad</label>
-                            <div class="">
-                                <input id="capacidad" th:field="*{capacidad}" name="capacidad" type="number" class="form-control input-md" >
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div th:if="*{tipoUsuario == 3}" id="clienteSection">
-                        <div class="form-group">
+                    <div th:if="*{tipoUsuario == 3}" id="clienteSection" class="form-group row my-2">
+                        <div class="form-group col-md-6 my-2">
                             <label class=" control-label" for="rif">RIF</label>
-                            <div class="">
-                                <input id="rif" th:field="*{rif}" name="rif" type="text" class="form-control input-md" >
-
-                            </div>
+                            <input id="rif" th:field="*{rif}" name="rif" type="text" class="form-control input-md" >
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-6 my-2">
                             <label class=" control-label" for="razonSocial">Razon Social</label>
-                            <div class="">
-                                <input id="razonSocial" th:field="*{razonSocial}" name="razonSocial" type="text" class="form-control input-md" >
-                            </div>
-                        </div>
-                        <div class="form-group">
+                            <input id="razonSocial" th:field="*{razonSocial}" name="razonSocial" type="text" class="form-control input-md" >
                             <label class=" control-label" for="denominacionComercial">Denominacion Comercial</label>
-                            <div class="">
-                                <input id="denominacionComercial" th:field="*{denominacionComercial}" name="denominacionComercial" type="text" class="form-control input-md" >
-                            </div>
+                            <input id="denominacionComercial" th:field="*{denominacionComercial}" name="denominacionComercial" type="text" class="form-control input-md" >
                         </div>
                     </div>
-
-                    <!-- Button (Double) -->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="submit"></label>
-                        <div class="col-md-8">
+                    <div th:if="*{tipoUsuario == 2}" id="tecnicoSection" class="form-group row my-2">
+                        <div class="form-group col-md-6 my-2">
+                            <label class=" control-label" for="capacidad">Técnico: Capacidad</label>
+                            <input id="capacidad" th:field="*{capacidad}" name="capacidad" type="number" class="form-control input-md" >
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-12">
                             <button type="submit" id="submit" name="submit" class="btn btn-success">Guardar cambios</button>
                             <a id="cancel" th:href="@{/usuarioL}" name="cancel" class="btn btn-danger">Cancelar</a>
                         </div>
