@@ -5,8 +5,6 @@ import com.micromax.incidencia.domain.entities.incidencias.Comentario;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.NaturalId;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -41,14 +39,13 @@ public class Usuario extends Desactivable implements Serializable {
     @Email(message = "*Por favor introduzca un email valido")
     @NotEmpty(message = "*Por favor introduzca un email")
     @Column(name="email", nullable = false)
-    @NaturalId
     private String email;
 
     @NotEmpty(message = "*Por favor introduzca un nombre de usuario")
-    @Column(name="username", nullable = false)
+    @Column(name="username", nullable = false, unique = true)
     private String username;
 
-    @Length(min = 5, message = "*Your password must have at least 5 characters")
+
     @NotEmpty(message = "*Please provide your password")
     @Column(name="password", nullable = false)
     private String password;

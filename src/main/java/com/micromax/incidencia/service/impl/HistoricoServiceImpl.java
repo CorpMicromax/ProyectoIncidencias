@@ -1,7 +1,8 @@
 package com.micromax.incidencia.service.impl;
 
 import com.micromax.incidencia.domain.entities.Historico;
-import com.micromax.incidencia.domain.entities.TipoCambio;
+import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
+import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.repository.HistoricoRepository;
 import com.micromax.incidencia.service.HistoricoService;
 import com.micromax.incidencia.service.UsuarioService;
@@ -13,11 +14,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Service
 @Slf4j
-
 public class HistoricoServiceImpl implements HistoricoService {
 
     @Autowired
@@ -27,34 +26,29 @@ public class HistoricoServiceImpl implements HistoricoService {
     private UsuarioService usuarioService;
 
     @Override
-    public Historico getHistoricoByIdAndIncidencia(long id, String idIncidencia) {
-        return historicoRepository.findHistoricoByIdHistoricoAndIncidencia(id,idIncidencia).orElse(null);
+    public Historico getHistoricoByIdAndIncidencia(long id, Incidencia incidencia) {
+        return historicoRepository.findHistoricoByIdHistoricoAndIncidencia(id,incidencia).orElse(null);
     }
 
     @Override
-    public Historico findHistoricoByIncidenciaAndUsuario(long id, String idIncidencia, long idUser) {
-        return historicoRepository.findHistoricoByIdHistoricoAndIncidenciaAndUsuarioResponsable(id,idIncidencia,idUser).orElse(null);
+    public Historico findHistoricoByIncidenciaAndUsuario(long id, Incidencia incidencia, Usuario usuario) {
+        return historicoRepository.findHistoricoByIdHistoricoAndIncidenciaAndUsuarioResponsable(id,incidencia,usuario).orElse(null);
     }
 
     @Override
-    public Collection<Historico> getHistoricoByIncidencia(String idIncidencia) {
+    public Collection<Historico> getHistoricoByIncidencia(Incidencia idIncidencia) {
         return historicoRepository.findAllByIncidencia(idIncidencia);
     }
 
     @Override
-    public Collection<Historico> getHistoricoByUsuario(long idUser, String idIncidencia) {
+    public Collection<Historico> getHistoricoByUsuario(Usuario idUser, Incidencia idIncidencia) {
         return historicoRepository.findAllByIncidenciaAndUsuarioResponsable(idIncidencia, idUser);
-    }
-    // Pendiente
-    @Override
-    public List<TipoCambio> getTipoCambio() {
-        return null;
     }
 
     @Override
     public void guardarHistorico(Historico historico, long idUsuario) {
         historico.setUsuarioResponsable(usuarioService.getUsuarioById(idUsuario));
         historico.setMomento(Date.from(LocalDateTime.now().toInstant(ZoneOffset.ofHours(0))));
-        historico = historicoRepository.save(historico);
+        historicoRepository.save(historico);
     }
 }

@@ -1,6 +1,6 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="usuarioC">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.UsuarioViewmodel"*/-->
-    <div class="card col-sm-6 elegant-color" >
+    <div class="card offset-3 col-sm-6 elegant-color" >
         <form id="crearForm" action="#" th:action="@{/usuarioC}" th:object="${data.usuarioDTO}" th:method="post" method="post" class="card-body form-horizontal">
             <fieldset>
                 <!-- Form Name -->
