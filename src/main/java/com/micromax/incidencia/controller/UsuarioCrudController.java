@@ -28,7 +28,7 @@ public class UsuarioCrudController {
     private ItemListService itemListService;
 
     /*-------------- USUARIO -------------*/
-    @GetMapping("/usuarioC")
+    @GetMapping("/admin//usuarioC")
     public String usuarioC(Model model){
         UsuarioViewmodel viewmodel = new UsuarioViewmodel();
         viewmodel.setUsuarioDTO(new UsuarioDTO());
@@ -41,7 +41,7 @@ public class UsuarioCrudController {
         return mainController.homeRoute(model);
     }
 
-    @GetMapping("/usuarioE")
+    @GetMapping("/admin/usuarioE")
     public String usuarioE(@RequestParam long id, Model model){
         UsuarioViewmodel viewmodel = new UsuarioViewmodel();
         viewmodel.setUsuarioDTO(new UsuarioDTO(usuarioService.getUsuarioById(id)));
@@ -54,7 +54,7 @@ public class UsuarioCrudController {
         return mainController.homeRoute(model);
     }
 
-    @GetMapping("/usuarioL")
+    @GetMapping("/admin/usuarioL")
     public String usuarioL(Model model){
         model = MasterCrudController.setTemplateToModel(model, USUARIO,"usuarioL")
                 .addAttribute("usuarios", usuarioService.getUsuariosActivos())
@@ -67,12 +67,12 @@ public class UsuarioCrudController {
     @PostMapping("/usuarioC")
     public String postUsuarioC(@ModelAttribute UsuarioViewmodel viewmodel, BindingResult errors, Model model) {
         usuarioService.guardarUsuario(viewmodel.getUsuarioDTO(),true);
-        return "redirect:/usuarioL";
+        return "redirect:/admin/usuarioL";
     }
 
     @PostMapping("/usuarioE")
     public String postUsuarioE(@ModelAttribute UsuarioViewmodel dto, BindingResult errors, Model model) {
         usuarioService.asignarTecnico(dto.getUsuarioDTO());
-        return "redirect:/usuarioL";
+        return "redirect:/admin/usuarioL";
     }
 }

@@ -6,12 +6,19 @@ import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -22,7 +29,7 @@ import java.util.List;
 @Table(name="usuario")
 @ToString(exclude = {"comentarios", "incidencias", "rol"})
 @DiscriminatorValue("U")
-public class Usuario extends Desactivable implements Serializable {
+public class Usuario extends Desactivable implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 10L;
 
@@ -72,4 +79,38 @@ public class Usuario extends Desactivable implements Serializable {
     private List<Incidencia> incidencias;
 
 
+    public String getPrimerNombreYPrimerApellido(){
+        Pattern pattern = Pattern.compile("^([\\w\\-]+)");
+
+        Matcher matchNombre = pattern.matcher(nombres);
+        Matcher matchApellido = pattern.matcher(apellidos);
+        if(matchNombre.matches() && matchApellido.matches()) return matchNombre.group(1)+" "+matchApellido.group(1);
+        return username;
+    }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority(rol.getNombre()));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return isHabilitado();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return isHabilitado();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isHabilitado();
+    }
 }

@@ -1,11 +1,16 @@
 package com.micromax.incidencia.config;
 
 import com.micromax.incidencia.controller.MicromaxAccessDeniedHandler;
+import com.micromax.incidencia.service.SecurityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +23,7 @@ import javax.sql.DataSource;
 @Configuration
 @Slf4j
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -25,6 +31,10 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    @Qualifier("userDetailsService")
+    private SecurityService securityService;
 
     @Value("${spring.queries.users-query}")
     private String usersQuery;
@@ -42,7 +52,7 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
             .antMatchers("/login","/img/**","/webjars/**","/static/**").permitAll()
             .antMatchers("/css/**","/scss/**","/font/**").permitAll()
             .antMatchers("/js/**").permitAll()
-            .antMatchers("/admin/**").hasAuthority("ADMIN")
+            .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
             .anyRequest().authenticated()
         .and()
             .csrf()
@@ -67,13 +77,9 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.
-                jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery(usersQuery)
-                .authoritiesByUsernameQuery(rolesQuery)
-                .passwordEncoder(passwordEncoder)
-                .rolePrefix("ROLE_");
+        auth
+                .userDetailsService(securityService)
+                .passwordEncoder(passwordEncoder);
     }
 
     @Override
@@ -81,5 +87,11 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
         web
                 .ignoring()
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }

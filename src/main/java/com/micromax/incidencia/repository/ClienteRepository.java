@@ -11,4 +11,5 @@ public interface ClienteRepository extends CrudRepository<Cliente,Long> {
 
     Cliente findClienteByIdUsuarioAndHabilitado(Long id, boolean h);
 
+    Cliente findClienteByUsernameAndHabilitado(String username, boolean h);
 }

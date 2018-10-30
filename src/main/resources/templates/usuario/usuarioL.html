@@ -50,12 +50,12 @@
             });
         });
         $('.editButton').click(function() {
-            window.location = "/usuarioE?id=" + this.id;
+            window.location = "/admin/usuarioE?id=" + this.id;
         });
         $('.deleteButton').click(function() {
             var id = $(this).attr('id');
             $.get("/rest/incidencia/usuarioD", {id: id}, function() {
-                window.location = "/usuarioL";
+                window.location = "/admin/usuarioL";
             });
         });
         /*]]>*/

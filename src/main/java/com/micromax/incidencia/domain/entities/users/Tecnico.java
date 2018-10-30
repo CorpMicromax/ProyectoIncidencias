@@ -1,6 +1,7 @@
 package com.micromax.incidencia.domain.entities.users;
 
 import com.micromax.incidencia.domain.entities.incidencias.Categoria;
+import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -27,4 +28,7 @@ public class Tecnico extends Usuario implements Serializable {
             inverseJoinColumns = { @JoinColumn(name = "id_categoria") }
     )
     private List<Categoria> categoriasTecnico;
+
+    @ManyToMany(mappedBy = "asignados")
+    private List<Incidencia> asignaciones;
 }

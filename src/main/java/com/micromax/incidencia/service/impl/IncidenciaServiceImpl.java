@@ -3,6 +3,7 @@ package com.micromax.incidencia.service.impl;
 import com.micromax.incidencia.domain.Status;
 import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
+import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.dto.IncidenciaDTO;
 import com.micromax.incidencia.repository.CategoriaRepository;
 import com.micromax.incidencia.repository.IncidenciaRepository;
@@ -104,6 +105,11 @@ public class IncidenciaServiceImpl implements IncidenciaService {
             return incidenciaRepository.save(i) != null;
         }
         return false;
+    }
+
+    @Override
+    public List<Incidencia> obtenerIncidenciasPorCreador(Usuario creador) {
+        return incidenciaRepository.findAllByCreadorAndHabilitado(creador, true);
     }
 
 

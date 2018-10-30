@@ -167,6 +167,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 
     public Usuario getUsuarioByUsername(String username){
+        Tecnico t = tecnicoRepository.findTecnicoByUsernameAndHabilitado(username, true);
+        if(t != null)return t;
+        Cliente c = clienteRepository.findClienteByUsernameAndHabilitado(username,true);
+        if(c != null)return c;
         return usuarioRepository.findUsuarioByUsernameAndHabilitado(username, true);
     }
 

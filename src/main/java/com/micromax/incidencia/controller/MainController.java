@@ -24,11 +24,16 @@ public class MainController {
         Usuario user = usuarioService.getUsuarioByUsername(nombre);
         assert(user != null);
 
-        model.addAttribute("nombre", nombre);
+        model.addAttribute("nombre", user.getPrimerNombreYPrimerApellido());
         model.addAttribute("authorization", auth.isAuthenticated() );
         model.addAttribute("user_role", user.getRol());
         model.addAttribute("permisos", user.getRol().getPermisos());
         return "home";
     }
+
+//    @GetMapping(value="/error")
+//    public String error(){
+//        return "error";
+//    }
 
 }

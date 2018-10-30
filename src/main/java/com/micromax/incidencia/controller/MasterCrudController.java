@@ -29,7 +29,7 @@ public class MasterCrudController {
     /*======================================= GETS ========================================*/
 
     /*-------------- CATEGORIA -------------*/
-    @GetMapping("/categoriaC")
+    @GetMapping("/admin/categoriaC")
     public String crearCategoria(Model model){
         CategoriaViewmodel viewmodel = new CategoriaViewmodel();
         viewmodel.setCategoria(new Categoria());
@@ -42,7 +42,7 @@ public class MasterCrudController {
         return mainController.homeRoute(model);
     }
     /*------------- TIPO INCIDENCIA ---------*/
-    @GetMapping("/tipoIncidenciaC")
+    @GetMapping("/admin/tipoIncidenciaC")
     public String tipoIncidenciaC(Model model){
         TipoIncidenciaViewmodel viewmodel = new TipoIncidenciaViewmodel();
         viewmodel.setTipoIncidencia(new TipoIncidencia());
@@ -54,7 +54,7 @@ public class MasterCrudController {
         return mainController.homeRoute(model);
     }
 
-    @GetMapping("/tipoIncidenciaL")
+    @GetMapping("/admin/tipoIncidenciaL")
     public String tipoIncidenciaL(@RequestParam(value = "id", required = false) Long id, Model model){
         model = setTemplateToModel(model,"incidencia","tipoIncidenciaL")
                 .addAttribute("TipoIncidencias", itemListService.getAllTipoIncidencias())
@@ -65,7 +65,7 @@ public class MasterCrudController {
         return mainController.homeRoute(model);
     }
 
-    @GetMapping("/TipIncidenciaE")
+    @GetMapping("/admin/TipIncidenciaE")
     public String tipoIncidenciaE(@RequestParam long id, Model model){
 
         TipoIncidenciaViewmodel viewmodel = new TipoIncidenciaViewmodel();
@@ -81,20 +81,20 @@ public class MasterCrudController {
     /*======================================= POSTS ========================================*/
 
     /*CATEGORIA*/
-    @PostMapping("/categoriaC")
+    @PostMapping("/admin/categoriaC")
     public String postCategoriaC(@ModelAttribute CategoriaDTO categoria, BindingResult errors, Model model){
         itemListService.guardar(categoria);
         return crearCategoria(model);
     }
 
-    @PostMapping("/tipIncidenciaC")
+    @PostMapping("/admin/tipIncidenciaC")
     public String crearTipoIncidencia(@ModelAttribute TipoIncidenciaViewmodel viewmodel, BindingResult errors, Model model){
         itemListService.createTipoIncidencia(viewmodel.getTipoIncidencia());
         return "redirect:/tipIncidenciaL?=" + viewmodel.getTipoIncidencia().getId(); // pendiente con esto
     }
 
     /*TIPO INCIDENCIA*/
-    @PostMapping("/tipoIncidenciaC")
+    @PostMapping("/admin/tipoIncidenciaC")
     public String crearTipoIncidencia(@ModelAttribute TipoIncidencia tipoIncid, BindingResult errors, Model model){
         itemListService.guardar(tipoIncid);
         return "redirect:/home";
