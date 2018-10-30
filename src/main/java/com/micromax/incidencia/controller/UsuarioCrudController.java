@@ -1,6 +1,7 @@
 package com.micromax.incidencia.controller;
 
 import com.micromax.incidencia.dto.UsuarioDTO;
+import com.micromax.incidencia.service.ItemListService;
 import com.micromax.incidencia.service.UsuarioService;
 import com.micromax.incidencia.viewmodel.UsuarioViewmodel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,16 @@ public class UsuarioCrudController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private ItemListService itemListService;
+
     /*-------------- USUARIO -------------*/
     @GetMapping("/usuarioC")
     public String usuarioC(Model model){
         UsuarioViewmodel viewmodel = new UsuarioViewmodel();
         viewmodel.setUsuarioDTO(new UsuarioDTO());
         viewmodel.setRoles(usuarioService.getRoles());
+        viewmodel.setCategorias(itemListService.getCategoriaByNivel(2));
 
         model = MasterCrudController.setTemplateToModel(model, USUARIO,"usuarioC");
         model.addAttribute(DATA, viewmodel);
@@ -41,7 +46,7 @@ public class UsuarioCrudController {
         UsuarioViewmodel viewmodel = new UsuarioViewmodel();
         viewmodel.setUsuarioDTO(new UsuarioDTO(usuarioService.getUsuarioById(id)));
         viewmodel.setRoles(usuarioService.getRoles());
-        viewmodel.setMessage("");
+        viewmodel.setCategorias(itemListService.getCategoriaByNivel(2));
 
         model = MasterCrudController.setTemplateToModel(model, USUARIO,"usuarioE")
                 .addAttribute(DATA, viewmodel)

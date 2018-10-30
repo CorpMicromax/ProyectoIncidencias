@@ -17,7 +17,8 @@ import java.sql.Statement;
 @Configuration
 public class GeneradorSecuencias implements IdentifierGenerator {
 
-    
+    private Constants constants = new Constants();
+
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object o) throws HibernateException {
         Connection connection = session.connection();
@@ -31,7 +32,9 @@ public class GeneradorSecuencias implements IdentifierGenerator {
             if(rs.next())
             {
                 Integer id=rs.getInt(1);
-                return Constants.SEQUENCE_PREFIX + String.format("%04d", id);
+                return constants.getSEQUENCE_PREFIX() + String.format("%04d", id);
+            }else{
+                return constants.getSEQUENCE_PREFIX() + String.format("%04d", 1);
             }
         } catch (SQLException e) {
             log.debug(e.getSQLState());

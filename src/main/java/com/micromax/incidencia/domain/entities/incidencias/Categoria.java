@@ -1,5 +1,6 @@
 package com.micromax.incidencia.domain.entities.incidencias;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.micromax.incidencia.domain.Desactivable;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.dto.CategoriaDTO;
@@ -44,9 +45,11 @@ public class Categoria extends Desactivable implements Serializable {
     private String tiempoEstimado;
 
     @ManyToMany(mappedBy = "categoriasTecnico")
+    @JsonIgnore
     private List<Tecnico> tecnicos;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
+    @JsonIgnore
     private List<Incidencia> incidencias;
 
     public Categoria(){}

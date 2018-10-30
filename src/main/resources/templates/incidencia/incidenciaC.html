@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label class="field-label" for="categoriaUno">Categoria</label>
+                        <label class="field-label" for="categoriaUno">Categorias</label>
                         <select id="categoriaUno" name="categoriaUno" class="form-control" required="required">
                             <option value="">--- Seleccione una ---</option>
                             <option th:each="cat : ${data.categorias}" th:value="${cat.id}" th:text="${cat.nombre}" ></option>

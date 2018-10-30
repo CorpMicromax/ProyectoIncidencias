@@ -1,14 +1,12 @@
 package com.micromax.incidencia.service.impl;
 
+import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import com.micromax.incidencia.domain.entities.users.Cliente;
 import com.micromax.incidencia.domain.entities.users.Rol;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.dto.UsuarioDTO;
-import com.micromax.incidencia.repository.PrivilegioRepository;
-import com.micromax.incidencia.repository.RolRepository;
-import com.micromax.incidencia.repository.TecnicoRepository;
-import com.micromax.incidencia.repository.UsuarioRepository;
+import com.micromax.incidencia.repository.*;
 import com.micromax.incidencia.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
@@ -32,6 +30,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     private TecnicoRepository tecnicoRepository;
 
     @Autowired
+    private ClienteRepository clienteRepository;
+
+    @Autowired
     private RolRepository rolRepository;
 
     @Autowired
@@ -39,6 +40,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private CategoriaRepository categoriaRepository;
 
     public Usuario findUserByEmail(String email) {
         return usuarioRepository.findByEmailAndHabilitado(email, true).orElse(null);
@@ -56,6 +60,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario getUsuarioById(long id) {
+        Tecnico t = tecnicoRepository.findTecnicoByIdUsuarioAndHabilitado(id, true);
+        Cliente c = clienteRepository.findClienteByIdUsuarioAndHabilitado(id,true);
+        if(t != null)return t;
+        if(c != null)return c;
         return usuarioRepository.findByIdUsuarioAndHabilitado(id, true);
     }
 
@@ -72,6 +80,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario findUsuarioByUsername(String username) {
+
         return usuarioRepository.findUsuarioByUsernameAndHabilitado(username, true);
     }
 
@@ -118,14 +127,16 @@ public class UsuarioServiceImpl implements UsuarioService {
         if(t!=null)tecnicoRepository.save(t);
     }
 
-
+    @Override
+    @Transactional
     public void guardarUsuario(UsuarioDTO usuarioDTO, boolean nuevo) {
         Usuario usuario;
         switch (usuarioDTO.getTipoUsuario()){
             case 1: usuario = new Usuario();
                     break;
             case 2: usuario = new Tecnico();
-                    ((Tecnico) usuario).setCapacidad(usuarioDTO.getCapacidad());
+                    List<Categoria> cats = (List<Categoria>) categoriaRepository.findAllById(usuarioDTO.getCats());
+                    ((Tecnico) usuario).setCategoriasTecnico(cats);
                     break;
             case 3: usuario = new Cliente();
                     ((Cliente) usuario).setRif(usuarioDTO.getRif());

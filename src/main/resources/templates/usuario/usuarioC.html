@@ -56,8 +56,10 @@
                     </div>
                     <div id="tecnicoSection" style="display: none" class="form-group row">
                         <div class="form-group col-md-6">
-                            <label class=" control-label" for="capacidad">Técnico: Capacidad</label>
-                            <input id="capacidad" th:field="*{capacidad}" name="capacidad" type="number" class="form-control input-md" >
+                            <label class=" control-label" for="categorias" >Categorias Tecnicas</label>
+                            <select id="categorias" name="selectmultiple" th:field="*{cats}" class="form-control" multiple="multiple">
+                                <option th:each="cat : ${data.categorias}" th:value="${cat.id}" th:text="${cat.nombre}" ></option>
+                            </select>
                         </div>
                     </div>
                     <div id="clienteSection" style="display: none" class="form-group row">

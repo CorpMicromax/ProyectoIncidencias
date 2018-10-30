@@ -1,11 +1,13 @@
 package com.micromax.incidencia.dto;
 
+import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import com.micromax.incidencia.domain.entities.users.Cliente;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
+import java.util.List;
 
 @Data
 public class UsuarioDTO {
@@ -25,14 +27,17 @@ public class UsuarioDTO {
     private String denominacionComercial;
     private String razonSocial;
     private Integer tipoUsuario;
+    private List<Categoria> categorias;
+    private List<Long> cats;
 
-    public UsuarioDTO(){};
+    public UsuarioDTO(){}
 
     public UsuarioDTO(Usuario usuario){
         this.id = usuario.getIdUsuario();
         this.tipoUsuario = 1;
         if(usuario instanceof Tecnico){
             this.capacidad = ((Tecnico) usuario).getCapacidad();
+            this.categorias = ((Tecnico) usuario).getCategoriasTecnico();
             this.tipoUsuario = 2;
         }
         if(usuario instanceof Cliente){
