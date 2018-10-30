@@ -1,13 +1,11 @@
 package com.micromax.incidencia.service;
 
-import com.micromax.incidencia.domain.entities.Historico;
 import com.micromax.incidencia.domain.entities.incidencias.Comentario;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 
 public interface ComentarioService {

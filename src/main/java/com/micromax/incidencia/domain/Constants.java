@@ -1,25 +1,20 @@
 package com.micromax.incidencia.domain;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 
-@ConfigurationProperties
+@EnableConfigurationProperties
 @Data
 @Configuration
+@ConfigurationProperties
 public class Constants {
 
     public enum nivel_categoria{
         UNO, DOS, TRES
     }
-
-    @Value("${micromax.prefijo.secuencia.incidencias}")
-    private final String SEQUENCE_PREFIX = "INC_";
-
-    @Value("${micromax.estragegia}")
-    private final String TIPO_ESTRATEGIA = "manual";
 
 
     public static final String AUTO = "Auto";

@@ -2,7 +2,6 @@ package com.micromax.incidencia.controller;
 
 import com.micromax.incidencia.domain.Constants;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
-import com.micromax.incidencia.domain.entities.users.Cliente;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.dto.IncidenciaDTO;
@@ -10,6 +9,7 @@ import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.ItemListService;
 import com.micromax.incidencia.service.UsuarioService;
 import com.micromax.incidencia.viewmodel.IncidenciaViewmodel;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.micromax.incidencia.controller.MasterCrudController.setTemplateToModel;
@@ -84,18 +84,12 @@ public class IncidenciaController {
         List<Incidencia> incidencias;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario u = usuarioService.getUsuarioByUsername(auth.getName());
-        if(obtenerRol().equalsIgnoreCase("ROLE_ADMIN")){
+        String rol = obtenerRol();
+        incidencias = incidenciaService.obtenerIncidenciasPorCreador(u);
+        if(rol.equalsIgnoreCase("ROLE_ADMIN")){
             incidencias = incidenciaService.getIncidencias();
-
-        }else
-        if( u instanceof Tecnico){
-            incidencias = u.getIncidencias();
-            incidencias.addAll(((Tecnico) u).getAsignaciones());
-        }else
-        if(obtenerRol().equalsIgnoreCase("ROLE_CLIENT") || u instanceof Cliente){
-            incidencias = incidenciaService.obtenerIncidenciasPorCreador(u);
-        }else{
-            incidencias = Collections.EMPTY_LIST;
+        }else if( u instanceof Tecnico){
+            incidencias.addAll(ObjectUtils.defaultIfNull(((Tecnico) u).getAsignaciones(), new ArrayList<>()) );
         }
 
         model = setTemplateToModel(model, INCIDENCIA,"incidenciaL")

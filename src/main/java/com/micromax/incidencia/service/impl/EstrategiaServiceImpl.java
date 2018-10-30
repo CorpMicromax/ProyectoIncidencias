@@ -1,8 +1,10 @@
 package com.micromax.incidencia.service.impl;
 
+import com.micromax.incidencia.config.ConfiguracionGeneral;
 import com.micromax.incidencia.domain.Constants;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
+import com.micromax.incidencia.service.EstrategiaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class EstrategiaService {
+public class EstrategiaServiceImpl implements EstrategiaService {
 
     @Autowired
-    private Constants constants;
+    private ConfiguracionGeneral config;
 
     public Tecnico ejecutarEstrategia(Incidencia incidencia, List<Tecnico> tecnicos){
 
-        if(constants.getTIPO_ESTRATEGIA().equalsIgnoreCase(Constants.AUTO)){
+        if(config.getTipoEstrategia().equalsIgnoreCase(Constants.AUTO)){
             List<Tecnico> disponibles = new ArrayList<>();
 
             for (Tecnico tecnico : tecnicos) {
@@ -27,7 +29,9 @@ public class EstrategiaService {
             }
 
             Tecnico elegido = encontrarTecnicoMasDisponible(disponibles);
-            elegido.getIncidencias().add(incidencia);
+
+
+            incidencia.getAsignados().add(elegido);
             return elegido;
         }
         return null;
