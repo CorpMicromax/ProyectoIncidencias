@@ -10,9 +10,6 @@ import java.util.List;
 
 public interface ComentarioRepository extends CrudRepository<Comentario,Long> {
 
-    Optional<Comentario> findComentarioByIdComentarioAndIncidencia (long idComentario, Incidencia incidencia);
-
-    Optional<Comentario> findComentarioByIncidenciaAndAutorAndCreacion (Incidencia incidencia, Usuario usuario, Date FechaCreacion);
     Comentario findComentarioByIdComentarioAndIncidencia(long idComentario, Incidencia incidencia);
 
     Comentario findComentarioByIncidenciaAndAutorAndCreacion(Incidencia incidencia, Usuario usuario, Date fechaCreacion);
