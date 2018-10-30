@@ -61,7 +61,7 @@
             <div class="card-block">
                 <div class="form-group">
                     <label>Tecnico(s) Asignado(s)</label>
-                    <select id="categoriaUno" name="categoriaUno"  class="form-control" disabled multiple>
+                    <select class="form-control" disabled multiple>
                         <option th:each="cat : *{incidencia.asignados}" th:text="${cat.username}" ></option>
                     </select>
                 </div>

@@ -40,7 +40,7 @@ public class IncidenciaController {
     @Autowired
     private ItemListService itemListService;
 
-    /*-------------- INCIDENCIA -------------*/
+    /*-------------------------------------------- INCIDENCIA -------------------------------------------------*/
     @GetMapping("/incidenciaC")
     public String incidenciaC(Model model){
         IncidenciaViewmodel viewmodel = new IncidenciaViewmodel();
@@ -70,6 +70,7 @@ public class IncidenciaController {
 
         IncidenciaViewmodel viewmodel = new IncidenciaViewmodel();
         viewmodel.setIncidenciaDTO(new IncidenciaDTO(incidenciaService.getIncidenciaById(id)));
+
         viewmodel.setMessage("");
         viewmodel.setCategorias(itemListService.getCategoriaByNivel(1));
 
@@ -101,7 +102,7 @@ public class IncidenciaController {
         return mainController.homeRoute(model);
     }
 
-    /*======================================= POSTS ========================================*/
+    /*=======================================+======== POSTS ========================================*/
 
     /* INCIDENCIA */
     @PostMapping("/incidenciaC")

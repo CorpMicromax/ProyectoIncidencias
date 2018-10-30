@@ -1,7 +1,6 @@
 package com.micromax.incidencia.service.impl;
 
 import com.micromax.incidencia.domain.entities.Historico;
-import com.micromax.incidencia.domain.entities.incidencias.Comentario;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.repository.HistoricoRepository;
@@ -34,11 +33,6 @@ public class HistoricoServiceImpl implements HistoricoService {
     @Override
     public Historico findHistoricoByIncidenciaAndUsuario(long id, Incidencia incidencia, Usuario usuario) {
         return historicoRepository.findHistoricoByIdHistoricoAndIncidenciaAndUsuarioResponsable(id,incidencia,usuario).orElse(null);
-    }
-
-    @Override
-    public Historico findHistoricoByComentarioAndIncidencia(long id, Incidencia incidencia, Comentario comentario) {
-        return historicoRepository.findHistoricoByIdHistoricoAndComentarioAndIncidencia(id,comentario, incidencia).orElse(null);
     }
 
     @Override

@@ -27,10 +27,7 @@ public class EstrategiaServiceImpl implements EstrategiaService {
                     disponibles.add(tecnico);
                 }
             }
-
             Tecnico elegido = encontrarTecnicoMasDisponible(disponibles);
-
-
             incidencia.getAsignados().add(elegido);
             return elegido;
         }

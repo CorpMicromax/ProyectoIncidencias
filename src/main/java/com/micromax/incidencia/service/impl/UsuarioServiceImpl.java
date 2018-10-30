@@ -129,6 +129,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
+    public List<Tecnico> getTecnicosPorCategoria(long o) {
+        return tecnicoRepository.findAllByCategoriasTecnicoContains(categoriaRepository.findById(o));
+    }
+
+    @Override
+    @Transactional
     public void guardarUsuario(UsuarioDTO usuarioDTO, boolean nuevo) {
         Usuario usuario;
         switch (usuarioDTO.getTipoUsuario()){

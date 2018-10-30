@@ -37,5 +37,6 @@ public interface UsuarioService {
 
     void asignarTecnico(Tecnico ejecutarEstrategia);
 
+    List<Tecnico> getTecnicosPorCategoria(long o);
 }
 

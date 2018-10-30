@@ -30,7 +30,14 @@
                         </select>
                     </div>
                 </div>
-
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label" for="asignados" >Categorias Tecnicas</label>
+                        <select id="asignados"  name="asignados" class="form-control" multiple="multiple">
+                            <option class="categoriasTecnicas" th:each="cat : ${data.incidenciaDTO.as.categorias}" th:selected="${data.usuarioDTO.categorias.contains(cat)}" th:value="${cat.id}" th:text="${cat.nombre}" ></option>
+                        </select>
+                    </div>
+                </div>
                 <input id="catId" th:value="*{incidenciaDTO.categoria.id}" type="hidden" >
                 <input id="dadId" th:value="*{incidenciaDTO.categoria.padre.id}" type="hidden">
                 <input type="hidden" th:field="*{incidenciaDTO.id}" />
@@ -71,6 +78,7 @@
                 event.stopPropagation();
                 window.location = "/incidenciaL";
             });
+            //rest/incidencia/getTecnicos/{catId}
             /*]]>*/
         </script>
     </div>

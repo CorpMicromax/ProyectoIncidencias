@@ -4,7 +4,10 @@ import com.micromax.incidencia.domain.Status;
 import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.incidencias.TipoIncidencia;
+import com.micromax.incidencia.domain.entities.users.Tecnico;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class IncidenciaDTO {
@@ -17,6 +20,7 @@ public class IncidenciaDTO {
     private TipoIncidencia tipoIncidencia;
     private String tiempoEstimado;
     private long categoriaId;
+    private List<Tecnico> asignados;
 
     public IncidenciaDTO(){}
 
