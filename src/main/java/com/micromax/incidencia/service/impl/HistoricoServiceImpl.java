@@ -1,6 +1,7 @@
 package com.micromax.incidencia.service.impl;
 
 import com.micromax.incidencia.domain.entities.Historico;
+import com.micromax.incidencia.domain.entities.incidencias.Comentario;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.repository.HistoricoRepository;
@@ -36,6 +37,11 @@ public class HistoricoServiceImpl implements HistoricoService {
     }
 
     @Override
+    public Historico findHistoricoByComentarioAndIncidencia(long id, Incidencia incidencia, Comentario comentario) {
+        return historicoRepository.findHistoricoByComentarioAndIncidencia(id,incidencia,comentario).orElse(null);
+    }
+
+    @Override
     public Collection<Historico> getHistoricoByIncidencia(Incidencia idIncidencia) {
         return historicoRepository.findAllByIncidencia(idIncidencia);
     }
@@ -44,8 +50,7 @@ public class HistoricoServiceImpl implements HistoricoService {
     public Collection<Historico> getHistoricoByUsuario(Usuario idUser, Incidencia idIncidencia) {
         return historicoRepository.findAllByIncidenciaAndUsuarioResponsable(idIncidencia, idUser);
     }
-
-    @Override
+     @Override
     public void guardarHistorico(Historico historico, long idUsuario) {
         historico.setUsuarioResponsable(usuarioService.getUsuarioById(idUsuario));
         historico.setMomento(Date.from(LocalDateTime.now().toInstant(ZoneOffset.ofHours(0))));
