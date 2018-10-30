@@ -7,6 +7,7 @@ import com.micromax.incidencia.domain.entities.incidencias.TipoIncidencia;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -31,6 +32,8 @@ public class IncidenciaDTO {
         categoria = incidencia.getCategoria();
         status = incidencia.getStatus();
         tipoIncidencia = incidencia.getTipoIncidencia();
+        asignados = new ArrayList<>();
+        asignados.addAll(incidencia.getAsignados());
     }
 
 }

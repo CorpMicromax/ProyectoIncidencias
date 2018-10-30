@@ -57,7 +57,10 @@
                         <div class="form-group col-md-6">
                             <label class=" control-label" for="cats" >Categorias Tecnicas</label>
                             <select id="cats"  name="cats" class="form-control" multiple="multiple">
-                                <option class="categoriasTecnicas" th:each="cat : ${data.categorias}" th:selected="${data.usuarioDTO.categorias.contains(cat)}" th:value="${cat.id}" th:text="${cat.nombre}" ></option>
+                                <option class="categoriasTecnicas"
+                                        th:each="cat : ${data.categorias}"
+                                        th:selected="${data.usuarioDTO.categorias.contains(cat)}"
+                                        th:value="${cat.id}" th:text="${cat.nombre}" ></option>
                             </select>
                         </div>
                     </div>

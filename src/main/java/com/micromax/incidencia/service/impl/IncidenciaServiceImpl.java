@@ -74,7 +74,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
         Optional<Incidencia> i = incidenciaRepository.findByIdIncidenciaAndHabilitadoIsTrue(dto.getId());
         if(i.isPresent()){
             Incidencia in = i.get();
-
+            in.setAsignados(defaultIfNull(dto.getAsignados(), new ArrayList<>()));
             in.setCategoria(defaultIfNull(cat, in.getCategoria()));
             in.setTitulo(defaultIfNull(dto.getTitulo(), in.getTitulo()));
             in.setTipoIncidencia(defaultIfNull(dto.getTipoIncidencia(), in.getTipoIncidencia()));

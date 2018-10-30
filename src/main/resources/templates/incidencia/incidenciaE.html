@@ -40,9 +40,14 @@
                 </div>-->
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label class="control-label" for="tecnicos" >Tecnicos Disponibles</label>
-                        <select id="tecnicos"  name="asignados" class="form-control" multiple="multiple">
-                            <option class="categoriasTecnicas" th:each="tec : ${data.tecnicos}" th:value="${tec.idUsuario}" th:text="${tec.username}" ></option>
+                        <label class="control-label" for="tecnicos" >Asignaciones</label>
+                        <select id="tecnicos"  name="asignados" th:field="*{incidenciaDTO.asignados}" class="form-control" multiple="multiple">
+                            <option class="categoriasTecnicas"
+                                    th:each="tec : ${data.tecnicos}"
+                                    th:value="${tec.idUsuario}"
+                                    th:text="${tec.username}"
+                                    th:selected="${data.incidenciaDTO.asignados.contains(tec)}"
+                            ></option>
                         </select>
                     </div>
                 </div>
