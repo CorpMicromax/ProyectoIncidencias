@@ -2,10 +2,10 @@
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaViewmodel"*/-->
     <div class="card offset-2 col-sm-8 elegant-color my-5" >
         <form th:action="@{/incidenciaE}" th:object="${data}" method="post" class="card-body form-horizontal">
-
             <fieldset>
                 <div class="card-header">
                     <legend class="card-title text-center my-lg-2">Editar Incidencia</legend>
+
                 </div>
                 <div class="form-group">
                     <label class=" control-label" for="titulo">Titulo</label>
@@ -30,11 +30,19 @@
                         </select>
                     </div>
                 </div>
+                <!--<div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label" for="asignados" >Tecnicos Asignados</label>
+                        <select id="asignados"  name="asignados" class="form-control" multiple="multiple">
+                            <option class="categoriasTecnicas" th:each="tec : ${data.incidenciaDTO.asignados}" th:value="${tec.idUsuario}" th:text="${tec.username}" ></option>
+                        </select>
+                    </div>
+                </div>-->
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label class="control-label" for="asignados" >Categorias Tecnicas</label>
-                        <select id="asignados"  name="asignados" class="form-control" multiple="multiple">
-                            <option class="categoriasTecnicas" th:each="cat : ${data.incidenciaDTO.as.categorias}" th:selected="${data.usuarioDTO.categorias.contains(cat)}" th:value="${cat.id}" th:text="${cat.nombre}" ></option>
+                        <label class="control-label" for="tecnicos" >Tecnicos Disponibles</label>
+                        <select id="tecnicos"  name="asignados" class="form-control" multiple="multiple">
+                            <option class="categoriasTecnicas" th:each="tec : ${data.tecnicos}" th:value="${tec.idUsuario}" th:text="${tec.username}" ></option>
                         </select>
                     </div>
                 </div>
@@ -54,9 +62,9 @@
             /*<![CDATA[*/
             $(document).ready(function(){
                 $('#categoriaUno option[value='+$("#dadId").val()+']').attr('selected','selected');
-
                 $("#categoriaUno").trigger("change", [{thing:true}]);
             });
+
             $("#categoriaUno").change(function(e, data){
                 $.ajax({
                     type: "GET",
@@ -66,7 +74,6 @@
                         $("#categoriaDos").empty().append('<option value="">---Seleccione una opcion---</option>');
                         $.each(response, function (i) {
                             $("#categoriaDos").append('<option value="' + response[i].id + '">' + response[i].nombre + '</option>');
-
                         });
                         if (data.thing) {
                             $('#categoriaDos option[value=' + $("#catId").val() + ']').attr('selected', 'selected');
@@ -78,7 +85,7 @@
                 event.stopPropagation();
                 window.location = "/incidenciaL";
             });
-            //rest/incidencia/getTecnicos/{catId}
+            //{catId}
             /*]]>*/
         </script>
     </div>

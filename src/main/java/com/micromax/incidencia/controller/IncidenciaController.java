@@ -70,7 +70,7 @@ public class IncidenciaController {
 
         IncidenciaViewmodel viewmodel = new IncidenciaViewmodel();
         viewmodel.setIncidenciaDTO(new IncidenciaDTO(incidenciaService.getIncidenciaById(id)));
-
+        viewmodel.setTecnicos(usuarioService.getTecnicos());
         viewmodel.setMessage("");
         viewmodel.setCategorias(itemListService.getCategoriaByNivel(1));
 

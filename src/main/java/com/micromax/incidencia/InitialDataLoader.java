@@ -1,10 +1,7 @@
 package com.micromax.incidencia;
 
 import com.micromax.incidencia.domain.entities.incidencias.Categoria;
-import com.micromax.incidencia.domain.entities.users.Cliente;
-import com.micromax.incidencia.domain.entities.users.Permiso;
-import com.micromax.incidencia.domain.entities.users.Rol;
-import com.micromax.incidencia.domain.entities.users.Usuario;
+import com.micromax.incidencia.domain.entities.users.*;
 import com.micromax.incidencia.dto.CategoriaDTO;
 import com.micromax.incidencia.repository.PrivilegioRepository;
 import com.micromax.incidencia.repository.RolRepository;
@@ -86,7 +83,14 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
                         incidencia_verPropias)
         );
 
-        createUsuarioIfNotFound(construirUsuario(
+        createUsuarioIfNotFound(construirUsuario(0,
+                "Administrador",
+                "Absoluto",
+                "Admin",
+                "admin",
+                "Admin@micromax.com",
+                adminRole));
+        createUsuarioIfNotFound(construirUsuario(0,
                 "Francisco",
                 "Letterer",
                 "FLetterer",
@@ -94,7 +98,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
                 "Javier.Darkona@gmail.com",
                 adminRole));
 
-        createUsuarioIfNotFound(construirUsuario(
+        createUsuarioIfNotFound(construirUsuario(1,
                 "Javier",
                 "Letterer",
                 "JLetterer",
@@ -102,7 +106,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
                 "Javier.Darkona@gmail.com",
                 tecnico));
 
-        createUsuarioIfNotFound(construirUsuario(
+        createUsuarioIfNotFound(construirUsuario(1,
                 "Karelis",
                 "Ramirez",
                 "KRamirez",
@@ -183,15 +187,21 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         return rol;
     }
 
-    private Usuario construirUsuario(String nombre, String apellido, String username, String pass, String email, Rol rol){
-        Usuario usuario = new Usuario();
-        usuario.setNombres(nombre);
-        usuario.setApellidos(apellido);
-        usuario.setUsername(username);
-        usuario.setPassword(pass);
-        usuario.setEmail(email);
-        usuario.setRol(rol);
-        usuario.setHabilitado(true);
-        return usuario;
+    private Usuario construirUsuario(int tipo, String nombre, String apellido, String username, String pass, String email, Rol rol){
+        Usuario u = new Usuario();
+        if (tipo == 1) {
+            u = new Tecnico();
+        }
+        if (tipo == 2){
+            u = new Cliente();
+        }
+        u.setNombres(nombre);
+        u.setApellidos(apellido);
+        u.setUsername(username);
+        u.setPassword(pass);
+        u.setEmail(email);
+        u.setRol(rol);
+        u.setHabilitado(true);
+        return u;
     }
 }

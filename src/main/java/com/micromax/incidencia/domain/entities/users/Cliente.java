@@ -2,7 +2,6 @@ package com.micromax.incidencia.domain.entities.users;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -25,7 +24,6 @@ public class Cliente extends Usuario implements Serializable {
     private String denominacionComercial;
 
     @Column(name = "rif")
-    @Length(max = 10, min = 10)
     private String rif;
 
 }

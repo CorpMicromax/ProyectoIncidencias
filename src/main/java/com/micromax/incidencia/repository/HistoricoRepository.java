@@ -1,7 +1,6 @@
 package com.micromax.incidencia.repository;
 
 import com.micromax.incidencia.domain.entities.Historico;
-import com.micromax.incidencia.domain.entities.incidencias.Comentario;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import org.springframework.data.repository.CrudRepository;
