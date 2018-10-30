@@ -36,7 +36,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 
     @Override
     public Comentario getComentarioByIdAndIncidencia(long id, Incidencia idIncidencia) {
-        return comentarioRepository.findComentarioByIdAndIncidencia(id, idIncidencia).orElse(null);
+        return comentarioRepository.findComentarioByIdComentarioAndIncidencia(id, idIncidencia).orElse(null);
     }
 
     @Override
