@@ -36,10 +36,10 @@ public class HistoricoServiceImpl implements HistoricoService {
         return historicoRepository.findHistoricoByIdHistoricoAndIncidenciaAndUsuarioResponsable(id,incidencia,usuario).orElse(null);
     }
 
-    @Override
+    /*@Override
     public Historico findHistoricoByComentarioAndIncidencia(long id, Incidencia incidencia, Comentario comentario) {
         return historicoRepository.findHistoricoByIdHistoricoAndComentarioAndIncidencia(id,comentario, incidencia).orElse(null);
-    }
+    }*/
 
     @Override
     public Collection<Historico> getHistoricoByIncidencia(Incidencia idIncidencia) {
