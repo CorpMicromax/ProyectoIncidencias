@@ -55,7 +55,15 @@ public class ItemListServiceImpl implements ItemListService {
 
     @Override
     public Categoria guardar(CategoriaDTO categoriaDTO) {
-        return categoriaRepository.save(new Categoria(categoriaDTO));
+        Categoria categoria = new Categoria();
+        categoria.setNivel(categoriaDTO.getNivel());
+        categoria.setNombre(categoriaDTO.getNombre());
+        if(categoriaDTO.getPadre() != null){
+            categoria.setPadre(categoriaDTO.getPadre());
+            categoria.setNivel(categoriaDTO.getPadre().getNivel() + 1);
+        }
+        categoria.setHabilitado(true);
+        return categoriaRepository.save(categoria);
     }
 
     @Override
@@ -66,6 +74,7 @@ public class ItemListServiceImpl implements ItemListService {
 
     @Override
     public boolean eliminarCategoria(Categoria cat) {
+
         cat.setHabilitado(false);
         categoriaRepository.save(cat);
         return true;

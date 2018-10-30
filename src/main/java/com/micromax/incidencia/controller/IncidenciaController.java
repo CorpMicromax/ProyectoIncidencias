@@ -47,6 +47,7 @@ public class IncidenciaController {
         viewmodel.setIncidenciaDTO(new IncidenciaDTO());
         viewmodel.setMessage("");
         viewmodel.setCategorias(itemListService.getCategoriaByNivel(1));
+        viewmodel.setTipoIncidencias(itemListService.getAllTipoIncidencias());
 
         model = setTemplateToModel(model, INCIDENCIA,"incidenciaC")
                 .addAttribute(Constants.DATA, viewmodel)
@@ -72,6 +73,7 @@ public class IncidenciaController {
         viewmodel.setIncidenciaDTO(new IncidenciaDTO(incidenciaService.getIncidenciaById(id)));
         viewmodel.setTecnicos(usuarioService.getTecnicos());
         viewmodel.setMessage("");
+        viewmodel.setTipoIncidencias(itemListService.getAllTipoIncidencias());
         viewmodel.setCategorias(itemListService.getCategoriaByNivel(1));
 
         model = setTemplateToModel(model, INCIDENCIA,"incidenciaE")

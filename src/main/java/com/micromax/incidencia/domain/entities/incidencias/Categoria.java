@@ -3,7 +3,6 @@ package com.micromax.incidencia.domain.entities.incidencias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.micromax.incidencia.domain.Desactivable;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
-import com.micromax.incidencia.dto.CategoriaDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -48,21 +47,8 @@ public class Categoria extends Desactivable implements Serializable {
     @JsonIgnore
     private List<Tecnico> tecnicos;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
+    @OneToMany(mappedBy = "categoria")
     @JsonIgnore
     private List<Incidencia> incidencias;
 
-    public Categoria(){}
-
-
-    public Categoria(CategoriaDTO cat){
-        setNombre(cat.getNombre());
-        if(cat.getPadre() != null){
-            setPadre(cat.getPadre());
-            setNivel(cat.getPadre().nivel + 1);
-        }else{
-            setNivel(cat.getNivel());
-        }
-
-    }
 }

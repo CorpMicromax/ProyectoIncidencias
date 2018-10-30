@@ -1,7 +1,6 @@
 package com.micromax.incidencia.controller;
 
 import com.micromax.incidencia.domain.Constants;
-import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import com.micromax.incidencia.domain.entities.incidencias.TipoIncidencia;
 import com.micromax.incidencia.dto.CategoriaDTO;
 import com.micromax.incidencia.service.ItemListService;
@@ -32,11 +31,11 @@ public class MasterCrudController {
     @GetMapping("/admin/categoriaC")
     public String crearCategoria(Model model){
         CategoriaViewmodel viewmodel = new CategoriaViewmodel();
-        viewmodel.setCategoria(new Categoria());
+        viewmodel.setCategoriaDTO(new CategoriaDTO());
         viewmodel.setCategorias(itemListService.getCategoriaByNivel(1));
         viewmodel.setMessage("");
 
-        model = setTemplateToModel(model, "categoria", "categoriaC")
+        model = setTemplateToModel(model, "categoriaDTO", "categoriaC")
                 .addAttribute(Constants.DATA, viewmodel)
                 .addAttribute(Constants.TITLE, "Crear Categoria");
         return mainController.homeRoute(model);
@@ -82,19 +81,19 @@ public class MasterCrudController {
 
     /*CATEGORIA*/
     @PostMapping("/admin/categoriaC")
-    public String postCategoriaC(@ModelAttribute CategoriaDTO categoria, BindingResult errors, Model model){
-        itemListService.guardar(categoria);
+    public String postCategoriaC(@ModelAttribute CategoriaDTO categoriaDTO, BindingResult errors, Model model){
+        itemListService.guardar(categoriaDTO);
         return crearCategoria(model);
     }
 
-    @PostMapping("/admin/tipIncidenciaC")
+    @PostMapping("/admin/tipoIncidenciaC")
     public String crearTipoIncidencia(@ModelAttribute TipoIncidenciaViewmodel viewmodel, BindingResult errors, Model model){
         itemListService.createTipoIncidencia(viewmodel.getTipoIncidencia());
-        return "redirect:/tipIncidenciaL?=" + viewmodel.getTipoIncidencia().getId(); // pendiente con esto
+        return "redirect:/home";
     }
 
     /*TIPO INCIDENCIA*/
-    @PostMapping("/admin/tipoIncidenciaC")
+    @PostMapping("/admin/tipoIncidenciaE")
     public String crearTipoIncidencia(@ModelAttribute TipoIncidencia tipoIncid, BindingResult errors, Model model){
         itemListService.guardar(tipoIncid);
         return "redirect:/home";
