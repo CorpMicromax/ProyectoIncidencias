@@ -9,5 +9,7 @@ public interface TecnicoRepository extends CrudRepository<Tecnico,Long> {
 
 
     Collection<Tecnico> findAllByHabilitado(boolean h);
+
+    Tecnico findTecnicoByIdUsuarioAndHabilitado(Long id, boolean h);
 }
 
