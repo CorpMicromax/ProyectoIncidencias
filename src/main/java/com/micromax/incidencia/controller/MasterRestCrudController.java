@@ -35,7 +35,7 @@ public class MasterRestCrudController {
     }
 
     @GetMapping("/rest/incidencia/incidenciaD")
-    public boolean incidenciaD( Long id){
+    public boolean incidenciaD( String id){
         return incidenciaService.borrarIncidencia(id);
     }
 

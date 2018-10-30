@@ -1,44 +1,42 @@
-<div th:fragment="usuarioL" xmlns:th="http://www.w3.org/1999/xhtml">
-    <div class="container justify-content-center">
-        <div class="card elegant-color my-5">
-            <div class="card-header">
-                <legend class="card-title text-center my-lg-2" >Usuarios</legend>
+<div th:fragment="usuarioL" xmlns:th="http://www.w3.org/1999/xhtml" class="container justify-content-center">
+    <div class="card elegant-color my-5">
+        <div class="card-header">
+            <legend class="card-title text-center my-lg-2" >Usuarios</legend>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <a class="btn btn-amber btn-rounded btn-sm" th:href="@{/usuarioC}"><i class="fa fa-star fa-sm"></i>Nuevo usuario</a>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <a class="btn btn-amber btn-rounded btn-sm" th:href="@{/usuarioC}">Nuevo usuario</a>
-                </div>
 
-                <table id="datatable" class="table table-hover table-striped table-bordered table-dark dt-responsive nowrap">
-                    <thead>
-                    <tr>
-                        <th> Id </th>
-                        <th> Username </th>
-                        <th> Nombres </th>
-                        <th> Apellidos </th>
-                        <th> Email </th>
-                        <th> Rol </th>
-                        <th> Editar </th>
-                        <th> Eliminar </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:if="${usuarios.empty}">
-                        <td colspan="2"> No hay usuarios (imposible!) </td>
-                    </tr>
-                    <tr th:each="usuario: ${usuarios}">
-                        <td><span th:text="${usuario.idUsuario}"> Id </span></td>
-                        <td><span th:text="${usuario.username}"> Username </span></td>
-                        <td><span th:text="${usuario.nombres}">Nombres</span>  </td>
-                        <td><span th:text="${usuario.apellidos}"> Apellidos </span></td>
-                        <td><span th:text="${usuario.email}"> Email </span></td>
-                        <td><span th:text="${usuario.rol.nombre}"> Rol </span></td>
-                        <td><a type="button" class="editButton btn btn-info btn-rounded btn-sm" th:id="${usuario.idUsuario}" th:text="Editar"></a></td>
-                        <td><a type="button" class="deleteButton btn btn-danger btn-rounded btn-sm" th:id="${usuario.idUsuario}" th:text="Eliminar"></a></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+            <table id="datatable" class="table table-hover table-striped table-bordered table-dark dt-responsive nowrap">
+                <thead>
+                <tr>
+                    <th> Id </th>
+                    <th> Username </th>
+                    <th> Nombres </th>
+                    <th> Apellidos </th>
+                    <th> Email </th>
+                    <th> Rol </th>
+                    <th> Editar </th>
+                    <th> Eliminar </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${usuarios.empty}">
+                    <td colspan="2"> No hay usuarios (imposible!) </td>
+                </tr>
+                <tr th:each="usuario: ${usuarios}">
+                    <td><span th:text="${usuario.idUsuario}"> Id </span></td>
+                    <td><span th:text="${usuario.username}"> Username </span></td>
+                    <td><span th:text="${usuario.nombres}">Nombres</span>  </td>
+                    <td><span th:text="${usuario.apellidos}"> Apellidos </span></td>
+                    <td><span th:text="${usuario.email}"> Email </span></td>
+                    <td><span th:text="${usuario.rol.nombre}"> Rol </span></td>
+                    <td><a th:id="${usuario.idUsuario}" class="editButton btn btn-info btn-rounded btn-sm flex-sm-nowrap" ><i class="float-left fa fa-edit fa-sm"></i>Editar</a></td>
+                    <td><a th:id="${usuario.idUsuario}" class="deleteButton btn btn-danger btn-rounded btn-sm flex-sm-nowrap" ><i class="fa fa-trash fa-sm"></i>Eliminar</a></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <script th:inline="javascript">
@@ -51,19 +49,15 @@
                 }
             });
         });
-
         $('.editButton').click(function() {
             window.location = "/usuarioE?id=" + this.id;
         });
-
-
         $('.deleteButton').click(function() {
             var id = $(this).attr('id');
             $.get("/rest/incidencia/usuarioD", {id: id}, function() {
                 window.location = "/usuarioL";
             });
         });
-
         /*]]>*/
     </script>
 </div>

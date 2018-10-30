@@ -1,106 +1,76 @@
-<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaE">
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaE" class="container justify-content-center">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaViewmodel"*/-->
-    <!--/*@thymesVar id="incidencia" type="com.micromax.incidencia.domain.entities.incidencias.Incidencia"*/-->
-    <div class="card col-sm-6 elegant-color" >
-        <form th:action="@{/incidenciaE}" th:object="${data.incidencia}" method="post" class="card-body form-horizontal">
+    <div class="card offset-2 col-sm-8 elegant-color my-5" >
+        <form th:action="@{/incidenciaE}" th:object="${data}" method="post" class="card-body form-horizontal">
 
             <fieldset>
-                <!-- Form Name -->
-
-                <legend class="card-header stylish-color-dark">Editar Incidencia</legend>
-
-                <!-- Id -->
-                <div class="form-group">
-                    <label class=" control-label" for="id">Id: <span th:text="*{idIncidencia}"></span></label>
-                    <div class="">
-                        <input  id="id" name="id" th:field="*{idIncidencia}" type="hidden" class="form-control input-md">
-                    </div>
+                <div class="card-header">
+                    <legend class="card-title text-center my-lg-2">Editar Incidencia</legend>
                 </div>
-
-                <!-- Titulo -->
                 <div class="form-group">
                     <label class=" control-label" for="titulo">Titulo</label>
-                    <div class="">
-                        <input id="titulo" name="titulo" th:value="*{titulo}" type="text" class="form-control input-md" disabled="disabled">
-                        <input type="hidden" th:field="*{titulo}" />
-
-                    </div>
+                    <input id="titulo"  th:field="*{incidenciaDTO.titulo}" type="text" class="form-control input-md">
                 </div>
-
-                <!-- Descripcion -->
                 <div class="form-group">
                     <label class=" control-label" for="desc">Descripción</label>
-                    <div class="">
-                        <textarea class="form-control" id="desc" name="desc" th:field="*{descripcion} " disabled="disabled"></textarea>
-                        <input type="hidden" th:field="*{descripcion}" />
-                    </div>
+                    <textarea class="form-control" id="desc" th:field="*{incidenciaDTO.descripcion} " disabled="disabled"></textarea>
                 </div>
-
-
-                <!-- Categoria input -->
-                <div class="form-group">
-                    <label class=" control-label" for="categoria">Categoria</label>
-                    <div class="">
-                        <input id="categoria" name="categoria" th:value="*{categoria.nombre}"  type="text" class="form-control input-md" disabled="disabled">
-                    </div>
-                </div>
-
-                <!-- Categoria Uno -->
-                <div class="form-group">
-                    <label class=" control-label" for="categoriaUno">Categoria</label>
-                    <div class="">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class=" control-label" for="categoriaUno">Categoria</label>
                         <select id="categoriaUno" name="categoriaUno"  class="form-control" required="required">
                             <option value="">--- Seleccione una ---</option>
                             <option th:each="cat : ${data.categorias}" th:value="${cat.id}" th:text="${cat.nombre}" ></option>
                         </select>
                     </div>
-                </div>
-
-                <!-- Categoria Dos -->
-                <div class="form-group">
-                    <label class=" control-label" for="categoriaDos">Categoria Específica</label>
-                    <div class="">
-                        <select id="categoriaDos" name="categoriaDos" class="form-control" th:field="*{categoria}" required="required">
+                    <div class="form-group col-md-6">
+                        <label class="control-label" for="categoriaDos">Categoria Específica</label>
+                        <select id="categoriaDos" class="form-control" th:field="*{incidenciaDTO.categoria}" required="required">
                             <option value="">--- Seleccione una ---</option>
                         </select>
                     </div>
                 </div>
+                <input id="catId" th:value="*{incidenciaDTO.categoria.id}" type="hidden" >
+                <input id="dadId" th:value="*{incidenciaDTO.categoria.padre.id}" type="hidden">
+                <input type="hidden" th:field="*{incidenciaDTO.id}" />
+                <input type="hidden" th:field="*{incidenciaDTO.status}" />
 
-
-                <input type="hidden" th:field="*{creador.username}" />
-                <input type="hidden" th:field="*{creacion}" />
-                <input type="hidden" th:field="*{status}" />
-
-                <!-- Button (Double) -->
                 <div class="form-group form-row">
                     <label class=" control-label" for="submit"></label>
-                    <div class="">
-                        <button type="submit" id="submit" name="submit" class="col-sm-6 btn btn-success">Guardar</button>
-                        <button id="cancel" name="cancel" class="col-sm-6 btn btn-danger">Cancelar</button>
-                    </div>
+                    <button type="submit" id="submit" name="submit" class="btn btn-success">Guardar</button>
+                    <button id="cancel" name="cancel" class="btn btn-danger">Cancelar</button>
                 </div>
-
             </fieldset>
         </form>
         <script th:inline="javascript">
-        /*<![CDATA[*/
-            $("#categoriaUno").change(function(){
+            /*<![CDATA[*/
+            $(document).ready(function(){
+                $('#categoriaUno option[value='+$("#dadId").val()+']').attr('selected','selected');
+
+                $("#categoriaUno").trigger("change", [{thing:true}]);
+            });
+            $("#categoriaUno").change(function(e, data){
                 $.ajax({
                     type: "GET",
                     url: /*[[@{/rest/incidencia/getCategoriasDos}]]*/"/rest/incidencia/getCategoriasDos",
                     data:  {id:$("#categoriaUno").val()},
-                    success: function(response){
+                    success: function(response) {
                         $("#categoriaDos").empty().append('<option value="">---Seleccione una opcion---</option>');
-                        $.each(response, function(i){
+                        $.each(response, function (i) {
                             $("#categoriaDos").append('<option value="' + response[i].id + '">' + response[i].nombre + '</option>');
-                        })}
+
+                        });
+                        if (data.thing) {
+                            $('#categoriaDos option[value=' + $("#catId").val() + ']').attr('selected', 'selected');
+                        }
+                    }
                 });
             });
             $('#cancel').click(function(event) {
                 event.stopPropagation();
-               window.location = "/home";
+                window.location = "/home";
             });
-        /*]]>*/
+            /*]]>*/
         </script>
     </div>
 </div>

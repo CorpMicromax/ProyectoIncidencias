@@ -1,6 +1,5 @@
-<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="usuarioC">
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="usuarioC" class="container justify-content-center">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.UsuarioViewmodel"*/-->
-    <div class="container justify-content-center">
         <div class="card offset-2 col-sm-8 elegant-color my-5" >
             <form id="crearForm" action="#" th:action="@{/usuarioC}" th:object="${data.usuarioDTO}" th:method="post" method="post" class="card-body form-horizontal">
                 <fieldset>
@@ -86,7 +85,7 @@
                 </fieldset>
             </form>
         </div>
-    </div>
+
     <script th:inline="javascript">
 
         $("#apellidos").on("input", function(e) {

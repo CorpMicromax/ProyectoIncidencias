@@ -10,5 +10,5 @@ public interface IncidenciaRepository extends CrudRepository<Incidencia,Long> {
 
     Collection<Incidencia> findAllByHabilitado(boolean activa);
 
-    Optional<Incidencia> findByIdIncidenciaAndHabilitado(long id, boolean activa);
+    Optional<Incidencia> findByIdIncidenciaAndHabilitado(String id, boolean activa);
 }

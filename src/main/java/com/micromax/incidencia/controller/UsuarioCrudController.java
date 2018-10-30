@@ -67,7 +67,7 @@ public class UsuarioCrudController {
 
     @PostMapping("/usuarioE")
     public String postUsuarioE(@ModelAttribute UsuarioViewmodel dto, BindingResult errors, Model model) {
-        usuarioService.guardarUsuario(dto.getUsuarioDTO(), false);
+        usuarioService.asignarTecnico(dto.getUsuarioDTO());
         return "redirect:/usuarioL";
     }
 }

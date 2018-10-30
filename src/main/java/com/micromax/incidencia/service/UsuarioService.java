@@ -1,6 +1,7 @@
 package com.micromax.incidencia.service;
 
 import com.micromax.incidencia.domain.entities.users.Rol;
+import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.dto.UsuarioDTO;
 
@@ -29,4 +30,11 @@ public interface UsuarioService {
     Usuario findUsuarioByUsername(String username);
 
     boolean existeUsuario(String username);
+
+    void asignarTecnico(UsuarioDTO dto);
+
+    List<Tecnico> getTecnicos();
+
+    void asignarTecnico(Tecnico ejecutarEstrategia);
 }
+

@@ -1,7 +1,7 @@
 package com.micromax.incidencia.controller;
 
 import com.micromax.incidencia.domain.Constants;
-import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
+import com.micromax.incidencia.dto.IncidenciaDTO;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.ItemListService;
 import com.micromax.incidencia.service.UsuarioService;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -34,20 +35,31 @@ public class IncidenciaController {
     @Autowired
     private ItemListService itemListService;
 
-
-
-
     /*-------------- INCIDENCIA -------------*/
     @GetMapping("/incidenciaC")
     public String incidenciaC(Model model){
         IncidenciaViewmodel viewmodel = new IncidenciaViewmodel();
-        viewmodel.setIncidencia(new Incidencia());
+        viewmodel.setIncidenciaDTO(new IncidenciaDTO());
         viewmodel.setMessage("");
         viewmodel.setCategorias(itemListService.getCategoriaByNivel(1));
 
         model = setTemplateToModel(model, INCIDENCIA,"incidenciaC")
                 .addAttribute(Constants.DATA, viewmodel)
                 .addAttribute(TITLE,"Crear Incidencia");
+        return mainController.homeRoute(model);
+    }
+
+    @GetMapping("/incidenciaE")
+    public String incidenciaE(@RequestParam String id, Model model){
+
+        IncidenciaViewmodel viewmodel = new IncidenciaViewmodel();
+        viewmodel.setIncidenciaDTO(new IncidenciaDTO(incidenciaService.getIncidenciaById(id)));
+        viewmodel.setMessage("");
+        viewmodel.setCategorias(itemListService.getCategoriaByNivel(1));
+
+        model = setTemplateToModel(model, INCIDENCIA,"incidenciaE")
+                .addAttribute(Constants.DATA, viewmodel)
+                .addAttribute(TITLE,"Editar Incidencia");
         return mainController.homeRoute(model);
     }
 
@@ -64,32 +76,16 @@ public class IncidenciaController {
 
     /*======================================= POSTS ========================================*/
 
-    @GetMapping("/incidenciaE")
-    public String incidenciaE(@RequestParam long id, Model model){
-
-        IncidenciaViewmodel viewmodel = new IncidenciaViewmodel();
-        viewmodel.setIncidencia(incidenciaService.getIncidenciaById(id));
-        viewmodel.setMessage("");
-        viewmodel.setCategorias(itemListService.getCategoriaByNivel(1));
-
-        model = setTemplateToModel(model, INCIDENCIA,"incidenciaE")
-                .addAttribute(Constants.DATA, viewmodel)
-                .addAttribute(TITLE,"Editar Incidencia");
-        return mainController.homeRoute(model);
-    }
-
     /* INCIDENCIA */
     @PostMapping("/incidenciaC")
-    public String postIncidenciaC(@RequestParam IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
-        incidenciaService.guardarIncidencia(viewmodel.getIncidencia(), SecurityContextHolder.getContext().getAuthentication().getName());
-        return "redirect:/incidenciaL?=" + viewmodel.getIncidencia().getIdIncidencia();
+    public String postIncidenciaC(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
+        incidenciaService.guardarIncidencia(viewmodel.getIncidenciaDTO(), SecurityContextHolder.getContext().getAuthentication().getName());
+        return "redirect:/incidenciaL";
     }
 
     @PostMapping("/incidenciaE")
-    public String postIncidenciaE(@RequestParam IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
-        viewmodel.getIncidencia().setCreador(usuarioService.getUsuarioByUsername(viewmodel.getIncidencia().getCreador().getUsername()));
-        incidenciaService.actualizarIncidencia(viewmodel.getIncidencia());
-
-        return "redirect:/incidenciaL?=" + viewmodel.getIncidencia().getIdIncidencia();
+    public String postIncidenciaE(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
+        incidenciaService.actualizarIncidencia(viewmodel.getIncidenciaDTO());
+        return "redirect:/incidenciaL";
     }
 }
