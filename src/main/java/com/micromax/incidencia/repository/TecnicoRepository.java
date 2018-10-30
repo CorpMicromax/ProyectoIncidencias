@@ -8,10 +8,10 @@ import java.util.Collection;
 public interface TecnicoRepository extends CrudRepository<Tecnico,Long> {
 
 
-    Collection<Tecnico> findAllByHabilitado(boolean h);
+    Collection<Tecnico> findAllByHabilitadoIsTrue();
 
-    Tecnico findTecnicoByIdUsuarioAndHabilitado(Long id, boolean h);
+    Tecnico findTecnicoByUsernameAndHabilitadoIsTrue(String username);
 
-    Tecnico findTecnicoByUsernameAndHabilitado(String username, boolean h);
+    Tecnico findTecnicoByIdUsuarioAndHabilitadoIsTrue(long id);
 }
 

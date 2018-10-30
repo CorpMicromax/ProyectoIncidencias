@@ -60,8 +60,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario getUsuarioById(long id) {
-        Tecnico t = tecnicoRepository.findTecnicoByIdUsuarioAndHabilitado(id, true);
-        Cliente c = clienteRepository.findClienteByIdUsuarioAndHabilitado(id,true);
+        Tecnico t = tecnicoRepository.findTecnicoByIdUsuarioAndHabilitadoIsTrue(id);
+        Cliente c = clienteRepository.findClienteByIdUsuarioAndHabilitadoIsTrue(id);
         if(t != null)return t;
         if(c != null)return c;
         return usuarioRepository.findByIdUsuarioAndHabilitado(id, true);
@@ -118,7 +118,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<Tecnico> getTecnicos() {
-        return (List<Tecnico>) tecnicoRepository.findAllByHabilitado(true);
+        return (List<Tecnico>) tecnicoRepository.findAllByHabilitadoIsTrue();
     }
 
     @Override
@@ -167,9 +167,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 
     public Usuario getUsuarioByUsername(String username){
-        Tecnico t = tecnicoRepository.findTecnicoByUsernameAndHabilitado(username, true);
+        Tecnico t = tecnicoRepository.findTecnicoByUsernameAndHabilitadoIsTrue(username);
         if(t != null)return t;
-        Cliente c = clienteRepository.findClienteByUsernameAndHabilitado(username,true);
+        Cliente c = clienteRepository.findClienteByUsernameAndHabilitadoIsTrue(username);
         if(c != null)return c;
         return usuarioRepository.findUsuarioByUsernameAndHabilitado(username, true);
     }

@@ -38,7 +38,7 @@ public class HistoricoServiceImpl implements HistoricoService {
 
     @Override
     public Historico findHistoricoByComentarioAndIncidencia(long id, Incidencia incidencia, Comentario comentario) {
-        return historicoRepository.findHistoricoByComentarioAndIncidencia(id,incidencia,comentario).orElse(null);
+        return historicoRepository.findHistoricoByIdHistoricoAndComentarioAndIncidencia(id,comentario, incidencia).orElse(null);
     }
 
     @Override

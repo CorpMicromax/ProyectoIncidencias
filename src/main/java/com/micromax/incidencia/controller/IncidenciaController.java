@@ -31,8 +31,6 @@ import static com.micromax.incidencia.domain.Constants.TITLE;
 @Controller
 public class IncidenciaController {
 
-
-
     @Autowired
     private UsuarioService usuarioService;
 

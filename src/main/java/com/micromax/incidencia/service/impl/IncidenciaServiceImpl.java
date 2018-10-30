@@ -43,7 +43,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     @Override
     public List<Incidencia> getIncidencias() {
         log.info("Buscando todas las incidencias");
-        return (ArrayList<Incidencia>) incidenciaRepository.findAllByHabilitado(true);
+        return (ArrayList<Incidencia>) incidenciaRepository.findAllByHabilitadoIsTrue();
     }
 
     @Override
@@ -72,7 +72,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     @Transactional
     public void actualizarIncidencia(IncidenciaDTO dto) {
         Categoria cat = categoriaRepository.findById(dto.getCategoria().getId());
-        Optional<Incidencia> i = incidenciaRepository.findByIdIncidenciaAndHabilitado(dto.getId(), true);
+        Optional<Incidencia> i = incidenciaRepository.findByIdIncidenciaAndHabilitadoIsTrue(dto.getId());
         if(i.isPresent()){
             Incidencia in = i.get();
 
@@ -93,12 +93,12 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     @Override
     public Incidencia getIncidenciaById(String id) {
         log.info("Buscando incidencia con id %d", id);
-        return incidenciaRepository.findByIdIncidenciaAndHabilitado(id, true).orElse(null);
+        return incidenciaRepository.findByIdIncidenciaAndHabilitadoIsTrue(id).orElse(null);
     }
 
     @Override
     public boolean borrarIncidencia(String id) {
-        Incidencia i = incidenciaRepository.findByIdIncidenciaAndHabilitado(id, true).orElse(  null);
+        Incidencia i = incidenciaRepository.findByIdIncidenciaAndHabilitadoIsTrue(id).orElse(  null);
         if(i != null) {
             i.setHabilitado(false);
             log.info("Eliminada incidencia con id %d", id);
@@ -109,7 +109,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
 
     @Override
     public List<Incidencia> obtenerIncidenciasPorCreador(Usuario creador) {
-        return incidenciaRepository.findAllByCreadorAndHabilitado(creador, true);
+        return incidenciaRepository.findAllByCreadorAndHabilitadoIsTrue(creador);
     }
 
 
