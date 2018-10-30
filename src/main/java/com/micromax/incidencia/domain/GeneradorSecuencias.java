@@ -1,6 +1,7 @@
 package com.micromax.incidencia.domain;
 
 
+import com.micromax.incidencia.config.ConfiguracionGeneral;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
@@ -17,7 +18,7 @@ import java.sql.Statement;
 @Configuration
 public class GeneradorSecuencias implements IdentifierGenerator {
 
-    private Constants constants = new Constants();
+    private ConfiguracionGeneral config = new ConfiguracionGeneral();
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object o) throws HibernateException {
@@ -32,9 +33,9 @@ public class GeneradorSecuencias implements IdentifierGenerator {
             if(rs.next())
             {
                 Integer id=rs.getInt(1);
-                return constants.getSEQUENCE_PREFIX() + String.format("%04d", id);
+                return config.getSequencePrefix() + String.format("%04d", id);
             }else{
-                return constants.getSEQUENCE_PREFIX() + String.format("%04d", 1);
+                return config.getSequencePrefix() + String.format("%04d", 1);
             }
         } catch (SQLException e) {
             log.debug(e.getSQLState());

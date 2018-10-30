@@ -38,7 +38,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
 
 
     @Autowired
-    private EstrategiaService estrategiaService;
+    private EstrategiaServiceImpl estrategiaService;
 
     @Override
     public List<Incidencia> getIncidencias() {
@@ -55,11 +55,10 @@ public class IncidenciaServiceImpl implements IncidenciaService {
         i.setCreador(usuarioService.getUsuarioByUsername(username));
         i.setCreacion(Date.from(LocalDateTime.now().toInstant(ZoneOffset.ofHours(0))));
         i.setStatus(Status.NUEVA);
-
-
+        i.setAsignados(new ArrayList<>());
         usuarioService.asignarTecnico(estrategiaService.ejecutarEstrategia(i, usuarioService.getTecnicos()));
+        i = incidenciaRepository.save(i);
 
-        incidenciaRepository.save(i);
         log.info("Usuario %s ha creado una incidencia nueva con id %d", i.getIdIncidencia(), username);
     }
 
@@ -77,8 +76,6 @@ public class IncidenciaServiceImpl implements IncidenciaService {
             Incidencia in = i.get();
 
             in.setCategoria(defaultIfNull(cat, in.getCategoria()));
-
-
             in.setTitulo(defaultIfNull(dto.getTitulo(), in.getTitulo()));
             in.setTipoIncidencia(defaultIfNull(dto.getTipoIncidencia(), in.getTipoIncidencia()));
             in.setDescripcion(defaultIfNull(dto.getDescripcion(), in.getDescripcion()));
@@ -109,8 +106,8 @@ public class IncidenciaServiceImpl implements IncidenciaService {
 
     @Override
     public List<Incidencia> obtenerIncidenciasPorCreador(Usuario creador) {
-        return incidenciaRepository.findAllByCreadorAndHabilitadoIsTrue(creador);
+        List<Incidencia> in = incidenciaRepository.findAllByCreadorAndHabilitadoIsTrue(creador);
+        return in;
     }
-
 
 }

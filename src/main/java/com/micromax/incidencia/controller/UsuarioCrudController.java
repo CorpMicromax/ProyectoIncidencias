@@ -64,13 +64,13 @@ public class UsuarioCrudController {
     }
 
     /*USUARIO*/
-    @PostMapping("/usuarioC")
+    @PostMapping("/admin/usuarioC")
     public String postUsuarioC(@ModelAttribute UsuarioViewmodel viewmodel, BindingResult errors, Model model) {
         usuarioService.guardarUsuario(viewmodel.getUsuarioDTO(),true);
         return "redirect:/admin/usuarioL";
     }
 
-    @PostMapping("/usuarioE")
+    @PostMapping("/admin/usuarioE")
     public String postUsuarioE(@ModelAttribute UsuarioViewmodel dto, BindingResult errors, Model model) {
         usuarioService.asignarTecnico(dto.getUsuarioDTO());
         return "redirect:/admin/usuarioL";

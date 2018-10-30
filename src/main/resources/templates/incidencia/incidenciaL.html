@@ -27,7 +27,7 @@
                     <td colspan="2"> No hay incidencias </td>
                 </tr>
                 <tr th:each="incidencia: ${incidencias}">
-                    <td><span th:text="${incidencia.idIncidencia}"> Id </span></td>
+                    <td><a class="text-info" th:href="@{'/incidenciaV/' + ${incidencia.idIncidencia}}"><i class="fa fa-link"></i><span th:text="${incidencia.idIncidencia}"> Id </span></a></td>
                     <td><span th:if="${incidencia.titulo}" th:text="${incidencia.titulo}"> Titulo </span></td>
                     <td><span th:if="${incidencia.categoria}" th:text="${incidencia.categoria.nombre}"></span></td>
                     <td><span th:if="${incidencia.creador}" th:text="${incidencia.creador.username}"> Nombre creador </span></td>
