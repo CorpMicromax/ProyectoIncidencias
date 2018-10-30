@@ -2,6 +2,7 @@ package com.micromax.incidencia.service.impl;
 
 import com.micromax.incidencia.config.ConfiguracionGeneral;
 import com.micromax.incidencia.domain.Constants;
+import com.micromax.incidencia.domain.Status;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.service.EstrategiaService;
@@ -29,6 +30,7 @@ public class EstrategiaServiceImpl implements EstrategiaService {
             }
             Tecnico elegido = encontrarTecnicoMasDisponible(disponibles);
             incidencia.getAsignados().add(elegido);
+            incidencia.setStatus(Status.ASIGNADA);
             return elegido;
         }
         return null;

@@ -80,6 +80,12 @@ public class IncidenciaServiceImpl implements IncidenciaService {
             in.setTipoIncidencia(defaultIfNull(dto.getTipoIncidencia(), in.getTipoIncidencia()));
             in.setDescripcion(defaultIfNull(dto.getDescripcion(), in.getDescripcion()));
             in.setStatus(defaultIfNull(dto.getStatus(), in.getStatus()));
+            if(in.getStatus().equals(Status.NUEVA) && !in.getAsignados().isEmpty()){
+                in.setStatus(Status.ASIGNADA);
+            }else if(in.getStatus().equals(Status.ASIGNADA) && in.getAsignados().isEmpty()){
+                in.setStatus(Status.ABIERTA);
+            }
+
             in.setTiempoEstimado(defaultIfNull(dto.getTiempoEstimado(), in.getTiempoEstimado()));
             incidenciaRepository.save(in);
         }else{
