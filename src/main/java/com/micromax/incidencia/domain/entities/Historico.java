@@ -16,6 +16,7 @@ import java.util.Date;
 @Table(name = "historico")
 public class Historico implements Serializable {
 
+    @Transient
     private static final long serialVersionUID = 125L;
 
     @Id

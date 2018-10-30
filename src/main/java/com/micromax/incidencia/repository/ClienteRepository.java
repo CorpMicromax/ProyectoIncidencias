@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface ClienteRepository extends CrudRepository<Cliente,Long> {
 
-    List<Cliente> findAllByHabilitado(boolean h);
+    List<Cliente> findAllByHabilitadoIsTrue();
 
-    Cliente findClienteByIdUsuarioAndHabilitado(Long id, boolean h);
+    Cliente findClienteByIdUsuarioAndHabilitadoIsTrue(Long id);
 
-    Cliente findClienteByUsernameAndHabilitado(String username, boolean h);
+    Cliente findClienteByUsernameAndHabilitadoIsTrue(String username);
 }

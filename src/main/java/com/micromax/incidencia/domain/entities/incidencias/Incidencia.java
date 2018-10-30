@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.Transient;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,7 +24,7 @@ import java.util.Date;
 public class Incidencia extends Desactivable implements Serializable {
 
     @Transient
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 8361927790262577413L;
 
     @Id
     @GenericGenerator(

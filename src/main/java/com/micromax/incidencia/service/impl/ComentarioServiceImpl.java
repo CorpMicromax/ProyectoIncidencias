@@ -1,14 +1,10 @@
 package com.micromax.incidencia.service.impl;
 
 
-import com.micromax.incidencia.domain.entities.Historico;
 import com.micromax.incidencia.domain.entities.incidencias.Comentario;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.repository.ComentarioRepository;
-import com.micromax.incidencia.repository.HistoricoRepository;
-import com.micromax.incidencia.repository.IncidenciaRepository;
-import com.micromax.incidencia.repository.UsuarioRepository;
 import com.micromax.incidencia.service.ComentarioService;
 import com.micromax.incidencia.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,26 +18,22 @@ import java.util.Date;
 
 @Service
 @Slf4j
-
 public class ComentarioServiceImpl implements ComentarioService {
 
-    @Autowired ComentarioRepository comentarioRepository;
-
-    @Autowired HistoricoRepository historicoRepository;
-
-    @Autowired IncidenciaRepository incidenciaRepository;
+    @Autowired
+    private ComentarioRepository comentarioRepository;
 
     @Autowired
     private UsuarioService usuarioService;
 
     @Override
     public Comentario getComentarioByIdAndIncidencia(long id, Incidencia idIncidencia) {
-        return comentarioRepository.findComentarioByIdComentarioAndIncidencia(id, idIncidencia).orElse(null);
+        return comentarioRepository.findComentarioByIdComentarioAndIncidencia(id, idIncidencia);
     }
 
     @Override
     public Comentario getComentarioByIncidenciaAndUsuarioAndFecha(Incidencia idIncidencia, Usuario idUsuario, Date fechaCreacion) {
-        return comentarioRepository.findComentarioByIncidenciaAndAutorAndCreacion(idIncidencia,idUsuario, fechaCreacion).orElse(null);
+        return comentarioRepository.findComentarioByIncidenciaAndAutorAndCreacion(idIncidencia,idUsuario, fechaCreacion);
     }
 
     @Override
