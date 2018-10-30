@@ -13,7 +13,7 @@ public interface HistoricoService {
 
     Historico findHistoricoByIncidenciaAndUsuario(long id,Incidencia idIncidencia, Usuario idUser);
 
-    Historico findHistoricoByComentarioAndIncidencia(long id,Incidencia idIncidencia, Comentario idcomentario);
+  //  Historico findHistoricoByComentarioAndIncidencia(long id, Comentario idComentario, Incidencia idIncidencia);
 
     Collection<Historico> getHistoricoByIncidencia (Incidencia idIncidencia);
 
