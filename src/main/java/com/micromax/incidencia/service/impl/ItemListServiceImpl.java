@@ -25,9 +25,6 @@ public class ItemListServiceImpl implements ItemListService {
     @Autowired
     private TipoIncidenciaRepository tipoIncidenciaRepository;
 
-    // Implementación para los tipos de Categoría
-
-
     @Override
     public List<Categoria> getCategoriasByPadre(long idPadre) {
         return (ArrayList<Categoria>) categoriaRepository.findByPadreAndHabilitado(getCategoria(idPadre), true);
