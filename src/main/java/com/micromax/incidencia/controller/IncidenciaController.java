@@ -16,10 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -54,6 +51,17 @@ public class IncidenciaController {
         model = setTemplateToModel(model, INCIDENCIA,"incidenciaC")
                 .addAttribute(Constants.DATA, viewmodel)
                 .addAttribute(TITLE,"Crear Incidencia");
+        return mainController.homeRoute(model);
+    }
+
+    @GetMapping(value = "/incidenciaV/{idIncidencia}")
+    public String incidenciaV(@PathVariable String idIncidencia, Model model){
+        IncidenciaViewmodel viewmodel = new IncidenciaViewmodel();
+        viewmodel.setIncidencia(incidenciaService.getIncidenciaById(idIncidencia));
+
+        model = setTemplateToModel(model, INCIDENCIA,"incidenciaV")
+                .addAttribute(Constants.DATA, viewmodel)
+                .addAttribute(TITLE,"Detalles Incidencia");
         return mainController.homeRoute(model);
     }
 

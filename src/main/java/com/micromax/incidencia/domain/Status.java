@@ -11,5 +11,8 @@ public enum Status {
         return StringUtils.capitalize(super.toString());
     }
 
+    public String textName(){
+        return StringUtils.capitalize(super.toString().toLowerCase());
+    }
 }
 
