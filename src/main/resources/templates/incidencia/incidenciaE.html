@@ -1,12 +1,8 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaE" class="container justify-content-center">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaViewmodel"*/-->
-    <div class="card elegant-color my-5" >
+    <div class="card elegant-color" >
         <form th:action="@{/incidenciaE}" th:object="${data}" method="post" class="card-body form-horizontal">
             <fieldset>
-                <div class="card-header">
-                    <legend class="card-title text-center my-lg-2">Editar Incidencia</legend>
-
-                </div>
                 <div class="form-group">
                     <label class=" control-label" for="titulo">Titulo</label>
                     <input id="titulo"  th:field="*{incidenciaDTO.titulo}" type="text" class="form-control input-md">

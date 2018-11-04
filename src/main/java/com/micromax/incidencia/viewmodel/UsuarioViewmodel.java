@@ -14,6 +14,6 @@ public class UsuarioViewmodel {
     private Usuario usuario;
     private List<Rol> roles;
     private String message;
-    private  List<Categoria> categorias;
+    private List<Categoria> categorias;
 
 }

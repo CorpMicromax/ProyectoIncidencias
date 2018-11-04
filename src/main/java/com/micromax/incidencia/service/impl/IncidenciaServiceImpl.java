@@ -9,6 +9,7 @@ import com.micromax.incidencia.repository.CategoriaRepository;
 import com.micromax.incidencia.repository.IncidenciaRepository;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.UsuarioService;
+import com.micromax.incidencia.viewmodel.DashboardViewmodel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,7 +57,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
         i.setCreacion(Date.from(LocalDateTime.now().toInstant(ZoneOffset.ofHours(0))));
         i.setStatus(Status.NUEVA);
         i.setAsignados(new ArrayList<>());
-        usuarioService.asignarTecnico(estrategiaService.ejecutarEstrategia(i, usuarioService.getTecnicos()));
+        estrategiaService.ejecutarEstrategia(i, usuarioService.getTecnicos());
         i = incidenciaRepository.save(i);
 
         log.info("Usuario %s ha creado una incidencia nueva con id %d", i.getIdIncidencia(), username);
@@ -115,5 +116,28 @@ public class IncidenciaServiceImpl implements IncidenciaService {
         List<Incidencia> in = incidenciaRepository.findAllByCreadorAndHabilitadoIsTrue(creador);
         return in;
     }
+
+    @Override
+    public List<Incidencia> incidenciasPorEstado(Status status) {
+        return null;
+    }
+
+    @Override
+    public DashboardViewmodel obtenerTodasIncidenciasPorUsuario(Usuario usuario) {
+        return null;
+    }
+
+    @Override
+    public DashboardViewmodel obtenerTodasIncidencias() {
+        DashboardViewmodel dash = new DashboardViewmodel();
+        dash.setAsignadas(incidenciaRepository.countAllByStatusAndHabilitadoIsTrue(Status.ASIGNADA));
+        dash.setNuevas(incidenciaRepository.countAllByStatusAndHabilitadoIsTrue(Status.NUEVA));
+        dash.setCerradas(incidenciaRepository.countAllByStatusAndHabilitadoIsTrue(Status.CERRADA));
+        dash.setProgreso(incidenciaRepository.countAllByStatusAndHabilitadoIsTrue(Status.PROGRESO));
+        dash.setReabiertas(incidenciaRepository.countAllByStatusAndHabilitadoIsTrue(Status.REABIERTA));
+        dash.setTodas(incidenciaRepository.countAllByHabilitadoIsTrue());
+        return dash;
+    }
+
 
 }

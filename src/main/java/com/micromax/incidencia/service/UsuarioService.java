@@ -31,11 +31,11 @@ public interface UsuarioService {
 
     boolean existeUsuario(String username);
 
-    void asignarTecnico(UsuarioDTO dto);
+    void editarUsuario(UsuarioDTO dto);
 
     List<Tecnico> getTecnicos();
 
-    void asignarTecnico(Tecnico ejecutarEstrategia);
+    void editarUsuario(Tecnico ejecutarEstrategia);
 
     List<Tecnico> getTecnicosPorCategoria(long o);
 }

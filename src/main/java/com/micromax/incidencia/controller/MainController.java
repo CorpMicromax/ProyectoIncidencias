@@ -2,6 +2,7 @@ package com.micromax.incidencia.controller;
 
 import com.micromax.incidencia.domain.entities.users.Permiso;
 import com.micromax.incidencia.domain.entities.users.Usuario;
+import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.UsuarioService;
 import com.micromax.incidencia.viewmodel.HomeViewmodel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class MainController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private IncidenciaService incidenciaService;
+
     @GetMapping(value = {"/home","/"})
     public String homeRoute(Model model){
 
@@ -33,15 +37,12 @@ public class MainController {
         viewmodel.setRol(user.getRol());
         viewmodel.setPermisos((List<Permiso>)user.getRol().getPermisos());
         if (!model.containsAttribute("location")){
+            model.addAttribute("data", incidenciaService.obtenerTodasIncidencias());
             model.addAttribute("location", "/").addAttribute("template","dashboard");
         }
         model.addAttribute("homeData", viewmodel);
         return "home2";
     }
 
-//    @GetMapping(value="/error")
-//    public String error(){
-//        return "error";
-//    }
 
 }

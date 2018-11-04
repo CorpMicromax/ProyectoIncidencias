@@ -6,9 +6,9 @@
 body {
     background: #3e4551;
     /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #000000,#3e4551, #3e4551, #000000);
+    background: -webkit-linear-gradient(to right, #EEF5F9,#ffffff, #ffffff, #EEF5F9);
     /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #000000,#3e4551, #3e4551, #000000);
+    background: linear-gradient(to right, #EEF5F9,#ffffff, #ffffff, #EEF5F9);
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 

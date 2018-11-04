@@ -7,6 +7,7 @@ import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.dto.UsuarioDTO;
 import com.micromax.incidencia.repository.*;
+import com.micromax.incidencia.service.MailService;
 import com.micromax.incidencia.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,6 +45,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private MailService mailService;
 
     public Usuario findUserByEmail(String email) {
         return usuarioRepository.findByEmailAndHabilitado(email, true).orElse(null);
@@ -94,7 +99,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.save(usuario);
     }
 
-    public void asignarTecnico(UsuarioDTO dto){
+    public void editarUsuario(UsuarioDTO dto){
         Usuario u = usuarioRepository.findByIdUsuarioAndHabilitado(dto.getId(),true);
         u.setNombres(ObjectUtils.defaultIfNull(dto.getNombres(), u.getNombres()));
         u.setApellidos(ObjectUtils.defaultIfNull(dto.getApellidos(), u.getApellidos()));
@@ -112,7 +117,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         if(u instanceof Tecnico){
             ((Tecnico) u).setCapacidad(ObjectUtils.defaultIfNull(dto.getCapacidad(), ((Tecnico) u).getCapacidad()));
+            if(dto.getCats() != null){
+                List<Categoria> cats = (List<Categoria>) categoriaRepository.findAllById(dto.getCats());
+                ((Tecnico) u).setCategoriasTecnico(cats);
+            }
         }
+
         usuarioRepository.save(u);
     }
 
@@ -123,7 +133,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public void asignarTecnico(Tecnico t) {
+    public void editarUsuario(Tecnico t) {
         if(t!=null)tecnicoRepository.save(t);
     }
 
@@ -156,7 +166,14 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setApellidos(usuarioDTO.getApellidos());
         usuario.setUsername(usuarioDTO.getUsername());
         usuario.setEmail(usuarioDTO.getEmail());
+
         if(nuevo){
+            try {
+                log.info("Enviando correo");
+                mailService.sendEmail("javier.darkona@gmail.com", "Creacion de cuenta de usuario", "Su password es: " + usuarioDTO.getPassword());
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
             usuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
         }else{
             Usuario u = usuarioRepository.findByIdUsuarioAndHabilitado(usuarioDTO.getId(),true);
@@ -168,7 +185,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setRol(rolRepository.findByIdRol(usuarioDTO.getIdRol()));
         usuario.setDireccion(usuarioDTO.getDireccion());
         usuario.setHabilitado(true);
-        usuarioRepository.save(usuario);
+
+
+        usuario = usuarioRepository.save(usuario);
+
+       // mailService.prepareAndSend(usuario.getEmail(),"Su password es: " + usuarioDTO.getPassword());
+
     }
 
 

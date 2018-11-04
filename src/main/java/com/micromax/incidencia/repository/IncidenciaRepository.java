@@ -1,5 +1,6 @@
 package com.micromax.incidencia.repository;
 
+import com.micromax.incidencia.domain.Status;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
@@ -18,4 +19,14 @@ public interface IncidenciaRepository extends CrudRepository<Incidencia,Long> {
     List<Incidencia> findAllByCreadorAndHabilitadoIsTrue(Usuario creador);
 
     List<Incidencia> findAllByAsignadosContains(Tecnico tecnico);
+
+    List<Incidencia> findAllByStatusAndCreadorAndHabilitadoIsTrue(Status status, Usuario creador);
+
+    List<Incidencia> findAllByStatusAndHabilitadoIsTrue(Status status);
+
+    int countAllByStatusAndHabilitadoIsTrue(Status status);
+
+    int countAllByStatusAndCreadorAndHabilitadoIsTrue(Status status, Usuario user);
+
+    int countAllByHabilitadoIsTrue();
 }

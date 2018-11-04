@@ -55,8 +55,8 @@
                     </div>
                     <div th:if="*{tipoUsuario == 2}" id="tecnicoSection" class="form-group row my-2">
                         <div class="form-group col-md-6">
-                            <label class=" control-label" for="cats" >Categorias Tecnicas</label>
-                            <select id="cats"  name="cats" class="form-control" multiple="multiple">
+                            <label class=" control-label" for="usuarioDTO.cats" >Categorias Tecnicas</label>
+                            <select id="usuarioDTO.cats"  name="usuarioDTO.cats" class="form-control" multiple="multiple">
                                 <option class="categoriasTecnicas"
                                         th:each="cat : ${data.categorias}"
                                         th:selected="${data.usuarioDTO.categorias.contains(cat)}"

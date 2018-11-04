@@ -1,15 +1,12 @@
 <div th:fragment="incidenciaL" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="card">
-        <div class="card-header ">
-            <legend class="card-title text-center my-lg-2">Incidencias</legend>
-        </div>
         <div class="card-body" th:objetct="${data}">
 
             <div class="row">
-                <a class="btn btn-amber btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#"><i
+                <a class="btn btn-primary btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#"><i
                         class="float-left fa fa-star fa-sm"></i>Crear Incidencia</a>
             </div>
-            <div class="table-responsive">
+            <div class="table-responsive row">
                 <table id="datatable"
                        class="table table-hover dt-bootstrap table-striped table-bordered table-sm nowrap">
                     <thead>
@@ -41,13 +38,13 @@
                         <td><span th:unless="${incidencia.asignados != null && incidencia.asignados.isEmpty()}" th:text="${incidencia.asignados.get(0).username}"> Asignado </span>
                         </td>
                         <td>
-                            <a th:id="${incidencia.idIncidencia}" class="editButton btn btn-info text-white"
+                            <a th:id="${incidencia.idIncidencia}" class="editButton btn btn-primary text-white"
                                data-target="#editar">
                                 <i class="float-left fa fa-edit fa-sm"></i>Editar
                             </a>
                         </td>
                         <td>
-                            <a th:id="${incidencia.idIncidencia}" class="deleteCall btn btn-danger text-white"
+                            <a th:id="${incidencia.idIncidencia}" class="deleteCall btn btn-secondary text-white"
                                data-toggle="modal" data-target="#delete">
                                 <i class="fa fa-trash fa-sm"></i> Eliminar
                             </a>
@@ -70,10 +67,10 @@
                     <div class="alert alert-dismissible "> Seguro que quiere eliminar?</div>
                 </div>
                 <div class="modal-footer ">
-                    <button type="button" class="deleteButton btn btn-success "><span
+                    <button type="button" class="deleteButton btn btn-primary "><span
                             class="fa fa-thumbs-up"></span> Sí
                     </button>
-                    <button type="button" class="btn btn-danger " data-dismiss="modal"><span
+                    <button type="button" class="btn btn-secondary " data-dismiss="modal"><span
                             class="fa fa-thumbs-down"></span> No
                     </button>
                 </div>

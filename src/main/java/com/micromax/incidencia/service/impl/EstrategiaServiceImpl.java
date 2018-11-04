@@ -32,8 +32,9 @@ public class EstrategiaServiceImpl implements EstrategiaService {
             if(elegido != null) {
                 incidencia.getAsignados().add(elegido);
                 incidencia.setStatus(Status.ASIGNADA);
+                return elegido;
             }
-            return elegido;
+
         }
         return null;
     }
@@ -41,13 +42,19 @@ public class EstrategiaServiceImpl implements EstrategiaService {
     public Tecnico encontrarTecnicoMasDisponible(List<Tecnico> tecs){
         if(tecs.isEmpty()) return null;
 
-        int min = Integer.MAX_VALUE;
+        int min = 0;
         int index = 0;
         for (int i = 0; i < tecs.size(); i++){
-            int size = tecs.get(i).getIncidencias().size();
-            if(tecs.get(i).getIncidencias().size()< min) {
-                min = size;
-                index = i;
+            int cantidad_asignaciones = tecs.get(i).getAsignaciones().stream().filter(incidencia -> incidencia.isHabilitado()).toArray().length;
+
+            if(i == 0){
+                min = cantidad_asignaciones;
+                index = 0;
+            }else{
+                if(cantidad_asignaciones < min) {
+                    min = cantidad_asignaciones;
+                    index = i;
+                }
             }
         }
 

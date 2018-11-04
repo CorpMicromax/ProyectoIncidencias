@@ -71,8 +71,8 @@ public class UsuarioCrudController {
     }
 
     @PostMapping("/admin/usuarioE")
-    public String postUsuarioE(@ModelAttribute UsuarioViewmodel dto, BindingResult errors, Model model) {
-        usuarioService.asignarTecnico(dto.getUsuarioDTO());
+    public String postUsuarioE(@ModelAttribute UsuarioViewmodel viewmodel, BindingResult errors, Model model) {
+        usuarioService.editarUsuario(viewmodel.getUsuarioDTO());
         return "redirect:/admin/usuarioL";
     }
 }
