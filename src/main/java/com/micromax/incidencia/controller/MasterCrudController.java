@@ -35,7 +35,7 @@ public class MasterCrudController {
         viewmodel.setCategorias(itemListService.getCategoriaByNivel(1));
         viewmodel.setMessage("");
 
-        model = setTemplateToModel(model, "categoriaDTO", "categoriaC")
+        model = setTemplateToModel(model, "categoria", "categoriaC")
                 .addAttribute(Constants.DATA, viewmodel)
                 .addAttribute(Constants.TITLE, "Crear Categoria");
         return mainController.homeRoute(model);

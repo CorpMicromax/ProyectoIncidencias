@@ -29,14 +29,18 @@ public class EstrategiaServiceImpl implements EstrategiaService {
                 }
             }
             Tecnico elegido = encontrarTecnicoMasDisponible(disponibles);
-            incidencia.getAsignados().add(elegido);
-            incidencia.setStatus(Status.ASIGNADA);
+            if(elegido != null) {
+                incidencia.getAsignados().add(elegido);
+                incidencia.setStatus(Status.ASIGNADA);
+            }
             return elegido;
         }
         return null;
     }
 
     public Tecnico encontrarTecnicoMasDisponible(List<Tecnico> tecs){
+        if(tecs.isEmpty()) return null;
+
         int min = Integer.MAX_VALUE;
         int index = 0;
         for (int i = 0; i < tecs.size(); i++){
@@ -46,6 +50,7 @@ public class EstrategiaServiceImpl implements EstrategiaService {
                 index = i;
             }
         }
+
         return tecs.get(index);
     }
 }

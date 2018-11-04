@@ -1,14 +1,14 @@
-<div th:fragment="usuarioL" xmlns:th="http://www.w3.org/1999/xhtml" class="container justify-content-center">
+<div th:fragment="usuarioL" xmlns:th="http://www.w3.org/1999/xhtml" class="justify-content-center">
     <div class="card elegant-color my-5">
         <div class="card-header">
-            <legend class="card-title text-center my-lg-2" >Usuarios</legend>
+            <legend class="card-title text-center" >Usuarios</legend>
         </div>
         <div class="card-body">
             <div class="row">
                 <a class="btn btn-amber btn-rounded btn-sm" th:href="@{/admin/usuarioC}"><i class="fa fa-star fa-sm"></i>Nuevo usuario</a>
             </div>
 
-            <table id="datatable" class="table table-hover table-striped table-bordered table-dark dt-responsive nowrap">
+            <table id="datatable" class="table table-hover table-striped table-bordered dt-responsive nowrap">
                 <thead>
                 <tr>
                     <th> Id </th>
@@ -32,8 +32,8 @@
                     <td><span th:text="${usuario.apellidos}"> Apellidos </span></td>
                     <td><span th:text="${usuario.email}"> Email </span></td>
                     <td><span th:text="${usuario.rol.nombre}"> Rol </span></td>
-                    <td><a th:id="${usuario.idUsuario}" class="editButton btn btn-info btn-rounded btn-sm flex-sm-nowrap" ><i class="float-left fa fa-edit fa-sm"></i>Editar</a></td>
-                    <td><a th:id="${usuario.idUsuario}" class="deleteButton btn btn-danger btn-rounded btn-sm flex-sm-nowrap" ><i class="fa fa-trash fa-sm"></i>Eliminar</a></td>
+                    <td><a th:id="${usuario.idUsuario}" class="editButton btn btn-info btn-rounded btn-sm flex-sm-nowrap text-white" ><i class="float-left fa fa-edit fa-sm"></i>Editar</a></td>
+                    <td><a th:id="${usuario.idUsuario}" class="deleteButton btn btn-danger btn-rounded btn-sm flex-sm-nowrap text-white" ><i class="fa fa-trash fa-sm"></i>Eliminar</a></td>
                 </tr>
                 </tbody>
             </table>

@@ -1,73 +1,88 @@
-<div th:fragment="incidenciaL"  xmlns:th="http://www.w3.org/1999/xhtml" class="">
-    <div class="card elegant-color col-md-12 my-5">
+<div th:fragment="incidenciaL" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="card">
         <div class="card-header ">
-            <legend class="card-title text-center my-lg-2" >Incidencias</legend>
+            <legend class="card-title text-center my-lg-2">Incidencias</legend>
         </div>
-        <div class="card-body">
+        <div class="card-body" th:objetct="${data}">
 
             <div class="row">
-                <a class="btn btn-amber btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#"><i class="float-left fa fa-star fa-sm"></i>Crear Incidencia</a>
+                <a class="btn btn-amber btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#"><i
+                        class="float-left fa fa-star fa-sm"></i>Crear Incidencia</a>
             </div>
-
-            <table id="datatable" class="table table-hover table-striped table-bordered table-dark table-sm nowrap">
-                <thead>
-                <tr>
-                    <th> Id </th>
-                    <th> Titulo </th>
-                    <th> Categoria </th>
-                    <th> Creador </th>
-                    <th> Fecha y Hora de Creacion </th>
-                    <th> Status </th>
-                    <th> Editar </th>
-                    <th> Eliminar </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:if="${incidencias.empty}">
-                    <td colspan="2"> No hay incidencias </td>
-                </tr>
-                <tr th:each="incidencia: ${incidencias}">
-                    <td><a class="text-info" th:href="@{'/incidenciaV/' + ${incidencia.idIncidencia}}"><i class="fa fa-link"></i><span th:text="${incidencia.idIncidencia}"> Id </span></a></td>
-                    <td><span th:if="${incidencia.titulo}" th:text="${incidencia.titulo}"> Titulo </span></td>
-                    <td><span th:if="${incidencia.categoria}" th:text="${incidencia.categoria.nombre}"></span></td>
-                    <td><span th:if="${incidencia.creador}" th:text="${incidencia.creador.username}"> Nombre creador </span></td>
-                    <td><span th:if="${incidencia.creacion}" th:text="${incidencia.creacion}"> creacion </span></td>
-                    <td><span th:if="${incidencia.status}" th:text="${incidencia.status}"> Status </span></td>
-                    <td>
-                        <a th:id="${incidencia.idIncidencia}" class="editButton btn btn-info btn-sm"  data-target="#editar" >
-                            <i class="float-left fa fa-edit fa-sm"></i>Editar
-                        </a>
-                    </td>
-                    <td>
-                        <a th:id="${incidencia.idIncidencia}" class="deleteCall btn btn-danger btn-sm" data-toggle="modal" data-target="#delete" >
-                            <i class="fa fa-trash fa-sm"></i>Eliminar
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table id="datatable"
+                       class="table table-hover dt-bootstrap table-striped table-bordered table-sm nowrap">
+                    <thead>
+                    <tr>
+                        <th> Id</th>
+                        <th> Titulo</th>
+                        <th> Categoria</th>
+                        <th> Creador</th>
+                        <th> Fecha y Hora de Creacion</th>
+                        <th> Status</th>
+                        <th> Asignado</th>
+                        <th> Editar</th>
+                        <th> Eliminar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${incidencias.empty}">
+                        <td colspan="2"> No hay incidencias</td>
+                    </tr>
+                    <tr th:each="incidencia: ${incidencias}">
+                        <td><a class="text-info" th:href="@{'/incidenciaV/' + ${incidencia.idIncidencia}}">
+                            <i class="fa fa-link"></i><span th:text="${incidencia.idIncidencia}"> Id </span></a></td>
+                        <td><span th:if="${incidencia.titulo}" th:text="${incidencia.titulo}"> Titulo </span></td>
+                        <td><span th:if="${incidencia.categoria}" th:text="${incidencia.categoria.nombre}"></span></td>
+                        <td><span th:if="${incidencia.creador}"
+                                  th:text="${incidencia.creador.username}"> Nombre creador </span></td>
+                        <td><span th:if="${incidencia.creacion}" th:text="${incidencia.creacion}"> creacion </span></td>
+                        <td><span th:if="${incidencia.status}" th:text="${incidencia.status}"> Status </span></td>
+                        <td><span th:unless="${incidencia.asignados != null && incidencia.asignados.isEmpty()}" th:text="${incidencia.asignados.get(0).username}"> Asignado </span>
+                        </td>
+                        <td>
+                            <a th:id="${incidencia.idIncidencia}" class="editButton btn btn-info text-white"
+                               data-target="#editar">
+                                <i class="float-left fa fa-edit fa-sm"></i>Editar
+                            </a>
+                        </td>
+                        <td>
+                            <a th:id="${incidencia.idIncidencia}" class="deleteCall btn btn-danger text-white"
+                               data-toggle="modal" data-target="#delete">
+                                <i class="fa fa-trash fa-sm"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-
     <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content elegant-color-dark">
                 <div class="modal-header text-white">
                     <h4 class="modal-title custom_align" id="Heading">Eliminar</h4>
-                    <a type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="fa fa-window-close" aria-hidden="false"></span></a>
+                    <a type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
+                            class="fa fa-window-close" aria-hidden="false"></span></a>
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-dismissible "> Seguro que quiere eliminar?</div>
                 </div>
                 <div class="modal-footer ">
-                    <button type="button" class="deleteButton btn btn-success btn-md" ><span class="fa fa-thumbs-up"></span> Sí</button>
-                    <button type="button" class="btn btn-danger btn-md" data-dismiss="modal"><span class="fa fa-thumbs-down"></span> No</button>
+                    <button type="button" class="deleteButton btn btn-success "><span
+                            class="fa fa-thumbs-up"></span> Sí
+                    </button>
+                    <button type="button" class="btn btn-danger " data-dismiss="modal"><span
+                            class="fa fa-thumbs-down"></span> No
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade elegant-color-dark" id="ver" tabindex="-1" role="contentinfo" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal fade elegant-color-dark" id="ver" tabindex="-1" role="contentinfo" aria-labelledby="edit"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
@@ -80,20 +95,20 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
         var relevant = /*[[${relevant}]]*/ "none";
-        $(document).ready( function () {
+        $(document).ready(function () {
             $('#datatable').DataTable({
                 "language": {
                     "url": /*[[@{/js/localization/spanish.json}]]*/ "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
                 }
             });
         });
-        $('.editButton').click(function() {
+        $('.editButton').click(function () {
             window.location = "/incidenciaE?id=" + this.id;
         });
-        $('.deleteCall').click(function() {
+        $('.deleteCall').click(function () {
             id = $(this).attr('id');
         });
-        $('.deleteButton').click(function() {
+        $('.deleteButton').click(function () {
             $.get("/rest/incidencia/incidenciaD", {id: id}, function (response) {
                 id = "";
                 window.location = "/incidenciaL";

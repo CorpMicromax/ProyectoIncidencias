@@ -1,6 +1,6 @@
-<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="categoriaC" class="container justify-content-center">
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="categoriaC" class="justify-content-center">
         <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.CategoriaViewmodel"*/-->
-    <div class="card offset-2 col-sm-8 elegant-color my-5" >
+    <div class="card elegant-color my-5" >
         <form class="card-body form-horizontal" th:object="${data}" th:action="@{/admin/categoriaC}" th:method="post" th:model>
             <fieldset>
                 <div class="card-header">
@@ -8,18 +8,18 @@
                 </div>
                 <div class="form-group">
                     <label class=" label" for="nombre">Nombre</label>
-                    <input id="nombre" th:field="*{getCategoriaDTO.nombre}" class="form-control input-md" autofocus required="">
+                    <input id="nombre" th:field="*{categoriaDTO.nombre}" class="form-control input-md" autofocus required="">
                 </div>
                 <div class="form-group">
                     <label class="label" for="nivel">Nivel</label>
-                    <select id="nivel" name="nivel" class="form-control" th:field="*{padre}">
+                    <select id="nivel" name="nivel" class="form-control" th:field="*{categoriaDTO.padre}">
                         <option value="">--- Seleccione una ---</option>
                         <option th:each="i : ${#numbers.sequence(0, 3)}" th:value="${i}" th:text="${i}">
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="label" for="padre">Categoria Padre</label>
-                    <select id="padre" name="padre" class="form-control" th:field="*{padre}">
+                    <select id="padre" name="padre" class="form-control" th:field="*{categoriaDTO.padre}">
                         <option value="">--- Seleccione una ---</option>
                         <option th:each="cat : ${data.categorias}" th:value="${cat.id}" th:text="${cat.nombre}" ></option>
                     </select>

@@ -32,9 +32,11 @@ public class MainController {
         viewmodel.setNombre(user.getPrimerNombreYPrimerApellido());
         viewmodel.setRol(user.getRol());
         viewmodel.setPermisos((List<Permiso>)user.getRol().getPermisos());
-
+        if (!model.containsAttribute("location")){
+            model.addAttribute("location", "/").addAttribute("template","dashboard");
+        }
         model.addAttribute("homeData", viewmodel);
-        return "home";
+        return "home2";
     }
 
 //    @GetMapping(value="/error")

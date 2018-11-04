@@ -1,12 +1,14 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  th:fragment="tipoIncidenciaC" class="container justify-content-center">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.TipoIncidenciaViewmodel"*/-->
-    <div class="card offset-2 col-sm-8 elegant-color my-5" >
+    <div class="card elegant-color my-5" >
         <form id="crearForm" class="card-body form-horizontal" th:object="${data.tipoIncidencia}" th:action="@{/admin/tipoIncidenciaC}" method="post" >
             <fieldset>
+
                 <!-- Form Name -->
                 <div class="card-header">
                     <legend class="card-title text-center my-lg-2">Nuevo Tipo de Incidencia</legend>
                 </div>
+
                 <!-- Nombre input-->
                 <div class="form-group">
                     <label class="control-label" for="nombre">Tipo de Incidencia</label>

@@ -6,13 +6,14 @@
 
     <title th:text="${title}"></title>
 
-    <div th:include="/fragmentos/header" ></div>
+    <div th:include="/fragmentos/header"></div>
 </head>
 <body class="stylish-color-dark text-white">
 
 <nav class="navbar navbar-expand-sm navbar-static-top navbar-dark elegant-color sticky-top" th:object="${homeData}">
     <a class="navbar-brand" th:href="@{/home}"><span>Micromax</span></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="glyphicon navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -24,23 +25,28 @@
                 <a class="nav-link btn btn-elegant waves-effect waves-light" href="#">Reportes</a>
             </li>
             <li th:if="${homeData.rol.nombre.equals('ROLE_ADMIN')}" class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle btn btn-elegant waves-effect waves-light" id="incidenciaDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador</a>
+                <a class="nav-link dropdown-toggle btn btn-elegant waves-effect waves-light"
+                   id="incidenciaDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador</a>
                 <div class="dropdown-menu dropdown-info" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item waves-effect waves-light" th:href="@{/admin/usuarioL}">Usuarios</a>
                     <!--<a class="dropdown-item waves-effect waves-light" >Roles y Privilegios</a>-->
                 </div>
             </li>
             <li th:if="${homeData.rol.nombre.equals('ROLE_ADMIN')}" class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle btn btn-elegant waves-effect waves-light" id="incidenciaDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mantenimiento</a>
+                <a class="nav-link dropdown-toggle btn btn-elegant waves-effect waves-light"
+                   id="incidenciaDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mantenimiento</a>
                 <div class="dropdown-menu dropdown-info" aria-labelledby="navbarDropdownMenuLink2">
-                    <a class="dropdown-item waves-effect waves-light" th:href="@{/admin/tipoIncidenciaC}">Tipos de Incidencia</a>
+                    <a class="dropdown-item waves-effect waves-light" th:href="@{/admin/tipoIncidenciaC}">Tipos de
+                        Incidencia</a>
                     <a class="dropdown-item waves-effect waves-light" th:href="@{/admin/categoriaC}">Categorias</a>
-                    <a class="dropdown-item waves-effect waves-light" >Estrategias</a>
+                    <a class="dropdown-item waves-effect waves-light">Estrategias</a>
                 </div>
             </li>
         </ul>
         <div class="md-form my-0">
-            <a class="nav-link btn btn-elegant dropdown-toggle waves-effect waves-light" id="incidenciaDropdownMenuLink3" th:text="${homeData.nombre}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Usuario</a>
+            <a class="nav-link btn btn-elegant dropdown-toggle waves-effect waves-light"
+               id="incidenciaDropdownMenuLink3" th:text="${homeData.nombre}" data-toggle="dropdown" aria-haspopup="true"
+               aria-expanded="false" href="#">Usuario</a>
             <div class="dropdown-menu dropdown-info" aria-labelledby="navbarDropdownMenuLink3">
                 <!--<a class="dropdown-item waves-effect waves-light" >Perfil</a>-->
                 <a class="dropdown-item navbar-brand" th:href="@{/logout}"><span>Cerrar Sesión</span></a>
@@ -50,14 +56,13 @@
     </div>
 </nav>
 
-<div id="content" class="container justify-content-center">
-    <div th:if="${template}" class="">
-
-        <div th:replace="@{${location} + ${template}} :: ${template}" ></div>
-
+<div id="content" class="col-lg-auto offset-2 ">
+    <div th:if="${template}">
+        <div th:replace="@{${location} + ${template}} :: ${template}"></div>
     </div>
 </div>
+
+
 <div th:replace="/fragmentos/footer"></div>
-</bodystylish-color-dark>
 </body>
 </html>

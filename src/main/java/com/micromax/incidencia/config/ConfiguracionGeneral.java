@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 public class ConfiguracionGeneral {
 
     @Value("${micromax.prefijo.secuencia.incidencias}")
-    public String sequencePrefix;
+    public String sequencePrefix = "INC_";
 
     @Value("${micromax.estragegia}")
-    public String tipoEstrategia;
+    public String tipoEstrategia = "auto";
 
 }
