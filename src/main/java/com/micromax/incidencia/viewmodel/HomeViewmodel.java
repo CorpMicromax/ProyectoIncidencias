@@ -13,5 +13,6 @@ public class HomeViewmodel {
    private String nombre;
    private boolean authenticated;
    private Rol rol;
+   private boolean isAdmin;
    List<Permiso> permisos;
 }

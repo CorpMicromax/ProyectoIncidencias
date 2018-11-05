@@ -58,7 +58,7 @@ public class UsuarioCrudController {
     public String usuarioL(Model model){
         model = MasterCrudController.setTemplateToModel(model, USUARIO,"usuarioL")
                 .addAttribute("usuarios", usuarioService.getUsuariosActivos())
-                .addAttribute(TITLE,"Ver incidencias");
+                .addAttribute(TITLE,"Usuarios");
 
         return mainController.homeRoute(model);
     }

@@ -1,12 +1,11 @@
-<div th:fragment="incidenciaL" xmlns:th="http://www.w3.org/1999/xhtml">
-    <div class="card">
-        <div class="card-body" th:objetct="${data}">
-
-            <div class="row">
-                <a class="btn btn-primary btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#"><i
-                        class="float-left fa fa-star fa-sm"></i>Crear Incidencia</a>
-            </div>
-            <div class="table-responsive row">
+<!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaListViewmodel"*/-->
+<!--/*@thymesVar id="homeData" type="com.micromax.incidencia.viewmodel.HomeViewmodel"*/-->
+<section  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaL">
+    <div class="container-fluid">
+        <div class="card card-body" >
+            <a class="col-sm-2 btn btn-primary btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#">
+                <i class="float-left fa fa-star fa-sm"></i>Crear Incidencia</a>
+            <div class="table-responsive">
                 <table id="datatable"
                        class="table table-hover dt-bootstrap table-striped table-bordered table-sm nowrap">
                     <thead>
@@ -19,7 +18,7 @@
                         <th> Status</th>
                         <th> Asignado</th>
                         <th> Editar</th>
-                        <th> Eliminar</th>
+                        <th th:if="${homeData != null && homeData.rol.nombre.equals('ROLE_ADMIN')}"> Eliminar</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -38,13 +37,13 @@
                         <td><span th:unless="${incidencia.asignados != null && incidencia.asignados.isEmpty()}" th:text="${incidencia.asignados.get(0).username}"> Asignado </span>
                         </td>
                         <td>
-                            <a th:id="${incidencia.idIncidencia}" class="editButton btn btn-primary text-white"
+                            <a th:id="${incidencia.idIncidencia}" class="editButton btn btn-primary btn-toolbar text-white"
                                data-target="#editar">
-                                <i class="float-left fa fa-edit fa-sm"></i>Editar
+                                <i class="fa fa-edit fa-sm"></i>Editar
                             </a>
                         </td>
-                        <td>
-                            <a th:id="${incidencia.idIncidencia}" class="deleteCall btn btn-secondary text-white"
+                        <td th:if="${homeData != null && homeData.rol.nombre.equals('ROLE_ADMIN')}">
+                            <a th:id="${incidencia.idIncidencia}" class="deleteCall btn btn-secondary btn-toolbar text-center text-white"
                                data-toggle="modal" data-target="#delete">
                                 <i class="fa fa-trash fa-sm"></i> Eliminar
                             </a>
@@ -64,7 +63,7 @@
                             class="fa fa-window-close" aria-hidden="false"></span></a>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-dismissible "> Seguro que quiere eliminar?</div>
+                    <div class="alert alert-dismissible"> Seguro que quiere eliminar?</div>
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="deleteButton btn btn-primary "><span
@@ -98,6 +97,9 @@
                     "url": /*[[@{/js/localization/spanish.json}]]*/ "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
                 }
             });
+
+            $('#homeli').toggleClass("active");
+            $('#incidenciali').toggleClass("active");
         });
         $('.editButton').click(function () {
             window.location = "/incidenciaE?id=" + this.id;
@@ -113,4 +115,4 @@
         });
         /*]]>*/
     </script>
-</div>
+</section>

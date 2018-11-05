@@ -62,7 +62,7 @@ public class IncidenciaController {
 
         model = setTemplateToModel(model, INCIDENCIA,"incidenciaV")
                 .addAttribute(Constants.DATA, viewmodel)
-                .addAttribute(TITLE,"Detalles Incidencia");
+                .addAttribute(TITLE,"Detalles Incidencia: " + viewmodel.getIncidencia().getIdIncidencia());
         return mainController.homeRoute(model);
     }
 
@@ -97,7 +97,7 @@ public class IncidenciaController {
 
         model = setTemplateToModel(model, INCIDENCIA,"incidenciaL")
                 .addAttribute("incidencias", incidencias)
-                .addAttribute(TITLE,"Ver incidencias");
+                .addAttribute(TITLE,"Incidencias");
         if(id != null){
             model.addAttribute("relevant", id);
         }

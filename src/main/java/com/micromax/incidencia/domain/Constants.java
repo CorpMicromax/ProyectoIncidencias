@@ -21,6 +21,7 @@ public class Constants {
     public static final String MANUAL = "Manual";
     public static final String TITLE = "title";
     public static final String DATA = "data";
+    public static final String ADMINROLE = "ROLE_ADMIN";
 
     public static final String USUARIO = "usuario";
     public static final String INCIDENCIA = "incidencia";

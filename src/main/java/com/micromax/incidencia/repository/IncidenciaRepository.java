@@ -22,6 +22,8 @@ public interface IncidenciaRepository extends CrudRepository<Incidencia,Long> {
 
     List<Incidencia> findAllByStatusAndCreadorAndHabilitadoIsTrue(Status status, Usuario creador);
 
+    List<Incidencia> findAllByStatusIsNotAndCreadorAndHabilitadoIsTrue(Status status, Usuario creador);
+
     List<Incidencia> findAllByStatusAndHabilitadoIsTrue(Status status);
 
     int countAllByStatusAndHabilitadoIsTrue(Status status);

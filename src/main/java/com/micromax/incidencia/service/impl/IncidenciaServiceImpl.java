@@ -128,7 +128,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     }
 
     @Override
-    public DashboardViewmodel obtenerTodasIncidencias() {
+    public DashboardViewmodel obtenerTodasIncidencias(Usuario usuario) {
         DashboardViewmodel dash = new DashboardViewmodel();
         dash.setAsignadas(incidenciaRepository.countAllByStatusAndHabilitadoIsTrue(Status.ASIGNADA));
         dash.setNuevas(incidenciaRepository.countAllByStatusAndHabilitadoIsTrue(Status.NUEVA));
@@ -136,6 +136,8 @@ public class IncidenciaServiceImpl implements IncidenciaService {
         dash.setProgreso(incidenciaRepository.countAllByStatusAndHabilitadoIsTrue(Status.PROGRESO));
         dash.setReabiertas(incidenciaRepository.countAllByStatusAndHabilitadoIsTrue(Status.REABIERTA));
         dash.setTodas(incidenciaRepository.countAllByHabilitadoIsTrue());
+
+        dash.setIncidencias(incidenciaRepository.findAllByStatusIsNotAndCreadorAndHabilitadoIsTrue(Status.CERRADA, usuario));
         return dash;
     }
 

@@ -1,9 +1,11 @@
 package com.micromax.incidencia.controller;
 
+import com.micromax.incidencia.domain.Constants;
 import com.micromax.incidencia.domain.entities.users.Permiso;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.UsuarioService;
+import com.micromax.incidencia.viewmodel.DashboardViewmodel;
 import com.micromax.incidencia.viewmodel.HomeViewmodel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -36,13 +38,18 @@ public class MainController {
         viewmodel.setNombre(user.getPrimerNombreYPrimerApellido());
         viewmodel.setRol(user.getRol());
         viewmodel.setPermisos((List<Permiso>)user.getRol().getPermisos());
-        if (!model.containsAttribute("location")){
-            model.addAttribute("data", incidenciaService.obtenerTodasIncidencias());
-            model.addAttribute("location", "/").addAttribute("template","dashboard");
-        }
+        viewmodel.setAdmin(user.getRol().getNombre().equalsIgnoreCase(Constants.ADMINROLE));
         model.addAttribute("homeData", viewmodel);
+
+        if (!model.containsAttribute("location") || !model.containsAttribute("template")){
+            DashboardViewmodel dash = incidenciaService.obtenerTodasIncidencias(usuarioService.getUsuarioByUsername(nombre));
+            model.addAttribute("data", dash)
+                    .addAttribute("location", "/")
+                    .addAttribute("template","dashboard")
+                    .addAttribute(Constants.TITLE, "Home");
+        }
+
         return "home2";
     }
-
 
 }

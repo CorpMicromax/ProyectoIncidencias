@@ -27,7 +27,7 @@ public interface IncidenciaService {
 
     DashboardViewmodel obtenerTodasIncidenciasPorUsuario(Usuario usuario);
 
-    DashboardViewmodel obtenerTodasIncidencias();
+    DashboardViewmodel obtenerTodasIncidencias(Usuario usuario);
 
 
 }
