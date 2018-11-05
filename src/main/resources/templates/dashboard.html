@@ -101,59 +101,60 @@
                 </div>
             </div>
         </section>
-        <section class="col-lg-6">
-            <div class="container-fluid">
-                <div class="card">
-                    <div class="card-header ">Mis incidencias</div>
-                    <div class="card-body table-responsive">
-                        <table id="datatable"
-                               class="table table-hover dt-bootstrap table-striped table-bordered nowrap">
-                            <thead>
-                            <tr>
-                                <th> Id</th>
-                                <th> Titulo</th>
-                                <th> Categoria</th>
-                                <th> Fecha y Hora de Creacion</th>
-                                <th> Status</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:if="${data.incidencias.empty}">
-                                <td colspan="2"> No tiene incidencias</td>
-                            </tr>
-                            <tr th:each="incidencia: ${data.incidencias}">
-                                <td><a class="text-info" th:href="@{'/incidenciaV/' + ${incidencia.idIncidencia}}">
-                                    <i class="fa fa-link"></i><span th:text="${incidencia.idIncidencia}"> Id </span></a>
-                                </td>
-                                <td><span th:if="${incidencia.titulo}" th:text="${incidencia.titulo}"> Titulo </span>
-                                </td>
-                                <td><span th:if="${incidencia.categoria}"
-                                          th:text="${incidencia.categoria.nombre}"></span>
-                                </td>
-                                <td><span th:if="${incidencia.creacion}"
-                                          th:text="${incidencia.creacion.toLocaleString()}"> creacion </span>
-                                </td>
-                                <td><span th:if="${incidencia.status}" th:text="${incidencia.status}"> Status </span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+        <div class="row">
+            <section class="col-lg-6">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-header ">Mis incidencias</div>
+                        <div class="card-body table-responsive">
+                            <table id="datatable"
+                                   class="table table-hover dt-bootstrap table-striped table-bordered nowrap">
+                                <thead>
+                                <tr>
+                                    <th> Id</th>
+                                    <th> Titulo</th>
+                                    <th> Categoria</th>
+                                    <th> Fecha y Hora de Creacion</th>
+                                    <th> Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:if="${data.incidencias.empty}">
+                                    <td colspan="2"> No tiene incidencias</td>
+                                </tr>
+                                <tr th:each="incidencia: ${data.incidencias}">
+                                    <td><a class="text-info" th:href="@{'/incidenciaV/' + ${incidencia.idIncidencia}}">
+                                        <i class="fa fa-link"></i><span th:text="${incidencia.idIncidencia}"> Id </span></a>
+                                    </td>
+                                    <td><span th:if="${incidencia.titulo}"
+                                              th:text="${incidencia.titulo}"> Titulo </span>
+                                    </td>
+                                    <td><span th:if="${incidencia.categoria}"
+                                              th:text="${incidencia.categoria.nombre}"></span>
+                                    </td>
+                                    <td><span th:if="${incidencia.creacion}"
+                                              th:text="${incidencia.creacion.toLocaleString()}"> creacion </span>
+                                    </td>
+                                    <td><span th:if="${incidencia.status}"
+                                              th:text="${incidencia.status}"> Status </span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <script th:inline="javascript">
-                $(document).ready(function () {
-                    $('#datatable').DataTable({
-                        "language": {
-                            "url": /*[[@{/js/localization/spanish.json}]]*/ "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-                        },
-                        "paging": false,
-                        "searching": false,
 
-                    });
-
-                });
-            </script>
-        </section>
+            </section>
+            <section class="col-lg-6">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-header ">Incidencias en el tiempo</div>
+                        <div class="card-body ">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </div>
 </div>

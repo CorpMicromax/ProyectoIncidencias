@@ -31,15 +31,7 @@
                             </select>
                         </div>
                     </div>
-                    <!--<div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label class="control-label" for="asignados" >Tecnicos Asignados</label>
-                            <select id="asignados"  name="asignados" class="form-control" multiple="multiple">
-                                <option class="categoriasTecnicas" th:each="tec : ${data.incidenciaDTO.asignados}" th:value="${tec.idUsuario}" th:text="${tec.username}" ></option>
-                            </select>
-                        </div>
-                    </div>-->
-                    <div class="form-row">
+                    <div th:if="${homeData != null && (homeData.rol.nombre.equals('ROLE_ADMIN')} || homeData.rol.nombre.equals('ROLE_TECH')})" class="form-row">
                         <div class="form-group col-md-6">
                             <label class="control-label" for="tecnicos">Asignaciones</label>
                             <select id="tecnicos" name="asignados" th:field="*{incidenciaDTO.asignados}"
@@ -52,7 +44,30 @@
                                 ></option>
                             </select>
                         </div>
+
+                        <div class="col-sm-6 ">
+                            <h4>Tiempo estimado</h4>
+                            <div class="row">
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="dias">Dias</label>
+                                <input type="number" min='0' max="100" id="dias" class="form-control"
+                                       th:field="*{incidenciaDTO.tiempoEstimado.dias}">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="horas">Horas</label>
+                                <input type="number" min="0" max="23" id="horas" class="form-control"
+                                       th:field="*{incidenciaDTO.tiempoEstimado.hora}">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="minutos">Minutos</label>
+                                <input type="number" min="0" max="59" id="minutos" class="form-control"
+                                       th:field="*{incidenciaDTO.tiempoEstimado.minutos}">
+                            </div>
+                            </div>
+
+                        </div>
                     </div>
+
                     <input id="catId" th:value="*{incidenciaDTO.categoria.id}" type="hidden">
                     <input id="dadId" th:value="*{incidenciaDTO.categoria.padre.id}" type="hidden">
                     <input type="hidden" th:field="*{incidenciaDTO.id}"/>

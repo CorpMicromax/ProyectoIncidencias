@@ -10,15 +10,17 @@
                        class="table table-hover dt-bootstrap table-striped table-bordered table-sm nowrap">
                     <thead>
                     <tr>
-                        <th> Id</th>
-                        <th> Titulo</th>
-                        <th> Categoria</th>
-                        <th> Creador</th>
-                        <th> Fecha y Hora de Creacion</th>
-                        <th> Status</th>
-                        <th> Asignado</th>
-                        <th> Editar</th>
-                        <th th:if="${homeData != null && homeData.rol.nombre.equals('ROLE_ADMIN')}"> Eliminar</th>
+                        <th> Id </th>
+                        <th> Titulo </th>
+                        <th> Categoria </th>
+                        <th> Tipo </th>
+                        <th> Creador </th>
+                        <th> Fecha y Hora de Creacion </th>
+                        <th> Entrega Estimada </th>
+                        <th> Status </th>
+                        <th> Asignado </th>
+                        <th> Editar </th>
+                        <th th:if="${homeData != null && homeData.rol.nombre.equals('ROLE_ADMIN')}"> Eliminar </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -30,9 +32,10 @@
                             <i class="fa fa-link"></i><span th:text="${incidencia.idIncidencia}"> Id </span></a></td>
                         <td><span th:if="${incidencia.titulo}" th:text="${incidencia.titulo}"> Titulo </span></td>
                         <td><span th:if="${incidencia.categoria}" th:text="${incidencia.categoria.nombre}"></span></td>
-                        <td><span th:if="${incidencia.creador}"
-                                  th:text="${incidencia.creador.username}"> Nombre creador </span></td>
-                        <td><span th:if="${incidencia.creacion}" th:text="${incidencia.creacion}"> creacion </span></td>
+                        <td><span th:if="${incidencia.tipoIncidencia}" th:text="${incidencia.tipoIncidencia.nombre}"></span></td>
+                        <td><span th:if="${incidencia.creador}"th:text="${incidencia.creador.username}"> Nombre creador </span></td>
+                        <td><span th:if="${incidencia.creacion}" th:text="${incidencia.getCreacionFormateada()}"> creacion </span></td>
+                        <td><span th:if="${incidencia.tiempoEstimado}"th:text="${incidencia.getTiempoEstimado().getEntregaEstimada()}"> Nombre creador </span></td>
                         <td><span th:if="${incidencia.status}" th:text="${incidencia.status}"> Status </span></td>
                         <td><span th:unless="${incidencia.asignados != null && incidencia.asignados.isEmpty()}" th:text="${incidencia.asignados.get(0).username}"> Asignado </span>
                         </td>

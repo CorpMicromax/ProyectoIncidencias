@@ -5,6 +5,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.format.DateTimeFormatter;
+
 
 @EnableConfigurationProperties
 @Data
@@ -16,7 +18,7 @@ public class Constants {
         UNO, DOS, TRES
     }
 
-
+    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, hh:mm");
     public static final String AUTO = "Auto";
     public static final String MANUAL = "Manual";
     public static final String TITLE = "title";

@@ -1,7 +1,9 @@
 package com.micromax.incidencia.domain.entities.incidencias;
 
+import com.micromax.incidencia.domain.Constants;
 import com.micromax.incidencia.domain.Desactivable;
 import com.micromax.incidencia.domain.Status;
+import com.micromax.incidencia.domain.TiempoEstimado;
 import com.micromax.incidencia.domain.entities.Encuesta;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
@@ -13,6 +15,8 @@ import org.springframework.data.annotation.Transient;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Date;
 
@@ -67,9 +71,21 @@ public class Incidencia extends Desactivable implements Serializable {
     @JoinColumn(name = "id_tipo_incidencia")
     private TipoIncidencia tipoIncidencia;
 
-    @Column(name = "tiempo_estimado", length = 8)
+    @Column(name = "tiempo_estimado", length = 12)
     private String tiempoEstimado;
 
+    public TiempoEstimado getTiempoEstimado(){
+        return new TiempoEstimado(creacion, tiempoEstimado);
+    }
+
+    public void setTiempoEstimado(TiempoEstimado t){
+        tiempoEstimado = t.toString();
+    }
+
+    public String getCreacionFormateada(){
+
+        return LocalDateTime.ofInstant(creacion.toInstant(), ZoneId.systemDefault()).format(Constants.formatter);
+    }
     @ManyToMany
     @JoinTable(
             name = "asignaciones",

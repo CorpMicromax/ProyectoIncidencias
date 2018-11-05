@@ -1,6 +1,7 @@
 package com.micromax.incidencia.dto;
 
 import com.micromax.incidencia.domain.Status;
+import com.micromax.incidencia.domain.TiempoEstimado;
 import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.incidencias.TipoIncidencia;
@@ -19,7 +20,7 @@ public class IncidenciaDTO {
     private Categoria categoria;
     private Status status;
     private TipoIncidencia tipoIncidencia;
-    private String tiempoEstimado;
+    private TiempoEstimado tiempoEstimado;
     private long categoriaId;
     private List<Tecnico> asignados;
 
@@ -34,6 +35,8 @@ public class IncidenciaDTO {
         tipoIncidencia = incidencia.getTipoIncidencia();
         asignados = new ArrayList<>();
         asignados.addAll(incidencia.getAsignados());
+        tiempoEstimado = incidencia.getTiempoEstimado();
+
     }
 
 }
