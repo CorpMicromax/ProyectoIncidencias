@@ -14,6 +14,7 @@ import com.micromax.incidencia.repository.CategoriaRepository;
 import com.micromax.incidencia.repository.IncidenciaRepository;
 import com.micromax.incidencia.service.HistoricoService;
 import com.micromax.incidencia.service.IncidenciaService;
+import com.micromax.incidencia.service.MailService;
 import com.micromax.incidencia.service.UsuarioService;
 import com.micromax.incidencia.viewmodel.DashboardViewmodel;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +49,9 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     @Autowired
     private EstrategiaServiceImpl estrategiaService;
 
+    @Autowired
+    private MailService mailService;
+
     @Override
     public List<Incidencia> getIncidencias() {
         log.info("Buscando todas las incidencias");
@@ -68,6 +72,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
         estrategiaService.ejecutarEstrategia(i, usuarioService.getTecnicos());
         i = incidenciaRepository.save(i);
         historia.guardarHistorico(new Historico(i,TipoCambio.CREACION_INCIDENCIA, null, Status.NUEVA,null), user);
+        mailService.sendEmail(user.getEmail(),"Incidencia creada en Micromax", String.format("Ha creado exitosamente la incidencia %s en el sistema de Incidencias de Micromax, con el titulo \"%s\"", i.getIdIncidencia(),i.getTitulo()));
         log.info("Usuario %s ha creado una incidencia nueva con id %d", i.getIdIncidencia(), user);
     }
 
