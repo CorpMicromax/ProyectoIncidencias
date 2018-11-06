@@ -10,7 +10,7 @@
                     </legend>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 card-block">
+                    <div class="col-auto card-block">
                         <div class="form-group">
                             <label class="">Descripcion</label>
                             <textarea style="height:250px;" th:text="*{incidencia.descripcion}" class="form-control form-control-plaintext"
@@ -18,14 +18,14 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-auto">
                         <div class="row">
-                            <div class="col-md-4 form-group">
+                            <div class="col-auto form-group">
                                 <label class="col-md-12">Status</label>
                                 <input type="text" th:value="*{incidencia.status}" class="form-control form-control-plaintext"
                                        disabled="disabled">
                             </div>
-                            <div class="col-md-4 card-block">
+                            <div class="col-auto card-block">
                                 <div class="form-group">
                                     <label>Categoria</label>
                                     <input type="text" th:value="*{incidencia.categoria.nombre}"
@@ -40,17 +40,24 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 card-block">
+                            <div class="col-auto card-block">
                                 <div class="form-group">
                                     <label>Creador</label>
                                     <input type="text" th:value="*{incidencia.creador.getUsername()}"
                                            class="form-control form-control-plaintext" disabled="disabled">
                                 </div>
                             </div>
-                            <div class="col-md-6 card-block">
+                            <div class="col-auto card-block">
                                 <div class="form-group">
                                     <label>Fecha Creacion</label>
                                     <input type="text" th:value="*{incidencia.creacion.toLocaleString()}"
+                                           class="form-control form-control-plaintext" disabled="disabled">
+                                </div>
+                            </div>
+                            <div class="col-auto card-block">
+                                <div class="form-group">
+                                    <label>Fecha Estimada</label>
+                                    <input type="text" th:value="*{incidencia.getTiempoEstimado().getEntregaEstimada()}"
                                            class="form-control form-control-plaintext" disabled="disabled">
                                 </div>
                             </div>
@@ -59,15 +66,23 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4 form-group">
+                    <div class="col-auto form-group">
+                        <input type="hidden" th:value="*{incidencia.idIncidencia}">
                         <label>Tecnico(s) Asignado(s)</label>
                         <ul class="card-block" disabled multiple>
                             <li th:each="cat : *{incidencia.asignados}" th:text="${cat.username}"></li>
                         </ul>
                     </div>
+                    <div class="col-auto form-group">
+                        <label>Historico</label>
+                        <ul class="card-block" disabled multiple>
+                            <li th:each="h : *{historico}" th:text="${h.obtenerMensaje()}"></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="form-group form-row">
-                    <button id="cancel" name="cancel" class="btn btn-amber">Volver</button>
+                    <button id="cancel" name="cancel" class="btn btn-secondary">Volver</button>
+                    <a id="editar" name="editar" class="btn btn-primary" th:href="@{'/incidenciaE?id=' + ${data.incidencia.idIncidencia}}">Editar</a>
                 </div>
 
             </fieldset>

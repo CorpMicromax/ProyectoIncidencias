@@ -170,7 +170,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         if(nuevo){
             try {
                 log.info("Enviando correo");
-                mailService.sendEmail("javier.darkona@gmail.com", "Creacion de cuenta de usuario", "Su password es: " + usuarioDTO.getPassword());
+                mailService.sendEmail(usuario.getEmail(), "Creacion de cuenta de usuario", "Su password es: " + usuarioDTO.getPassword());
             } catch (MessagingException e) {
                 e.printStackTrace();
             }

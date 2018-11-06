@@ -1,6 +1,7 @@
 package com.micromax.incidencia.domain.entities;
 
 
+import com.micromax.incidencia.domain.Constants;
 import com.micromax.incidencia.domain.Status;
 import com.micromax.incidencia.domain.entities.incidencias.Comentario;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
@@ -9,6 +10,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Data
@@ -51,4 +55,40 @@ public class Historico implements Serializable {
     @OneToOne
     @JoinColumn(name = "id_comentario", referencedColumnName = "id_comentario")
     private Comentario comentario;
+
+    public Historico(Incidencia i, TipoCambio t, Status sa, Status sn, Comentario c){
+        this.incidencia = i;
+        this.statusAnterior = sa;
+        this.statusNuevo = sn;
+        this.tipoCambio = t;
+        this.comentario = c;
+    }
+
+    public String obtenerMensaje(){
+        String mensaje;
+        String i = incidencia.getIdIncidencia();
+        String u = usuarioResponsable != null ? usuarioResponsable.getUsername() : "Admin";
+        String sa = statusAnterior != null ? statusAnterior.toString() : "Inexistente";
+        String sn = statusNuevo != null ? statusNuevo.toString() : "";
+        switch (tipoCambio){
+            case CREACION_INCIDENCIA: mensaje = String.format("Incidencia %s fue creada por el usuario %s.", i, u);
+            break;
+            case CAMBIO_STATUS: mensaje = String.format("Incidencia %s fue cambiada de status %s a status %s por el usuario %s", i, sa, sn, u);
+            break;
+            case EDICION_INCIDENCIA: mensaje = String.format("Incidencia %s fue editada por el usuario %s",i,u);
+            break;
+            case COMENTARIO: mensaje = String.format("Comentario %d en incidencia %s agregado por el usuario %s", comentario.getIdComentario(),i,u);
+            break;
+            default: mensaje = "Ocurrio un error recuperando historico";
+        }
+        return obtenerFecha() + " " + mensaje;
+    }
+
+    public String obtenerFecha() {
+        try {
+            return LocalDateTime.ofInstant(momento.toInstant(), ZoneId.systemDefault()).format(Constants.formatter);
+        } catch (DateTimeException e) {
+            return null;
+        }
+    }
 }

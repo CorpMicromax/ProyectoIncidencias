@@ -1,5 +1,6 @@
 package com.micromax.incidencia.viewmodel;
 
+import com.micromax.incidencia.domain.entities.Historico;
 import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.incidencias.TipoIncidencia;
@@ -18,4 +19,5 @@ public class IncidenciaViewmodel {
     private List<TipoIncidencia> tipoIncidencias;
     private List<Categoria> categorias;
     private List<Tecnico> tecnicos;
+    private List<Historico> historico;
 }

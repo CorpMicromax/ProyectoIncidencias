@@ -83,9 +83,13 @@ public class Incidencia extends Desactivable implements Serializable {
     }
 
     public String getCreacionFormateada(){
-
         return LocalDateTime.ofInstant(creacion.toInstant(), ZoneId.systemDefault()).format(Constants.formatter);
     }
+
+    public boolean estaAsignadaA(Usuario u){
+        return asignados.contains(u);
+    }
+
     @ManyToMany
     @JoinTable(
             name = "asignaciones",

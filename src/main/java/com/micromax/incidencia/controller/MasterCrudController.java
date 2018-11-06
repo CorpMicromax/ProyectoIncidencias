@@ -81,8 +81,8 @@ public class MasterCrudController {
 
     /*CATEGORIA*/
     @PostMapping("/admin/categoriaC")
-    public String postCategoriaC(@ModelAttribute CategoriaDTO categoriaDTO, BindingResult errors, Model model){
-        itemListService.guardar(categoriaDTO);
+    public String postCategoriaC(@ModelAttribute CategoriaViewmodel viewmodel, BindingResult errors, Model model){
+        itemListService.guardar(viewmodel.getCategoriaDTO());
         return crearCategoria(model);
     }
 

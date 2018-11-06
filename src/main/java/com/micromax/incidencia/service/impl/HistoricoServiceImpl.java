@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -36,7 +37,7 @@ public class HistoricoServiceImpl implements HistoricoService {
     }
 
     @Override
-    public Collection<Historico> getHistoricoByIncidencia(Incidencia idIncidencia) {
+    public List<Historico> getHistoricoByIncidencia(Incidencia idIncidencia) {
         return historicoRepository.findAllByIncidencia(idIncidencia);
     }
 
@@ -45,8 +46,8 @@ public class HistoricoServiceImpl implements HistoricoService {
         return historicoRepository.findAllByIncidenciaAndUsuarioResponsable(idIncidencia, idUser);
     }
      @Override
-    public void guardarHistorico(Historico historico, long idUsuario) {
-        historico.setUsuarioResponsable(usuarioService.getUsuarioById(idUsuario));
+    public void guardarHistorico(Historico historico, Usuario user) {
+        historico.setUsuarioResponsable(user);
         historico.setMomento(Date.from(LocalDateTime.now().toInstant(ZoneOffset.ofHours(0))));
         historicoRepository.save(historico);
     }

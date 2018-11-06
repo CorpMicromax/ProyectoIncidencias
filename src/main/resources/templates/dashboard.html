@@ -6,77 +6,79 @@
             <div class="container-fluid">
                 <div class="row bg-white has-shadow">
                     <!-- Item -->
-                    <div class="col-xl-2 col-sm-6">
+                    <div class="col-md-auto">
                         <div class="item d-flex align-items-center">
                             <div class="icon bg-green"><i class="fa fa-star"></i></div>
                             <div class="title"><span>Nuevas<br>Incidencias</span>
                                 <div class="progress">
-                                    <div th:if="${nuevas > 0}" role="progressbar"
-                                         th:style="'height:4px; width: '+${nuevas*100/todas} + 'px;'"
-                                         th:aria-valuemin="0" th:attr="aria-valuemax=${todas}, aria-valuenow=${nuevas}"
-                                         class="progress-bar bg-green"></div>
+                                    <div th:if="${data.nuevas > 0 && data.nuevas != null}" role="progressbar"
+                                         th:style="'height:4px; width: '+${data.nuevas*100/data.todas} + 'px;'"
+                                         th:aria-valuemin="0" th:attr="aria-valuemax=${data.todas}, aria-valuenow=${data.nuevas}"
+                                         class="progress-bar bg-green">
+
+                                    </div>
                                 </div>
                             </div>
                             <div class="number"><strong th:text="*{nuevas}"></strong></div>
                         </div>
                     </div>
                     <!-- Item -->
-                    <div class="col-xl-2 col-sm-6">
+                    <div class="col-md-auto">
                         <div class="item d-flex align-items-center">
                             <div class="icon bg-violet"><i class="fa fa-user"></i></div>
                             <div class="title"><span>Incidencias<br>Asignadas</span>
                                 <div class="progress">
-                                    <div th:if="${todas > 0}" role="progressbar"
-                                         th:style="'height:4px; width: '+${asignadas*100/todas} + 'px;'"
+                                    <div th:if="${data.todas > 0 && data.asignadas != null}" role="progressbar"
+                                         th:style="'height:4px; width: '+${data.asignadas*100/data.todas} + 'px;'"
                                          th:aria-valuemin="0"
-                                         th:attr="aria-valuemax=${todas}, aria-valuenow=${asignadas}"
+                                         th:attr="aria-valuemax=${data.todas}, aria-valuenow=${data.asignadas}"
                                          class="progress-bar bg-violet"></div>
                                 </div>
                             </div>
-                            <div class="number"><strong th:text="${asignadas}"></strong></div>
+                            <div class="number"><strong th:text="${data.asignadas}"></strong></div>
                         </div>
                     </div>
                     <!-- Item -->
-                    <div class="col-xl-2 col-sm-6">
+                    <div class="col-md-auto">
                         <div class="item d-flex align-items-center">
                             <div class="icon bg-orange"><i class="fa fa-gear"></i></div>
                             <div class="title"><span>Incidencias<br>En Progreso</span>
                                 <div class="progress">
-                                    <div th:if="${data.todas > 0}" role="progressbar"
+                                    <div th:if="${data.todas > 0 && data.progreso != null}" role="progressbar"
                                          th:style="'height:4px; width: '+${data.progreso*100/data.todas} + 'px;'"
                                          th:aria-valuemin="0"
-                                         th:attr="aria-valuemax=${todas}, aria-valuenow=${progreso}"
+                                         th:attr="aria-valuemax=${data.todas}, aria-valuenow=${data.progreso}"
                                          class="progress-bar bg-orange"></div>
                                 </div>
                             </div>
-                            <div class="number"><strong th:text="${progreso}"></strong></div>
+                            <div class="number"><strong th:text="${data.progreso}"></strong></div>
                         </div>
                     </div>
                     <!-- Item -->
-                    <div class="col-xl-2 col-sm-6">
+                    <div class="col-md-auto">
                         <div class="item d-flex align-items-center">
                             <div class="icon bg-blue"><i class="fa fa-check"></i></div>
                             <div class="title"><span>Incidencias<br>Cerradas</span>
                                 <div class="progress">
-                                    <div th:if="${todas > 0}" class="progress-bar bg-blue"
-                                         th:style="'height:4px; width: '+${cerradas*100/todas} + 'px;'"
+                                    <div th:if="${data.todas > 0 && data.cerradas != null}" class="progress-bar bg-blue"
+                                         th:style="'height:4px; width: '+${data.cerradas*100/data.todas} + 'px;'"
                                          role="progressbar"
-                                         th:attr="aria-valuenow=${cerradas}, aria-valuemin='0', aria-valuemax=${todas}">
+                                         th:attr="aria-valuenow=${data.cerradas}, aria-valuemin='0', aria-valuemax=${data.todas}">
                                     </div>
                                 </div>
                             </div>
-                            <div class="number"><strong th:text="${cerradas}"></strong></div>
+                            <div class="number"><strong th:text="${data.cerradas}"></strong></div>
                         </div>
                     </div>
                     <!-- Item -->
-                    <div class="col-xl-2 col-sm-6">
+                    <div class="col-md-auto">
                         <div class="item d-flex align-items-center">
                             <div class="icon bg-red"><i class="fa fa-warning"></i></div>
                             <div class="title"><span>Incidencias<br>Retrasadas</span>
                                 <div class="progress">
-                                    <div th:if="${todas > 0}" role="progressbar"
-                                         th:style="'height:4px; width: '+${todas*100/todas} + 'px;'"
-                                         th:aria-valuemin="0" th:attr="aria-valuemax=${todas}, aria-valuenow=50"
+                                    <div th:if="${data.todas > 0 && data.progreso != null}" role="progressbar"
+                                         th:style="'height:4px; width: '+${data.progreso*100/data.todas} + 'px;'"
+                                         th:aria-valuemin="0" th:attr="aria-valuemax=${data.todas}, aria-valuenow=50"
                                          class="progress-bar bg-red"></div>
                                 </div>
                             </div>
@@ -84,18 +86,18 @@
                         </div>
                     </div>
                     <!-- Item -->
-                    <div class="col-xl-2 col-sm-6">
+                    <div class="col-md-auto">
                         <div class="item d-flex align-items-center">
                             <div class="icon bg-gray"><i class="fa fa-bug"></i></div>
                             <div class="title"><span>Incidencias<br>Reabiertas</span>
                                 <div class="progress">
-                                    <div th:if="${todas > 0}" role="progressbar"
-                                         th:style="'height:4px; width: '+${reabiertas*100/data.todas} + 'px;'"
-                                         aria-valuemin="0" th:attr="aria-valuemax=${todas}, aria-valuenow=${reabiertas}"
+                                    <div th:if="${data.todas > 0 && data.reabiertas != null}" role="progressbar"
+                                         th:style="'height:4px; width: '+${data.reabiertas*100/data.todas} + 'px;'"
+                                         aria-valuemin="0" th:attr="aria-valuemax=${data.todas}, aria-valuenow=${data.reabiertas}"
                                          class="progress-bar bg-gray"></div>
                                 </div>
                             </div>
-                            <div class="number"><strong th:text="${reabiertas}"></strong></div>
+                            <div class="number"><strong th:text="${data.reabiertas}"></strong></div>
                         </div>
                     </div>
                 </div>
@@ -119,10 +121,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:if="${data.incidencias.empty}">
+                                <tr th:if="${data.incidencias.isEmpty()}">
                                     <td colspan="2"> No tiene incidencias</td>
                                 </tr>
-                                <tr th:each="incidencia: ${data.incidencias}">
+                                <tr th:class="${incidencia.estaAsignadaA(data.u)} ? 'seacolor' : ''" th:each="incidencia: ${data.incidencias}">
                                     <td><a class="text-info" th:href="@{'/incidenciaV/' + ${incidencia.idIncidencia}}">
                                         <i class="fa fa-link"></i><span th:text="${incidencia.idIncidencia}"> Id </span></a>
                                     </td>

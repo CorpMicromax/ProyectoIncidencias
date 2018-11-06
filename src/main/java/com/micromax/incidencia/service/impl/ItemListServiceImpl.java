@@ -53,7 +53,6 @@ public class ItemListServiceImpl implements ItemListService {
     @Override
     public Categoria guardar(CategoriaDTO categoriaDTO) {
         Categoria categoria = new Categoria();
-        categoria.setNivel(categoriaDTO.getNivel());
         categoria.setNombre(categoriaDTO.getNombre());
         if(categoriaDTO.getPadre() != null){
             categoria.setPadre(categoriaDTO.getPadre());

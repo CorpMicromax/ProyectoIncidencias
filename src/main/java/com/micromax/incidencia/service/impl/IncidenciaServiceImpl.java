@@ -1,12 +1,17 @@
 package com.micromax.incidencia.service.impl;
 
+import com.micromax.incidencia.domain.Constants;
 import com.micromax.incidencia.domain.Status;
+import com.micromax.incidencia.domain.entities.Historico;
+import com.micromax.incidencia.domain.entities.TipoCambio;
 import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
+import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.dto.IncidenciaDTO;
 import com.micromax.incidencia.repository.CategoriaRepository;
 import com.micromax.incidencia.repository.IncidenciaRepository;
+import com.micromax.incidencia.service.HistoricoService;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.UsuarioService;
 import com.micromax.incidencia.viewmodel.DashboardViewmodel;
@@ -37,6 +42,8 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private HistoricoService historia;
 
     @Autowired
     private EstrategiaServiceImpl estrategiaService;
@@ -48,33 +55,38 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     }
 
     @Override
-    public void guardarIncidencia(IncidenciaDTO dto, String username){
+    public void guardarIncidencia(IncidenciaDTO dto, Usuario user){
         Incidencia i = new Incidencia();
         i.setTitulo(dto.getTitulo());
         i.setDescripcion(dto.getDescripcion());
         i.setCategoria(dto.getCategoria());
-        i.setCreador(usuarioService.getUsuarioByUsername(username));
+        i.setCreador(user);
         i.setCreacion(Date.from(LocalDateTime.now().toInstant(ZoneOffset.ofHours(0))));
         i.setStatus(Status.NUEVA);
         i.setAsignados(new ArrayList<>());
         estrategiaService.ejecutarEstrategia(i, usuarioService.getTecnicos());
         i = incidenciaRepository.save(i);
-
-        log.info("Usuario %s ha creado una incidencia nueva con id %d", i.getIdIncidencia(), username);
+        historia.guardarHistorico(new Historico(i,TipoCambio.CREACION_INCIDENCIA, null, Status.NUEVA,null), user);
+        log.info("Usuario %s ha creado una incidencia nueva con id %d", i.getIdIncidencia(), user);
     }
 
     public void cambiarAsignados(IncidenciaDTO incidenciaDTO){
-
 
     }
 
     @Override
     @Transactional
-    public void actualizarIncidencia(IncidenciaDTO dto) {
+    public void actualizarIncidencia(IncidenciaDTO dto, Usuario user) {
         Categoria cat = categoriaRepository.findById(dto.getCategoria().getId());
         Optional<Incidencia> i = incidenciaRepository.findByIdIncidenciaAndHabilitadoIsTrue(dto.getId());
+
         if(i.isPresent()){
             Incidencia in = i.get();
+
+            historia.guardarHistorico(
+                    new Historico(in,TipoCambio.EDICION_INCIDENCIA, in.getStatus(), dto.getStatus(),null),
+                    user);
+
             in.setAsignados(defaultIfNull(dto.getAsignados(), new ArrayList<>()));
             in.setCategoria(defaultIfNull(cat, in.getCategoria()));
             in.setTitulo(defaultIfNull(dto.getTitulo(), in.getTitulo()));
@@ -88,7 +100,9 @@ public class IncidenciaServiceImpl implements IncidenciaService {
             }
 
             in.setTiempoEstimado(defaultIfNull(dto.getTiempoEstimado(), in.getTiempoEstimado()));
+
             incidenciaRepository.save(in);
+
         }else{
             log.warn("No se pudo encontrar ninguna incidencia de id= %s", dto.getId());
         }
@@ -101,25 +115,28 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     }
 
     @Override
-    public boolean borrarIncidencia(String id) {
+    public boolean borrarIncidencia(String id, Usuario user) {
         Incidencia i = incidenciaRepository.findByIdIncidenciaAndHabilitadoIsTrue(id).orElse(  null);
         if(i != null) {
             i.setHabilitado(false);
             log.info("Eliminada incidencia con id %d", id);
+            historia.guardarHistorico(
+                    new Historico(i,TipoCambio.ELIMINACION_INCIDENCIA, i.getStatus(), null,null),
+                    user);
             return incidenciaRepository.save(i) != null;
         }
+
         return false;
     }
 
     @Override
     public List<Incidencia> obtenerIncidenciasPorCreador(Usuario creador) {
-        List<Incidencia> in = incidenciaRepository.findAllByCreadorAndHabilitadoIsTrue(creador);
-        return in;
+        return incidenciaRepository.findAllByCreadorAndHabilitadoIsTrue(creador);
     }
 
     @Override
     public List<Incidencia> incidenciasPorEstado(Status status) {
-        return null;
+        return incidenciaRepository.findAllByStatusAndHabilitadoIsTrue(status);
     }
 
     @Override
@@ -137,7 +154,16 @@ public class IncidenciaServiceImpl implements IncidenciaService {
         dash.setReabiertas(incidenciaRepository.countAllByStatusAndHabilitadoIsTrue(Status.REABIERTA));
         dash.setTodas(incidenciaRepository.countAllByHabilitadoIsTrue());
 
-        dash.setIncidencias(incidenciaRepository.findAllByStatusIsNotAndCreadorAndHabilitadoIsTrue(Status.CERRADA, usuario));
+        if(usuario.getRol().getNombre().equalsIgnoreCase(Constants.ADMINROLE)){
+            dash.setIncidencias(incidenciaRepository.findAllByStatusIsNotAndHabilitadoIsTrue(Status.CERRADA));
+        }else{
+            dash.setIncidencias(incidenciaRepository.findAllByStatusIsNotAndCreadorAndHabilitadoIsTrue(Status.CERRADA, usuario));
+            if(usuario instanceof Tecnico ) {
+                dash.getIncidencias().addAll(incidenciaRepository.findAllByStatusIsNotAndAsignadosContainsAndHabilitadoIsTrue(Status.CERRADA, (Tecnico) usuario));
+            }
+        }
+        dash.setU(usuario);
+        dash.setIncidencias(dash.getIncidencias().subList(0, Math.min(9, dash.getIncidencias().size()-1)));
         return dash;
     }
 

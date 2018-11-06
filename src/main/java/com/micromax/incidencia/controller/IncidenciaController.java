@@ -5,6 +5,7 @@ import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.dto.IncidenciaDTO;
+import com.micromax.incidencia.service.HistoricoService;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.ItemListService;
 import com.micromax.incidencia.service.UsuarioService;
@@ -40,6 +41,9 @@ public class IncidenciaController {
     @Autowired
     private ItemListService itemListService;
 
+    @Autowired
+    private HistoricoService historicoService;
+
     /*-------------------------------------------- INCIDENCIA -------------------------------------------------*/
     @GetMapping("/incidenciaC")
     public String incidenciaC(Model model){
@@ -59,7 +63,7 @@ public class IncidenciaController {
     public String incidenciaV(@PathVariable String idIncidencia, Model model){
         IncidenciaViewmodel viewmodel = new IncidenciaViewmodel();
         viewmodel.setIncidencia(incidenciaService.getIncidenciaById(idIncidencia));
-
+        viewmodel.setHistorico(historicoService.getHistoricoByIncidencia(incidenciaService.getIncidenciaById(idIncidencia)));
         model = setTemplateToModel(model, INCIDENCIA,"incidenciaV")
                 .addAttribute(Constants.DATA, viewmodel)
                 .addAttribute(TITLE,"Detalles Incidencia: " + viewmodel.getIncidencia().getIdIncidencia());
@@ -109,18 +113,21 @@ public class IncidenciaController {
     /* INCIDENCIA */
     @PostMapping("/incidenciaC")
     public String postIncidenciaC(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
-        incidenciaService.guardarIncidencia(viewmodel.getIncidenciaDTO(), SecurityContextHolder.getContext().getAuthentication().getName());
+        incidenciaService.guardarIncidencia(viewmodel.getIncidenciaDTO(), usuarioActual());
         return "redirect:/incidenciaL";
     }
 
     @PostMapping("/incidenciaE")
     public String postIncidenciaE(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
-        incidenciaService.actualizarIncidencia(viewmodel.getIncidenciaDTO());
+        incidenciaService.actualizarIncidencia(viewmodel.getIncidenciaDTO(), usuarioActual());
         return "redirect:/incidenciaL";
     }
 
     private String obtenerRol(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return usuarioService.getUsuarioByUsername(auth.getName()).getRol().getNombre();
+        return usuarioActual().getRol().getNombre();
+    }
+
+    private Usuario usuarioActual(){
+        return usuarioService.getUsuarioByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }

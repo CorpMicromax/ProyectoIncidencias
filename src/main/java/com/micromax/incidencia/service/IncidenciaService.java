@@ -13,13 +13,13 @@ public interface IncidenciaService {
 
     List<Incidencia> getIncidencias();
 
-    void guardarIncidencia(IncidenciaDTO i, String username);
+    void guardarIncidencia(IncidenciaDTO i, Usuario user);
 
-    void actualizarIncidencia(IncidenciaDTO i);
+    void actualizarIncidencia(IncidenciaDTO i, Usuario user);
 
     Incidencia getIncidenciaById(String id);
 
-    boolean borrarIncidencia(String id);
+    boolean borrarIncidencia(String id, Usuario user);
 
     List<Incidencia> obtenerIncidenciasPorCreador(Usuario creador);
 

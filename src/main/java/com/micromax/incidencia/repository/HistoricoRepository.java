@@ -5,7 +5,7 @@ import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public interface HistoricoRepository extends CrudRepository<Historico,Long> {
@@ -16,8 +16,8 @@ public interface HistoricoRepository extends CrudRepository<Historico,Long> {
 
     Optional<Historico> findHistoricoByIdHistoricoAndIncidenciaAndUsuarioResponsable (long idHistorico, Incidencia incidencia, Usuario usuario);
 
-    Collection<Historico> findAllByIncidencia (Incidencia incidencia);
+    List<Historico> findAllByIncidencia (Incidencia incidencia);
 
-    Collection<Historico> findAllByIncidenciaAndUsuarioResponsable (Incidencia incidencia, Usuario usuario);
+    List<Historico> findAllByIncidenciaAndUsuarioResponsable (Incidencia incidencia, Usuario usuario);
 
 }
