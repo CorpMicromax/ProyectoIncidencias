@@ -72,7 +72,7 @@ public class Historico implements Serializable {
             break;
             case CAMBIO_STATUS: mensaje = String.format("Incidencia %s fue cambiada de status %s a status %s por el usuario %s", i, sa, sn, u);
             break;
-            case EDICION_INCIDENCIA: mensaje = String.format("Incidencia %s fue editada por el usuario %s",i,u);
+            case EDICION_INCIDENCIA: mensaje = String.format("Incidencia %s fue editada por el usuario %s. Pasó de %s a %s.",i,u,sa,sn);
             break;
             case COMENTARIO: mensaje = String.format("Comentario %d en incidencia %s agregado por el usuario %s", comentario.getIdComentario(),i,u);
             break;

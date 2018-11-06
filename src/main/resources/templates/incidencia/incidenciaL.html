@@ -1,60 +1,68 @@
-<section  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaL">
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaL">
 
     <!--/*@thymesVar id="homeData" type="com.micromax.incidencia.viewmodel.HomeViewmodel"*/-->
-    <div class="container-fluid" >
-        <div class="card card-body" >
+    <div class="container-fluid">
+        <div class="card card-body">
             <a class="col-sm-2 btn btn-primary btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#">
                 <i class="float-left fa fa-star fa-sm"></i>Crear Incidencia</a>
-            <div class="table-responsive">
-                <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaListViewmodel"*/-->
-                <table id="datatable" class="table table-hover dt-bootstrap table-striped table-bordered table-sm nowrap" >
-                    <thead>
-                    <tr>
-                        <th> Id </th>
-                        <th> Titulo </th>
-                        <th> Categoria </th>
-                        <th> Tipo </th>
-                        <th> Creador </th>
-                        <th> Fecha y Hora de Creacion </th>
-                        <th> Entrega Estimada </th>
-                        <th> Status </th>
-                        <th> Asignado </th>
-                        <th> Editar </th>
-                        <th th:if="${homeData != null && homeData.rol.nombre.equals('ROLE_ADMIN')}"> Eliminar </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:if="${incidencias}">
-                        <td colspan="2"> No hay incidencias</td>
-                    </tr>
-                    <tr th:each="incidencia: ${incidencias}">
-                        <td><a class="text-info" th:href="@{'/incidenciaV/' + ${incidencia.idIncidencia}}">
-                            <i class="fa fa-link"></i><span th:text="${incidencia.idIncidencia}"> Id </span></a></td>
-                        <td><span th:if="${incidencia.titulo}" th:text="${incidencia.titulo}"> Titulo </span></td>
-                        <td><span th:if="${incidencia.categoria}" th:text="${incidencia.categoria.nombre}"></span></td>
-                        <td><span th:if="${incidencia.tipoIncidencia}" th:text="${incidencia.tipoIncidencia.nombre}"></span></td>
-                        <td><span th:if="${incidencia.creador}"th:text="${incidencia.creador.username}"> Nombre creador </span></td>
-                        <td><span th:if="${incidencia.creacion}" th:text="${incidencia.creacionFormateada()}"> creacion </span></td>
-                        <td><span th:if="${incidencia.tiempoEstimado}"th:text="${incidencia.getTiempoEstimado().entregaFormateada()}"> Nombre creador </span></td>
-                        <td><span th:if="${incidencia.status}" th:text="${incidencia.status}"> Status </span></td>
-                        <td><span th:unless="${incidencia.asignados != null && incidencia.asignados.isEmpty()}" th:text="${incidencia.asignados.get(0).username}"> Asignado </span>
-                        </td>
-                        <td>
-                            <a th:id="${incidencia.idIncidencia}" class="editButton btn btn-primary btn-toolbar text-white"
-                               data-target="#editar">
-                                <i class="fa fa-edit fa-sm"></i>Editar
-                            </a>
-                        </td>
-                        <td th:if="${homeData != null && homeData.rol.nombre.equals('ROLE_ADMIN')}">
-                            <a th:id="${incidencia.idIncidencia}" class="deleteCall btn btn-secondary btn-toolbar text-center text-white"
-                               data-toggle="modal" data-target="#delete">
-                                <i class="fa fa-trash fa-sm"></i> Eliminar
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+            <!--/*@thymesVar id="listdata" type="com.micromax.incidencia.viewmodel.IncidenciaListViewmodel"*/-->
+            <table id="datatable"
+                   class="table table-responsive table-hover dt-bootstrap table-striped table-bordered table-sm nowrap" style="width:100%">
+                <thead>
+                <tr>
+                    <th> Id</th>
+                    <th> Titulo</th>
+                    <th> Categoria</th>
+                    <th> Tipo</th>
+                    <th> Creador</th>
+                    <th> Creación </th>
+                    <th> Entrega Estimada</th>
+                    <th> Status</th>
+                    <th> Asignado</th>
+                    <th> Editar</th>
+                    <th th:if="${homeData != null && homeData.rol.nombre.equals('ROLE_ADMIN')}"> Eliminar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${incidencias.empty}">
+                    <td colspan="2"> No hay incidencias</td>
+                </tr>
+                <tr th:each="incidencia: ${incidencias}">
+                    <td><a class="text-info" th:href="@{'/incidenciaV/' + ${incidencia.idIncidencia}}">
+                        <i class="fa fa-link"></i><span th:text="${incidencia.idIncidencia}"> Id </span></a></td>
+                    <td><span th:if="${incidencia.titulo}" th:text="${incidencia.tituloCorto()}"> Titulo </span></td>
+                    <td><span th:if="${incidencia.categoria}" th:text="${incidencia.categoria.nombre}"></span></td>
+                    <td><span th:if="${incidencia.tipoIncidencia}" th:text="${incidencia.tipoIncidencia.nombre}"></span>
+                    </td>
+                    <td><span th:if="${incidencia.creador}"
+                              th:text="${incidencia.creador.username}"> Nombre creador </span></td>
+                    <td><span th:if="${incidencia.creacion}"
+                              th:text="${incidencia.creacionFormateadaCorta()}"> creacion </span></td>
+                    <td><span th:if="${incidencia.tiempoEstimado}"
+                              th:text="${incidencia.getTiempoEstimado().entregaFormateadaCorta()}"> Nombre creador </span>
+                    </td>
+                    <td><span th:if="${incidencia.status}"
+                              th:text="${incidencia.status.getDisplayName()}"> Status </span></td>
+                    <td><span th:unless="${incidencia.asignados != null && incidencia.asignados.isEmpty()}"
+                              th:text="${incidencia.asignados.get(0).username}"> Asignado </span>
+                    </td>
+                    <td>
+                        <a th:id="${incidencia.idIncidencia}"
+                           class="editButton btn btn-primary btn-sm text-white"
+                           data-target="#editar">
+                            <i class="fa fa-edit fa-sm"></i>Editar
+                        </a>
+                    </td>
+                    <td th:if="${homeData != null && homeData.rol.nombre.equals('ROLE_ADMIN')}">
+                        <a th:id="${incidencia.idIncidencia}"
+                           class="deleteCall btn btn-secondary btn-sm text-white"
+                           data-toggle="modal" data-target="#delete">
+                            <i class="fa fa-trash fa-sm"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
@@ -97,7 +105,11 @@
         $(document).ready(function () {
             $('#datatable').DataTable({
                 "language": {
-                    "url": /*[[@{/js/localization/spanish.json}]]*/ "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                    "url": /*[[@{/js/localization/spanish.json}]]*/ "/js/localization/spanish.json"
+                },
+                responsive: true,
+                fixedColumns: {
+                    leftColumns: 1
                 }
             });
 

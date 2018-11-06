@@ -36,7 +36,6 @@ public class IncidenciaDTO {
         asignados = new ArrayList<>();
         asignados.addAll(incidencia.getAsignados());
         tiempoEstimado = incidencia.getTiempoEstimado();
-
     }
 
 }

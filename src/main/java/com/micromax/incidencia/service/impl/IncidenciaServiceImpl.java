@@ -78,27 +78,25 @@ public class IncidenciaServiceImpl implements IncidenciaService {
         Optional<Incidencia> i = incidenciaRepository.findByIdIncidenciaAndHabilitadoIsTrue(dto.getId());
 
         if(i.isPresent()){
-            Incidencia in = i.get();
-
             historia.guardarHistorico(
-                    new Historico(in,TipoCambio.EDICION_INCIDENCIA, in.getStatus(), dto.getStatus(),null),
+                    new Historico(i.get(),TipoCambio.EDICION_INCIDENCIA, i.get().getStatus(), dto.getStatus(),null),
                     user);
 
-            in.setAsignados(defaultIfNull(dto.getAsignados(), new ArrayList<>()));
-            in.setCategoria(defaultIfNull(cat, in.getCategoria()));
-            in.setTitulo(defaultIfNull(dto.getTitulo(), in.getTitulo()));
-            in.setTipoIncidencia(defaultIfNull(dto.getTipoIncidencia(), in.getTipoIncidencia()));
-            in.setDescripcion(defaultIfNull(dto.getDescripcion(), in.getDescripcion()));
-            in.setStatus(defaultIfNull(dto.getStatus(), in.getStatus()));
-            if(in.getStatus().equals(Status.NUEVA) && !in.getAsignados().isEmpty()){
-                in.setStatus(Status.ASIGNADA);
-            }else if(in.getStatus().equals(Status.ASIGNADA) && in.getAsignados().isEmpty()){
-                in.setStatus(Status.ABIERTA);
+            i.get().setAsignados(defaultIfNull(dto.getAsignados(), new ArrayList<>()));
+            i.get().setCategoria(defaultIfNull(cat, i.get().getCategoria()));
+            i.get().setTitulo(defaultIfNull(dto.getTitulo(), i.get().getTitulo()));
+            i.get().setTipoIncidencia(defaultIfNull(dto.getTipoIncidencia(), i.get().getTipoIncidencia()));
+            i.get().setDescripcion(defaultIfNull(dto.getDescripcion(), i.get().getDescripcion()));
+            i.get().setStatus(defaultIfNull(dto.getStatus(), i.get().getStatus()));
+            if(i.get().getStatus().equals(Status.NUEVA) && !i.get().getAsignados().isEmpty()){
+                i.get().setStatus(Status.ASIGNADA);
+            }else if(i.get().getStatus().equals(Status.ASIGNADA) && i.get().getAsignados().isEmpty()){
+                i.get().setStatus(Status.ABIERTA);
             }
 
-            in.setTiempoEstimado(defaultIfNull(dto.getTiempoEstimado(), in.getTiempoEstimado()));
+            i.get().setTiempoEstimado(defaultIfNull(dto.getTiempoEstimado(), i.get().getTiempoEstimado()));
 
-            incidenciaRepository.save(in);
+            incidenciaRepository.save(i.get());
 
         }else{
             log.warn("No se pudo encontrar ninguna incidencia de id= %s", dto.getId());

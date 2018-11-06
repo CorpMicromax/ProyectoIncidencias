@@ -73,4 +73,8 @@ public class TiempoEstimado {
         return Constants.formateador.format(entrega);
     }
 
+    public String entregaFormateadaCorta(){
+        return Constants.formateadorCorto.format(entrega);
+    }
+
 }

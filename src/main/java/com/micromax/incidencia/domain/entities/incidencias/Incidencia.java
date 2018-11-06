@@ -84,8 +84,15 @@ public class Incidencia extends Desactivable implements Serializable {
         return Constants.formateador.format(creacion);
     }
 
+    public String creacionFormateadaCorta(){return Constants.formateadorCorto.format(creacion);}
+
     public boolean estaAsignadaA(Usuario u){
         return asignados.contains(u);
+    }
+
+    public String tituloCorto(){
+        if(titulo.length()<=20) return titulo;
+        return titulo.substring(0, 20) + "...";
     }
 
     @ManyToMany

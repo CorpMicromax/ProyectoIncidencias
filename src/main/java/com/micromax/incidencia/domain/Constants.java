@@ -20,7 +20,7 @@ public class Constants {
     }
 
     public static final SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy, hh:mm a", new Locale("es_ES"));
-
+    public static final SimpleDateFormat formateadorCorto = new SimpleDateFormat("dd/MM/yyyy", new Locale("es_ES"));
     public static final String AUTO = "Auto";
     public static final String MANUAL = "Manual";
     public static final String TITLE = "title";

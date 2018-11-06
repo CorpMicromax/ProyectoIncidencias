@@ -138,7 +138,7 @@
                                               th:text="${incidencia.creacion.toLocaleString()}"> creacion </span>
                                     </td>
                                     <td><span th:if="${incidencia.status}"
-                                              th:text="${incidencia.status}"> Status </span>
+                                              th:text="${incidencia.status.getDisplayName()}"> Status </span>
                                     </td>
                                 </tr>
                                 </tbody>

@@ -1,14 +1,25 @@
 package com.micromax.incidencia.domain;
 
-import org.springframework.util.StringUtils;
-
 public enum Status {
 
-    NUEVA, ABIERTA, ASIGNADA, PROGRESO, CERRADA, REABIERTA, PAUSADA;
+    NUEVA("Nueva"),
+    ABIERTA("Abierta"),
+    ASIGNADA("Asignada"),
+    PROGRESO("Progreso"),
+    CERRADA("Cerrada"),
+    REABIERTA("Reabierta"),
+    PAUSADA("Pausada");
 
-    @Override
-    public String toString() {
-        return StringUtils.capitalize(super.toString().toLowerCase());
+    private final String displayName;
+
+    Status(String displayName) {
+        this.displayName = displayName;
     }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+
 }
 

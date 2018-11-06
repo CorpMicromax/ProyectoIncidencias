@@ -15,4 +15,7 @@ public class Utilidades {
         return false;
     }
 
+    public static String acortarString(String input, int maxChars){
+        return input.substring(0, Math.min(input.length()-1,maxChars));
+    }
 }
