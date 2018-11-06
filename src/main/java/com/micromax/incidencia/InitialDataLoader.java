@@ -1,9 +1,12 @@
 package com.micromax.incidencia;
 
+import com.micromax.incidencia.domain.Constants;
 import com.micromax.incidencia.domain.entities.incidencias.Categoria;
-import com.micromax.incidencia.domain.entities.users.*;
+import com.micromax.incidencia.domain.entities.users.Cliente;
+import com.micromax.incidencia.domain.entities.users.Rol;
+import com.micromax.incidencia.domain.entities.users.Tecnico;
+import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.dto.CategoriaDTO;
-import com.micromax.incidencia.repository.PrivilegioRepository;
 import com.micromax.incidencia.repository.RolRepository;
 import com.micromax.incidencia.service.ItemListService;
 import com.micromax.incidencia.service.UsuarioService;
@@ -15,9 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -31,9 +31,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     private RolRepository roleRepository;
 
     @Autowired
-    private PrivilegioRepository privilegioRepository;
-
-    @Autowired
     private ItemListService itemListService;
 
     @Autowired
@@ -45,43 +42,10 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
         if (alreadySetup)
             return;
-        Permiso admin_usuarios = crearPermisoSiNoExiste("admin_usuarios");
-        Permiso admin_mantenimiento = crearPermisoSiNoExiste("admin_mantenimiento");
-        Permiso admin_permisos = crearPermisoSiNoExiste("admin_permisos");
-        Permiso incidencia_crear = crearPermisoSiNoExiste("incidencia_crear");
-        Permiso incidencia_verPropias = crearPermisoSiNoExiste("incidencia_verPropias");
-        Permiso incidencia_verTodas = crearPermisoSiNoExiste("incidencia_verTodas");
-        Permiso incidencia_verAsignadas = crearPermisoSiNoExiste("incidencia_verAsignadas");
-        Permiso incidencia_editar = crearPermisoSiNoExiste("incidencia_editar");
-        Permiso incidencia_borrar = crearPermisoSiNoExiste("incidencia_borrar");
-        Permiso incidencia_cambiarEstado = crearPermisoSiNoExiste("incidencia_cambiarEstado");
-        Permiso incidencia_comentar = crearPermisoSiNoExiste("incidencia_comentar");
-        Permiso incidencia_asignar = crearPermisoSiNoExiste("incidencia_asignar");
-        Permiso todos = crearPermisoSiNoExiste("todos");
 
-        Rol adminRole = crearRolSiNoExiste("ROLE_ADMIN", Collections.singletonList(todos));
-        Rol tecnico = crearRolSiNoExiste("ROLE_TECH",
-                Arrays.asList(incidencia_crear,
-                    incidencia_editar,
-                    incidencia_verAsignadas,
-                    incidencia_verPropias)
-        );
-        Rol tecnicoAvanzado = crearRolSiNoExiste("ROLE_ADV_TECH",
-                Arrays.asList(
-                        incidencia_asignar,
-                        incidencia_cambiarEstado,
-                        incidencia_comentar,
-                        incidencia_editar,
-                        incidencia_verAsignadas,
-                        incidencia_verPropias,
-                        incidencia_verTodas)
-        );
-        Rol cliente = crearRolSiNoExiste("ROLE_CLIENT",
-                Arrays.asList(
-                        incidencia_crear,
-                        incidencia_comentar,
-                        incidencia_verPropias)
-        );
+        Rol adminRole = crearRolSiNoExiste(Constants.ADMINROLE);
+        Rol tecnico = crearRolSiNoExiste(Constants.TECHROLE);
+        Rol cliente = crearRolSiNoExiste(Constants.CLIENTROLE);
 
         createUsuarioIfNotFound(construirUsuario(0,
                 "Administrador",
@@ -90,20 +54,13 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
                 "admin",
                 "Admin@micromax.com",
                 adminRole));
-        createUsuarioIfNotFound(construirUsuario(0,
-                "Francisco",
-                "Letterer",
-                "FLetterer",
-                "admin",
-                "Javier.Darkona@gmail.com",
-                adminRole));
 
         createUsuarioIfNotFound(construirUsuario(1,
-                "Javier",
-                "Letterer",
-                "JLetterer",
+                "Tecnico",
+                "Uno",
+                "TechUno",
                 "admin",
-                "Javier.Darkona@gmail.com",
+                "Tecnico@micromax.com",
                 tecnico));
 
         createUsuarioIfNotFound(construirUsuario(1,
@@ -116,8 +73,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         ));
 
         Usuario c = new Cliente();
-        c.setNombres("Empresa Cliente");
-        c.setApellidos("");
+        c.setNombres("Empresa");
+        c.setApellidos("Cliente");
         c.setUsername("cliente");
         c.setPassword("cliente");
         c.setEmail("cliente@micromax.com");
@@ -126,39 +83,37 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         createUsuarioIfNotFound(c);
 
 
-        Categoria problema = crearCategoriaSiNoExiste("Problema", 0, null);
-        Categoria hardware = crearCategoriaSiNoExiste("Hardware", 0, problema);
-        Categoria software = crearCategoriaSiNoExiste("Software", 0, problema);
+        Categoria problema = crearCategoriaSiNoExiste("Problema", null);
 
-        crearCategoriaSiNoExiste("Disco duro", 0, hardware);
-        crearCategoriaSiNoExiste("Memorias RAM", 0, hardware);
-        crearCategoriaSiNoExiste("Encendido", 0, hardware);
 
-        crearCategoriaSiNoExiste("Sistema Operativo", 0, software);
-        crearCategoriaSiNoExiste("Office 2007", 0, software);
-        crearCategoriaSiNoExiste("Office 2010", 0, software);
+        Categoria hardware = crearCategoriaSiNoExiste("Hardware",  problema);
+        Categoria software = crearCategoriaSiNoExiste("Software",  problema);
+        Categoria servicios = crearCategoriaSiNoExiste("Servicios",  problema);
+
+        crearCategoriaSiNoExiste("Disco duro",  hardware);
+        crearCategoriaSiNoExiste("Memorias RAM",  hardware);
+        crearCategoriaSiNoExiste("Encendido",  hardware);
+        crearCategoriaSiNoExiste("Video",  hardware);
+        crearCategoriaSiNoExiste("Audio",  hardware);
+        crearCategoriaSiNoExiste("Impresora",  hardware);
+
+        crearCategoriaSiNoExiste("Sistema Operativo",  software);
+        crearCategoriaSiNoExiste("Office 2007",  software);
+        crearCategoriaSiNoExiste("Antivirus",  software);
+        crearCategoriaSiNoExiste("Instalacion de programas",  software);
+
+
+        crearCategoriaSiNoExiste("Reposicion consumible",  servicios);
+        crearCategoriaSiNoExiste("Instalacion de red",  servicios);
 
 
         alreadySetup = true;
     }
 
     @Transactional
-    public Permiso crearPermisoSiNoExiste(String name) {
-
-        Permiso permiso = privilegioRepository.findByNombre(name);
-        if (permiso == null) {
-            permiso = new Permiso();
-            permiso.setNombre(name);
-            privilegioRepository.save(permiso);
-        }
-        return permiso;
-    }
-
-    @Transactional
-    public Categoria crearCategoriaSiNoExiste(String nombre, int nivel, @Nullable Categoria padre) {
+    public Categoria crearCategoriaSiNoExiste(String nombre, @Nullable Categoria padre) {
         CategoriaDTO cat = new CategoriaDTO();
         cat.setNombre(nombre);
-        cat.setNivel(nivel);
         cat.setPadre(padre);
         if(!itemListService.existeCategoria(cat.getNombre())){
             return itemListService.guardar(cat);
@@ -174,14 +129,12 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     }
 
     @Transactional
-    public Rol crearRolSiNoExiste(
-            String nombre, Collection<Permiso> permisos) {
+    public Rol crearRolSiNoExiste(String nombre) {
 
         Rol rol = roleRepository.findByNombre(nombre);
         if (rol == null) {
             rol = new Rol();
             rol.setNombre(nombre);
-            rol.setPermisos(permisos);
             roleRepository.save(rol);
         }
         return rol;

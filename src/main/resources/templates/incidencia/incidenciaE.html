@@ -37,7 +37,16 @@
                             </select>
                         </div>
                     </div>
-                    <div th:if="${homeData != null && (homeData.rol.nombre.equals('ROLE_ADMIN') || homeData.rol.nombre.equals('ROLE_TECH'))}" class="form-row">
+                    <div th:if="${homeData != null && (homeData.isAdmin() || homeData.isTech())}" class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="field-label" for="incidenciaDTO.tipoIncidencia">Tipo de Incidencia</label>
+                            <select id="incidenciaDTO.tipoIncidencia" name="incidenciaDTO.tipoIncidencia" class="form-control" required="required">
+                                <option value="">--- Seleccione una ---</option>
+                                <option th:each="inci : ${data.tipoIncidencias}" th:value="${inci.id}" th:text="${inci.nombre}" ></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div th:if="${homeData != null && (homeData.isAdmin() || homeData.isTech())}" class="form-row">
                         <div class="form-group col-md-6">
                             <label class="control-label" for="tecnicos">Asignaciones</label>
                             <select id="tecnicos" name="asignados" th:field="*{incidenciaDTO.asignados}"

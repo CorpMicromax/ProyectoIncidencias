@@ -10,9 +10,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.DateTimeException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 
 @Data
@@ -85,10 +82,6 @@ public class Historico implements Serializable {
     }
 
     public String obtenerFecha() {
-        try {
-            return LocalDateTime.ofInstant(momento.toInstant(), ZoneId.systemDefault()).format(Constants.formatter);
-        } catch (DateTimeException e) {
-            return null;
-        }
+       return Constants.formateador.format(this.momento);
     }
 }

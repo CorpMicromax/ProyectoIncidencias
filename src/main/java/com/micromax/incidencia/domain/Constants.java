@@ -5,7 +5,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 
 @EnableConfigurationProperties
@@ -18,12 +19,15 @@ public class Constants {
         UNO, DOS, TRES
     }
 
-    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, hh:mm");
+    public static final SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy, hh:mm a", new Locale("es_ES"));
+
     public static final String AUTO = "Auto";
     public static final String MANUAL = "Manual";
     public static final String TITLE = "title";
     public static final String DATA = "data";
     public static final String ADMINROLE = "ROLE_ADMIN";
+    public static final String TECHROLE = "ROLE_TECH";
+    public static final String CLIENTROLE = "ROLE_CLIENT";
 
     public static final String USUARIO = "usuario";
     public static final String INCIDENCIA = "incidencia";

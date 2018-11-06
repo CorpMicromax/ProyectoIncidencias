@@ -50,14 +50,14 @@
                             <div class="col-auto card-block">
                                 <div class="form-group">
                                     <label>Fecha Creacion</label>
-                                    <input type="text" th:value="*{incidencia.creacion.toLocaleString()}"
+                                    <input type="text" th:value="*{incidencia.creacionFormateada()}"
                                            class="form-control form-control-plaintext" disabled="disabled">
                                 </div>
                             </div>
                             <div class="col-auto card-block">
                                 <div class="form-group">
                                     <label>Fecha Estimada</label>
-                                    <input type="text" th:value="*{incidencia.getTiempoEstimado().getEntregaEstimada()}"
+                                    <input type="text" th:value="*{incidencia.getTiempoEstimado().entregaFormateada()}"
                                            class="form-control form-control-plaintext" disabled="disabled">
                                 </div>
                             </div>

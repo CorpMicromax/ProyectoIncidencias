@@ -1,13 +1,13 @@
-<!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaListViewmodel"*/-->
-<!--/*@thymesVar id="homeData" type="com.micromax.incidencia.viewmodel.HomeViewmodel"*/-->
 <section  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaL">
-    <div class="container-fluid">
+
+    <!--/*@thymesVar id="homeData" type="com.micromax.incidencia.viewmodel.HomeViewmodel"*/-->
+    <div class="container-fluid" >
         <div class="card card-body" >
             <a class="col-sm-2 btn btn-primary btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#">
                 <i class="float-left fa fa-star fa-sm"></i>Crear Incidencia</a>
             <div class="table-responsive">
-                <table id="datatable"
-                       class="table table-hover dt-bootstrap table-striped table-bordered table-sm nowrap">
+                <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaListViewmodel"*/-->
+                <table id="datatable" class="table table-hover dt-bootstrap table-striped table-bordered table-sm nowrap" >
                     <thead>
                     <tr>
                         <th> Id </th>
@@ -24,7 +24,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:if="${incidencias.empty}">
+                    <tr th:if="${incidencias}">
                         <td colspan="2"> No hay incidencias</td>
                     </tr>
                     <tr th:each="incidencia: ${incidencias}">
@@ -34,8 +34,8 @@
                         <td><span th:if="${incidencia.categoria}" th:text="${incidencia.categoria.nombre}"></span></td>
                         <td><span th:if="${incidencia.tipoIncidencia}" th:text="${incidencia.tipoIncidencia.nombre}"></span></td>
                         <td><span th:if="${incidencia.creador}"th:text="${incidencia.creador.username}"> Nombre creador </span></td>
-                        <td><span th:if="${incidencia.creacion}" th:text="${incidencia.getCreacionFormateada()}"> creacion </span></td>
-                        <td><span th:if="${incidencia.tiempoEstimado}"th:text="${incidencia.getTiempoEstimado().getEntregaEstimada()}"> Nombre creador </span></td>
+                        <td><span th:if="${incidencia.creacion}" th:text="${incidencia.creacionFormateada()}"> creacion </span></td>
+                        <td><span th:if="${incidencia.tiempoEstimado}"th:text="${incidencia.getTiempoEstimado().entregaFormateada()}"> Nombre creador </span></td>
                         <td><span th:if="${incidencia.status}" th:text="${incidencia.status}"> Status </span></td>
                         <td><span th:unless="${incidencia.asignados != null && incidencia.asignados.isEmpty()}" th:text="${incidencia.asignados.get(0).username}"> Asignado </span>
                         </td>

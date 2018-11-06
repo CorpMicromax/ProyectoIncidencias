@@ -2,11 +2,9 @@ package com.micromax.incidencia.domain;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateUtils;
 import org.thymeleaf.util.StringUtils;
 
-import java.time.DateTimeException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 
 @Data
@@ -17,6 +15,7 @@ public class TiempoEstimado {
     private int hora = 0;
     private int minutos = 0;
     private Date creacion;
+    private Date entrega;
 
     public TiempoEstimado() {
     }
@@ -33,10 +32,12 @@ public class TiempoEstimado {
             dias = Integer.valueOf(s[0]);
             hora = Integer.valueOf(s[1]);
             minutos = Integer.valueOf(s[2]);
+            entrega = getFechaEntregaEstimada();
         } else {
             dias = 0;
             hora = 0;
             minutos = 0;
+            entrega = DateUtils.addHours(new Date(),2);
         }
 
     }
@@ -60,16 +61,16 @@ public class TiempoEstimado {
         return String.format("%d-%d-%d", dias, hora, minutos);
     }
 
-    public String getEntregaEstimada() {
+    public Date getFechaEntregaEstimada(){
+        Date estimado = creacion;
+        estimado = DateUtils.addDays(estimado,dias);
+        estimado = DateUtils.addHours(estimado,hora);
+        estimado = DateUtils.addMinutes(estimado, minutos);
+        return estimado;
+    }
 
-        try {
-
-            LocalDateTime ll = LocalDateTime.ofInstant(creacion.toInstant(), ZoneId.systemDefault());
-            return ll.plusDays(dias).plusHours(hora).plusMinutes(minutos).format(Constants.formatter);
-        } catch (DateTimeException e) {
-            log.info("Falle convirtiendo fechas");
-            return null;
-        }
+    public String entregaFormateada(){
+        return Constants.formateador.format(entrega);
     }
 
 }

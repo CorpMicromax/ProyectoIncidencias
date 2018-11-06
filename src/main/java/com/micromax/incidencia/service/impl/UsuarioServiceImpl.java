@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,8 +36,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private RolRepository rolRepository;
 
-    @Autowired
-    private PrivilegioRepository privilegioRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -103,7 +100,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario u = usuarioRepository.findByIdUsuarioAndHabilitado(dto.getId(),true);
         u.setNombres(ObjectUtils.defaultIfNull(dto.getNombres(), u.getNombres()));
         u.setApellidos(ObjectUtils.defaultIfNull(dto.getApellidos(), u.getApellidos()));
-        u.setDireccion(ObjectUtils.defaultIfNull(dto.getDireccion(), u.getDireccion()));
+
         u.setRol(ObjectUtils.defaultIfNull(
                 rolRepository.findByIdRol(dto.getIdRol()),
                 u.getRol()));
@@ -114,6 +111,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             ((Cliente) u).setRif(ObjectUtils.defaultIfNull(dto.getRif(), ((Cliente) u).getRif()));
             ((Cliente) u).setRazonSocial(ObjectUtils.defaultIfNull(dto.getRazonSocial(), ((Cliente) u).getRazonSocial()));
             ((Cliente) u).setDenominacionComercial(ObjectUtils.defaultIfNull(dto.getDenominacionComercial(), ((Cliente) u).getDenominacionComercial()));
+            ((Cliente) u).setDireccion(ObjectUtils.defaultIfNull(dto.getDireccion(), ((Cliente) u).getDireccion()));
         }
         if(u instanceof Tecnico){
             ((Tecnico) u).setCapacidad(ObjectUtils.defaultIfNull(dto.getCapacidad(), ((Tecnico) u).getCapacidad()));
@@ -158,6 +156,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                     ((Cliente) usuario).setRif(usuarioDTO.getRif());
                     ((Cliente) usuario).setDenominacionComercial(usuarioDTO.getDenominacionComercial());
                     ((Cliente) usuario).setRazonSocial(usuarioDTO.getRazonSocial());
+                    ((Cliente) usuario).setDireccion(usuarioDTO.getDireccion());
                     break;
             default: usuario = new Usuario();
                     break;
@@ -168,29 +167,22 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setEmail(usuarioDTO.getEmail());
 
         if(nuevo){
-            try {
+            /*try {
                 log.info("Enviando correo");
                 mailService.sendEmail(usuario.getEmail(), "Creacion de cuenta de usuario", "Su password es: " + usuarioDTO.getPassword());
             } catch (MessagingException e) {
                 e.printStackTrace();
-            }
+            }*/
             usuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
         }else{
             Usuario u = usuarioRepository.findByIdUsuarioAndHabilitado(usuarioDTO.getId(),true);
             usuario.setPassword(u.getPassword());
             usuario.setIdUsuario(u.getIdUsuario());
         }
-
         usuario.setTelefono(usuarioDTO.getTelefono());
         usuario.setRol(rolRepository.findByIdRol(usuarioDTO.getIdRol()));
-        usuario.setDireccion(usuarioDTO.getDireccion());
         usuario.setHabilitado(true);
-
-
-        usuario = usuarioRepository.save(usuario);
-
-       // mailService.prepareAndSend(usuario.getEmail(),"Su password es: " + usuarioDTO.getPassword());
-
+        usuarioRepository.save(usuario);
     }
 
 

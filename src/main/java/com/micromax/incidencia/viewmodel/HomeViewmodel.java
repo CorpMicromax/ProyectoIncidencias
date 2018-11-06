@@ -1,10 +1,7 @@
 package com.micromax.incidencia.viewmodel;
 
-import com.micromax.incidencia.domain.entities.users.Permiso;
 import com.micromax.incidencia.domain.entities.users.Rol;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class HomeViewmodel {
@@ -14,5 +11,6 @@ public class HomeViewmodel {
    private boolean authenticated;
    private Rol rol;
    private boolean isAdmin;
-   List<Permiso> permisos;
+   private boolean isTech;
+   private boolean isClient;
 }

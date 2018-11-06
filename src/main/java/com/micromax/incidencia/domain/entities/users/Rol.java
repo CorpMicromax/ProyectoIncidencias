@@ -1,16 +1,13 @@
 package com.micromax.incidencia.domain.entities.users;
 
 import lombok.Data;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 
 @Entity
 @Data
 @Table(name = "rol")
-@ToString(exclude = {"permisos"})
 public class Rol implements Serializable {
 
     @Transient
@@ -23,15 +20,6 @@ public class Rol implements Serializable {
 
     @Column(name = "nombre")
     private String nombre;
-
-    @ManyToMany
-    @JoinTable(
-            name = "roles_privilegios",
-            joinColumns = @JoinColumn(
-                    name = "id_rol", referencedColumnName = "id_Rol"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "id_permiso", referencedColumnName = "id_permiso"))
-    private Collection<Permiso> permisos;
 
     public Rol(String nombre){};
 

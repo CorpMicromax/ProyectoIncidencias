@@ -15,6 +15,8 @@ public class DashboardViewmodel {
     private int cerradas = 0;
     private int reabiertas = 0;
     private int todas = 0;
+    private int retrasadas = 0;
+
     private Usuario u;
     private List<Incidencia> incidencias;
 

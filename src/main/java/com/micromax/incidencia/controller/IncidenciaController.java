@@ -113,7 +113,7 @@ public class IncidenciaController {
     /* INCIDENCIA */
     @PostMapping("/incidenciaC")
     public String postIncidenciaC(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
-        incidenciaService.guardarIncidencia(viewmodel.getIncidenciaDTO(), usuarioActual());
+        incidenciaService.crearIncidencia(viewmodel.getIncidenciaDTO(), usuarioActual());
         return "redirect:/incidenciaL";
     }
 

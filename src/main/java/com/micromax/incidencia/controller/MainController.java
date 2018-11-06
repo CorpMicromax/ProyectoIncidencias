@@ -1,7 +1,6 @@
 package com.micromax.incidencia.controller;
 
 import com.micromax.incidencia.domain.Constants;
-import com.micromax.incidencia.domain.entities.users.Permiso;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.UsuarioService;
@@ -13,8 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 @Controller
 public class MainController {
@@ -37,8 +34,9 @@ public class MainController {
         viewmodel.setAuthenticated( auth.isAuthenticated());
         viewmodel.setNombre(user.getPrimerNombreYPrimerApellido());
         viewmodel.setRol(user.getRol());
-        viewmodel.setPermisos((List<Permiso>)user.getRol().getPermisos());
         viewmodel.setAdmin(user.getRol().getNombre().equalsIgnoreCase(Constants.ADMINROLE));
+        viewmodel.setTech(user.getRol().getNombre().equalsIgnoreCase(Constants.TECHROLE));
+        viewmodel.setClient(user.getRol().getNombre().equalsIgnoreCase(Constants.CLIENTROLE));
         model.addAttribute("homeData", viewmodel);
 
         if (!model.containsAttribute("location") || !model.containsAttribute("template")){

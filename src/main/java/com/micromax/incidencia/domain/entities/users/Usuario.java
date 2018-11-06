@@ -59,9 +59,6 @@ public class Usuario extends Desactivable implements Serializable, UserDetails {
     @Column(name="password", nullable = false)
     private String password;
 
-    @Column(name="direccion")
-    private String direccion;
-
     @Column(name="telefono")
     private String telefono;
 

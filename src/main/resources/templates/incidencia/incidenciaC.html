@@ -1,5 +1,6 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaC" class="container justify-content-center">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaViewmodel"*/-->
+    <!--/*@thymesVar id="homeData" type="com.micromax.incidencia.viewmodel.HomeViewmodel"*/-->
     <div class="card elegant-color my-5" >
         <form id="crearForm" th:action="@{/incidenciaC}" th:object="${data}" method="post" class="card-body form-horizontal">
             <fieldset>
@@ -45,7 +46,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-row">
+                <div th:if="${homeData != null && (homeData.isAdmin() || homeData.isTech())}" class="form-row">
                     <div class="form-group col-md-6">
                         <label class="field-label" for="tipoIncidencia">Tipo de Incidencia</label>
                         <select id="tipoIncidencia" name="tipoIncidencia" class="form-control" required="required">

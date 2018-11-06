@@ -13,7 +13,7 @@ public interface IncidenciaService {
 
     List<Incidencia> getIncidencias();
 
-    void guardarIncidencia(IncidenciaDTO i, Usuario user);
+    void crearIncidencia(IncidenciaDTO i, Usuario user);
 
     void actualizarIncidencia(IncidenciaDTO i, Usuario user);
 

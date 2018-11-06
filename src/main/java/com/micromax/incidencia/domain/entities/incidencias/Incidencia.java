@@ -15,8 +15,6 @@ import org.springframework.data.annotation.Transient;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Date;
 
@@ -82,8 +80,8 @@ public class Incidencia extends Desactivable implements Serializable {
         tiempoEstimado = t.toString();
     }
 
-    public String getCreacionFormateada(){
-        return LocalDateTime.ofInstant(creacion.toInstant(), ZoneId.systemDefault()).format(Constants.formatter);
+    public String creacionFormateada(){
+        return Constants.formateador.format(creacion);
     }
 
     public boolean estaAsignadaA(Usuario u){

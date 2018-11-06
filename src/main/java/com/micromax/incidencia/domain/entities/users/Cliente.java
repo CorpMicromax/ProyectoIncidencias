@@ -20,10 +20,13 @@ public class Cliente extends Usuario implements Serializable {
 
     @Column(name = "razon_social")
     private String razonSocial;
+
     @Column(name = "denom_comercial")
     private String denominacionComercial;
 
     @Column(name = "rif")
     private String rif;
 
+    @Column(name="direccion")
+    private String direccion;
 }

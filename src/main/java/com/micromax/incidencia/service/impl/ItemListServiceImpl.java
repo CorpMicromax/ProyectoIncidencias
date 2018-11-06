@@ -57,6 +57,8 @@ public class ItemListServiceImpl implements ItemListService {
         if(categoriaDTO.getPadre() != null){
             categoria.setPadre(categoriaDTO.getPadre());
             categoria.setNivel(categoriaDTO.getPadre().getNivel() + 1);
+        }else{
+            categoria.setNivel(0);
         }
         categoria.setHabilitado(true);
         return categoriaRepository.save(categoria);
