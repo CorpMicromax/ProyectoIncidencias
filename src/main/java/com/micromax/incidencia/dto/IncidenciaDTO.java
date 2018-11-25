@@ -23,6 +23,7 @@ public class IncidenciaDTO {
     private TiempoEstimado tiempoEstimado;
     private long categoriaId;
     private List<Tecnico> asignados;
+    private String comentario;
 
     public IncidenciaDTO(){}
 

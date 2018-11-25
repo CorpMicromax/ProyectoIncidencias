@@ -6,16 +6,14 @@ import com.micromax.incidencia.domain.Utilidades;
 import com.micromax.incidencia.domain.entities.Historico;
 import com.micromax.incidencia.domain.entities.TipoCambio;
 import com.micromax.incidencia.domain.entities.incidencias.Categoria;
+import com.micromax.incidencia.domain.entities.incidencias.Comentario;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.dto.IncidenciaDTO;
 import com.micromax.incidencia.repository.CategoriaRepository;
 import com.micromax.incidencia.repository.IncidenciaRepository;
-import com.micromax.incidencia.service.HistoricoService;
-import com.micromax.incidencia.service.IncidenciaService;
-import com.micromax.incidencia.service.MailService;
-import com.micromax.incidencia.service.UsuarioService;
+import com.micromax.incidencia.service.*;
 import com.micromax.incidencia.viewmodel.DashboardViewmodel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +50,9 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     @Autowired
     private MailService mailService;
 
+    @Autowired
+    private ComentarioService comentarioService;
+
     @Override
     public List<Incidencia> getIncidencias() {
         log.info("Buscando todas las incidencias");
@@ -83,10 +84,14 @@ public class IncidenciaServiceImpl implements IncidenciaService {
         Optional<Incidencia> i = incidenciaRepository.findByIdIncidenciaAndHabilitadoIsTrue(dto.getId());
 
         if(i.isPresent()){
-            historia.guardarHistorico(
-                    new Historico(i.get(),TipoCambio.EDICION_INCIDENCIA, i.get().getStatus(), dto.getStatus(),null),
-                    user);
+            Comentario c = new Comentario();
+            c.setContenido(dto.getComentario());
+            c = comentarioService.guardarComentario(c,user);
 
+            historia.guardarHistorico(
+                    new Historico(i.get(),TipoCambio.EDICION_INCIDENCIA, i.get().getStatus(), dto.getStatus(),c),
+                    user);
+            i.get().addComentario(c);
             i.get().setAsignados(defaultIfNull(dto.getAsignados(), new ArrayList<>()));
             i.get().setCategoria(defaultIfNull(cat, i.get().getCategoria()));
             i.get().setTitulo(defaultIfNull(dto.getTitulo(), i.get().getTitulo()));
@@ -110,16 +115,17 @@ public class IncidenciaServiceImpl implements IncidenciaService {
 
     @Override
     public Incidencia getIncidenciaById(String id) {
-        log.info("Buscando incidencia con id %d", id);
+        log.info("Buscando incidencia con id %s", id);
         return incidenciaRepository.findByIdIncidenciaAndHabilitadoIsTrue(id).orElse(null);
     }
+
 
     @Override
     public boolean borrarIncidencia(String id, Usuario user) {
         Incidencia i = incidenciaRepository.findByIdIncidenciaAndHabilitadoIsTrue(id).orElse(  null);
         if(i != null) {
             i.setHabilitado(false);
-            log.info("Eliminada incidencia con id %d", id);
+            log.info("Eliminada incidencia con id %s", id);
             historia.guardarHistorico(
                     new Historico(i,TipoCambio.ELIMINACION_INCIDENCIA, i.getStatus(), null,null),
                     user);
@@ -170,5 +176,24 @@ public class IncidenciaServiceImpl implements IncidenciaService {
             dash.setIncidencias(dash.getIncidencias().subList(0, Math.min(9, dash.getIncidencias().size())));
         }
         return dash;
+    }
+
+    @Override
+    public void cambioStatus(IncidenciaDTO dto, Usuario user){
+        Optional<Incidencia> i = incidenciaRepository.findByIdIncidenciaAndHabilitadoIsTrue(dto.getId());
+        if(i.isPresent()){
+            historia.guardarHistorico(
+                    new Historico(i.get(),TipoCambio.CAMBIO_STATUS, i.get().getStatus(), dto.getStatus(),null),
+                    user);
+            i.get().setStatus(defaultIfNull(dto.getStatus(), i.get().getStatus()));
+            if(i.get().getStatus().equals(Status.NUEVA) && !i.get().getAsignados().isEmpty()){
+                i.get().setStatus(Status.ASIGNADA);
+            }else if(i.get().getStatus().equals(Status.ASIGNADA) && i.get().getAsignados().isEmpty()){
+                i.get().setStatus(Status.ABIERTA);
+            }
+            incidenciaRepository.save(i.get());
+        }else{
+            log.warn("No se pudo encontrar ninguna incidencia de id= %s", dto.getId());
+        }
     }
 }

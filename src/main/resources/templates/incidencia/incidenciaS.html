@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaE"
+         class="justify-content-center">
+    <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaViewmodel"*/-->
+    <div class="container container-fluid">
+        <div class="card card-body">
+            <form th:action="@{/incidenciaS}" th:object="${data}" method="post" class="form-horizontal">
+                <fieldset>
+                    <div class="card-header">
+                        <legend class="card-title  my-lg-2">
+                            <span class="fa fa-clipboard"></span>
+                            <span th:text="*{incidenciaDTO.id + ': ' + incidenciaDTO.titulo}"></span>
+                        </legend>
+                    </div>
+                    <div class="form-group">
+                        <label class=" control-label" for="titulo">Titulo</label>
+                        <input id="titulo" th:field="*{incidenciaDTO.titulo}" type="text" class="form-control input-md">
+                    </div>
+                    <div class="form-group">
+                        <label class=" control-label" for="desc">Descripción</label>
+                        <textarea class="form-control" id="desc" th:field="*{incidenciaDTO.descripcion}"
+                                  disabled="disabled"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="incidenciaDTO.status">Status</label>
+                            <select id="incidenciaDTO.status" name="incidenciaDTO.status" th:field="*{incidenciaDTO.status}" class="form-control">
+                                <option th:each="s : ${data.stati}"
+                                        th:value="${s}"
+                                        th:text="${s.getDisplayName()}"
+                                        th:selected="${data.incidenciaDTO.status == s}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" th:field="*{incidenciaDTO.id}"/>
+                    <input type="hidden" th:field="*{incidenciaDTO.status}"/>
+
+                    <div class="form-group form-row">
+                        <label class=" control-label" for="submit"></label>
+                        <button type="submit" id="submit" name="submit" class="btn btn-primary">Guardar</button>
+                        <button id="cancel" name="cancel" class="btn btn-secondary">Cancelar</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</section>

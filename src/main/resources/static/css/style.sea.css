@@ -397,6 +397,8 @@ nav.side-navbar {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   z-index: 9;
+  -webkit-transition: width 2s; /* Safari */
+  transition: width 2s;
   /*==== Sidebar Header ====*/
   /*==== Sidebar Menu ====*/
   /*==== Shrinked Sidebar ====*/
@@ -978,6 +980,7 @@ section.dashboard-counts .progress {
 section.dashboard-counts .number {
   font-size: 1.8em;
   font-weight: 300;
+  padding-right:5px;
 }
 
 section.dashboard-counts .number strong {
@@ -2205,20 +2208,20 @@ STYLE SWITCHER FOR DEMO
 }
 
 .btn-secondary {
-  color: color-yiq(#868e96);
-  background-color: #868e96;
-  border-color: #868e96;
+  color: color-yiq(#c8a8d4);
+  background-color: #c8a8d4;
+  border-color: #c8a8d4;
 }
 
 .btn-secondary:hover {
-  color: color-yiq(#727b84);
-  background-color: #727b84;
-  border-color: #6c757d;
+  color: color-yiq(#ae8eba);
+  background-color: #ae8eba;
+  border-color: #ae8eba;
 }
 
 .btn-secondary:focus, .btn-secondary.focus {
-  -webkit-box-shadow: 0 0 0 0.2rem rgba(134, 142, 150, 0.5);
-  box-shadow: 0 0 0 0.2rem rgba(134, 142, 150, 0.5);
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(174, 142, 186, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(174, 142, 186, 0.5);
 }
 
 .btn-secondary.disabled, .btn-secondary:disabled {

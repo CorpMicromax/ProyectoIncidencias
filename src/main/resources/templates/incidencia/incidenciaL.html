@@ -1,13 +1,14 @@
 <section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaL">
 
     <!--/*@thymesVar id="homeData" type="com.micromax.incidencia.viewmodel.HomeViewmodel"*/-->
-    <div class="container-fluid">
+    <div class="">
         <div class="card card-body">
-            <a class="col-sm-2 btn btn-primary btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#">
+            <a class="col-sm-2 btn btn-primary btn-rounded btn-sm" th:href="@{/incidenciaC}" href="#" style="min-width:200px;">
                 <i class="float-left fa fa-star fa-sm"></i>Crear Incidencia</a>
             <!--/*@thymesVar id="listdata" type="com.micromax.incidencia.viewmodel.IncidenciaListViewmodel"*/-->
+            <div class="table-view" style="overflow-x:scroll;">
             <table id="datatable"
-                   class="table table-responsive table-hover dt-bootstrap table-striped table-bordered table-sm nowrap" style="width:100%">
+                   class="table small table-hover dt-bootstrap table-striped table-bordered table-sm nowrap" style="width:100%">
                 <thead>
                 <tr>
                     <th> Id</th>
@@ -19,8 +20,8 @@
                     <th> Entrega Estimada</th>
                     <th> Status</th>
                     <th> Asignado</th>
-                    <th> Editar</th>
-                    <th th:if="${homeData != null && homeData.rol.nombre.equals('ROLE_ADMIN')}"> Eliminar</th>
+                    <th > Editar</th>
+                    <th th:if="${homeData != null && homeData.isAdmin()}" > Eliminar</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -63,6 +64,7 @@
                 </tr>
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
     <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
@@ -77,10 +79,10 @@
                     <div class="alert alert-dismissible"> Seguro que quiere eliminar?</div>
                 </div>
                 <div class="modal-footer ">
-                    <button type="button" class="deleteButton btn btn-primary "><span
+                    <button th:if="${homeData != null && (homeData.isAdmin())}" type="button" class="deleteButton btn btn-primary "><span
                             class="fa fa-thumbs-up"></span> Sí
                     </button>
-                    <button type="button" class="btn btn-secondary " data-dismiss="modal"><span
+                    <button th:if="${homeData != null && (homeData.isAdmin() || homeData.isTech())}" type="button" class="btn btn-secondary " data-dismiss="modal"><span
                             class="fa fa-thumbs-down"></span> No
                     </button>
                 </div>
@@ -103,15 +105,7 @@
         /*<![CDATA[*/
         var relevant = /*[[${relevant}]]*/ "none";
         $(document).ready(function () {
-            $('#datatable').DataTable({
-                "language": {
-                    "url": /*[[@{/js/localization/spanish.json}]]*/ "/js/localization/spanish.json"
-                },
-                responsive: true,
-                fixedColumns: {
-                    leftColumns: 1
-                }
-            });
+
 
             $('#homeli').toggleClass("active");
             $('#incidenciali').toggleClass("active");
@@ -127,6 +121,16 @@
                 id = "";
                 window.location = "/incidenciaL";
             });
+        });
+
+        $('#datatable').dataTable({
+            "language": {
+                "url": /*[[@{/js/localization/spanish.json}]]*/ "/js/localization/spanish.json"
+            },
+            responsive: true,
+            fixedColumns: {
+                leftColumns: 1
+            }
         });
         /*]]>*/
     </script>

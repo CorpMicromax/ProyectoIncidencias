@@ -42,7 +42,7 @@ public class MainController {
         if (!model.containsAttribute("location") || !model.containsAttribute("template")){
             DashboardViewmodel dash = incidenciaService.obtenerTodasIncidencias(usuarioService.getUsuarioByUsername(nombre));
             model.addAttribute("data", dash)
-                    .addAttribute("location", "/")
+                    .addAttribute("location", "")
                     .addAttribute("template","dashboard")
                     .addAttribute(Constants.TITLE, "Home");
         }

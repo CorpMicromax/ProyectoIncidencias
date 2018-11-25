@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
-    <div th:include="/fragmentos/header"></div>
+    <div th:include="fragmentos/header"></div>
 </head>
 
 <body>
 <div class="page">
     <!-- Main Navbar-->
     <header class="header">
-        <nav class="navbar">
+        <nav class="navbar" style="position: sticky;">
             <!-- Search Box-->
             <div class="search-box">
                 <button class="dismiss"><i class="icon-close"></i></button>
@@ -23,17 +23,24 @@
                 <div class="navbar-holder d-flex align-items-center justify-content-between">
                     <!-- Navbar Header-->
                     <div class="navbar-header">
-                        <!-- Navbar Brand --><a th:href="@{/home}" class="navbar-brand d-none d-sm-inline-block">
-                        <div class="brand-text d-none d-lg-inline-block">
-                            <strong>Micromax</strong>
-                        </div>
-                        <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div>
-                    </a>
-                        <!-- Toggle Button--><a id="toggle-btn" href="#"
-                                                class="menu-btn active"><span></span><span></span><span></span></a>
+                        <!-- Navbar Brand -->
+
+                        <a th:href="@{/home}" class="navbar-brand d-none d-sm-inline-block">
+                            <div class="brand-text d-none d-lg-inline-block">
+                                <strong>Micromax</strong>
+                            </div>
+                            <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div>
+                        </a>
+                        <!-- Toggle Button-->
+                        <a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
+
+                            <a class="btn align-items-center" th:href="@{/incidenciaC}" href="#">
+                                <i class="float-left fa fa-star fa-sm " ></i>Crear Incidencia</a>
+
                     </div>
                     <!-- Navbar Menu -->
                     <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+
                         <!-- Search-->
                         <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i
                                 class="icon-search"></i></a></li>
@@ -48,11 +55,11 @@
     </header>
     <div class="page-content d-flex align-items-stretch">
         <!-- Side Navbar -->
-        <nav class="side-navbar">
+        <nav class="side-navbar ease-transform">
             <!-- Sidebar Header-->
             <div class="sidebar-header d-flex align-items-center">
                 <div class="title">
-                    <h1 th:text="${homeData.nombre}" class="h4"></h1>
+                    <h1 id="usernameSidebar" th:text="${homeData.nombre}" class="h4 ease-transform"></h1>
                 </div>
             </div>
             <!-- Sidebar Navidation Menus-->
@@ -101,10 +108,8 @@
                 </div>
             </header>
 
-            <section class="dashboard-counts no-margin-top no-padding">
-                <div class="">
+            <section class="no-margin-top no-padding">
                     <div th:if="${template}" th:replace="@{${location} + ${template}} :: ${template}"></div>
-                </div>
             </section>
             <footer class="main-footer">
                 <div class="container-fluid">

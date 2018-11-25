@@ -2,3 +2,44 @@
     background-color: #379392 !important;
     color: #fff;
 }
+
+.ease-transform, .content-inner, .container-fluid{
+    -webkit-transition:all 1s ease!important;
+    transition:all 1s ease!important;
+}
+
+.history{
+    font-size:10px;
+    height:300px;
+    overflow-y:scroll;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    z-index: 30;
+}
+
+.page-content{
+    margin-top:75px;
+}
+
+.content-inner{
+    padding-bottom: 59.0909px;
+    float: left;
+    right: 0;
+    position: absolute;
+}
+
+.side-navbar{
+    position: fixed;
+    height: 100%;
+}
+
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    width: 100%;
+}

@@ -1,6 +1,7 @@
-<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="usuarioE" class="justify-content-center">
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="usuarioE" class="justify-content-center">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.UsuarioViewmodel"*/-->
-        <div class="card elegant-color my-5" >
+    <div class="container container-fluid">
+    <div class="card" >
             <form id="editarForm" action="#" th:action="@{/admin/usuarioE}" th:object="${data.usuarioDTO}" method="post" class="form-horizontal">
                 <fieldset>
                     <div class="card-header">
@@ -73,6 +74,7 @@
                 </fieldset>
             </form>
         </div>
+    </div>
         <script th:inline="javascript">
             $(document).ready(function(){
                 //var cats =
@@ -81,4 +83,4 @@
                 //$('#categorias option[value='+id+']').attr('selected','selected');
             });
         </script>
-</div>
+</section>

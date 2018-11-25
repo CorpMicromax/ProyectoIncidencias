@@ -1,6 +1,6 @@
 <section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaV">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaViewmodel"*/-->
-    <div class="container-fluid" th:object="${data}">
+    <div class="container container-fluid" th:object="${data}">
         <div class="card card-body">
             <fieldset>
                 <div class="card-header">
@@ -10,82 +10,101 @@
                     </legend>
                 </div>
                 <div class="row">
-                    <div class="col-auto card-block">
+                    <div class="col-auto">
                         <div class="form-group">
                             <label class="">Descripcion</label>
-                            <textarea style="height:250px;" th:text="*{incidencia.descripcion}" class="form-control form-control-plaintext"
-                                      disabled="disabled"></textarea>
+                            <textarea style="height:250px;" th:text="*{incidencia.descripcion}"
+                                      class="form-control form-control-plaintext"
+                                      disabled="disabled"
+                            ></textarea>
                         </div>
                     </div>
-
                     <div class="col-auto">
-                        <div class="row">
-                            <div class="col-auto form-group">
-                                <label class="col-md-12">Status</label>
-                                <input type="text" th:value="*{incidencia.status.getDisplayName()}" class="form-control form-control-plaintext"
-                                       disabled="disabled">
-                            </div>
-                            <div class="col-auto card-block">
-                                <div class="form-group">
-                                    <label>Categoria</label>
-                                    <input type="text" th:value="*{incidencia.categoria.nombre}"
-                                           class="form-control form-control-plaintext" disabled="disabled">
-                                </div>
-                            </div>
-                            <div th:if="*{incidencia.tipoIncidencia}" class="col-md-4 card-block">
-                                <div class="form-group">
-                                    <label>Tipo de Incidencia</label>
-                                    <input th:value="*{incidencia.tipoIncidencia.nombre}" class="form-control form-control-plaintext" disabled/>
-                                </div>
+                        <div class="col-auto form-group">
+                            <label class="col-md-12">Status</label>
+                            <input type="text" th:value="*{incidencia.status.getDisplayName()}"
+                                   class="form-control form-control-plaintext"
+                                   disabled="disabled">
+                        </div>
+                        <div class="col-auto card-block">
+                            <div class="form-group">
+                                <label>Categoria</label>
+                                <input type="text" th:value="*{incidencia.categoria.nombre}"
+                                       class="form-control form-control-plaintext" disabled="disabled">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-auto card-block">
-                                <div class="form-group">
-                                    <label>Creador</label>
-                                    <input type="text" th:value="*{incidencia.creador.getUsername()}"
-                                           class="form-control form-control-plaintext" disabled="disabled">
-                                </div>
-                            </div>
-                            <div class="col-auto card-block">
-                                <div class="form-group">
-                                    <label>Fecha Creacion</label>
-                                    <input type="text" th:value="*{incidencia.creacionFormateada()}"
-                                           class="form-control form-control-plaintext" disabled="disabled">
-                                </div>
-                            </div>
-                            <div class="col-auto card-block">
-                                <div class="form-group">
-                                    <label>Fecha Estimada</label>
-                                    <input type="text" th:value="*{incidencia.getTiempoEstimado().entregaFormateada()}"
-                                           class="form-control form-control-plaintext" disabled="disabled">
-                                </div>
+                        <div th:if="*{incidencia.tipoIncidencia}" class="col-auto card-block">
+                            <div class="form-group">
+                                <label>Tipo de Incidencia</label>
+                                <input th:value="*{incidencia.tipoIncidencia.nombre}"
+                                       class="form-control form-control-plaintext" disabled/>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-auto form-group">
-                        <input type="hidden" th:value="*{incidencia.idIncidencia}">
-                        <label>Tecnico(s) Asignado(s)</label>
-                        <ul class="card-block" disabled multiple>
-                            <li th:each="cat : *{incidencia.asignados}" th:text="${cat.username}"></li>
-                        </ul>
+                    <div class="col-auto">
+                        <div class="col-auto card-block">
+                            <div class="form-group">
+                                <label>Creador</label>
+                                <input type="text" th:value="*{incidencia.creador.getUsername()}"
+                                       class="form-control form-control-plaintext" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="col-auto card-block">
+                            <div class="form-group">
+                                <label>Fecha Creacion</label>
+                                <input type="text" th:value="*{incidencia.creacionFormateada()}"
+                                       class="form-control form-control-plaintext" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="col-auto card-block">
+                            <div class="form-group">
+                                <label>Fecha Estimada</label>
+                                <input type="text" th:value="*{incidencia.getTiempoEstimado().entregaFormateada()}"
+                                       class="form-control form-control-plaintext" disabled="disabled">
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-auto form-group">
-                        <label>Historico</label>
-                        <ul class="card-block" disabled multiple>
-                            <li th:each="h : *{historico}" th:text="${h.obtenerMensaje()}"></li>
-                        </ul>
+                </div>
+                <input type="hidden" th:value="*{incidencia.idIncidencia}">
+                <div class="form-row">
+                    <div class="form-group form-row btn-group right-col">
+                        <button id="cancel" name="cancel" class="btn btn-secondary">Volver</button>
+                        <a id="editar" name="editar" class="btn btn-primary"
+                           th:href="@{'/incidenciaE?id=' + ${data.incidencia.idIncidencia}}">Editar</a>
                     </div>
                 </div>
-                <div class="form-group form-row">
-                    <button id="cancel" name="cancel" class="btn btn-secondary">Volver</button>
-                    <a id="editar" name="editar" class="btn btn-primary" th:href="@{'/incidenciaE?id=' + ${data.incidencia.idIncidencia}}">Editar</a>
-                </div>
-
             </fieldset>
+        </div>
+
+        <div class="row">
+            <div class="card col-auto">
+                <div class="card-header">
+                    <label>Tecnico(s) Asignado(s)</label>
+                </div>
+                <div class="card-body">
+                    <ul class="card-block list-unstyled">
+                        <li th:each="cat : *{incidencia.asignados}" th:text="${cat.username}"></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="detailsRow" class="col-auto ">
+                <div id="historyCard" class="card">
+                    <div id="historicoHeader" class="card-header">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#historico"
+                                aria-expanded="true" aria-controls="collapseOne">
+                            Histórico de Incidencia
+                        </button>
+                    </div>
+                    <div id="historico" class="collapse" aria-labelledby="historicoHeader" data-parent="#detailsRow">
+                        <div class="card-body history">
+                            <ul class="card-block list-unstyled" disabled multiple>
+                                <li class="card-block" th:each="h : *{historico}"><span
+                                        th:text="${h.obtenerMensaje()}"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script th:inline="javascript">

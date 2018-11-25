@@ -100,6 +100,6 @@ public class MasterCrudController {
     }
 
     public static Model setTemplateToModel(Model model, String location, String template) {
-        return model.addAttribute("location", "/" + location + "/").addAttribute("template", template);
+        return model.addAttribute("location", location + "/").addAttribute("template", template);
     }
 }

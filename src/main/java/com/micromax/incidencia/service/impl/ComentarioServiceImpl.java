@@ -11,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.Date;
 
@@ -42,9 +40,9 @@ public class ComentarioServiceImpl implements ComentarioService {
     }
 
     @Override
-    public void guardarComentario(Comentario comentario, long idUsuario) {
-        comentario.setAutor(usuarioService.getUsuarioById(idUsuario));
-        comentario.setCreacion(Date.from(LocalDateTime.now().toInstant(ZoneOffset.ofHours(0))));
-        comentarioRepository.save(comentario);
+    public Comentario guardarComentario(Comentario comentario, Usuario usuario) {
+        comentario.setAutor(usuario);
+        comentario.setCreacion(new Date());
+        return comentarioRepository.save(comentario);
     }
 }

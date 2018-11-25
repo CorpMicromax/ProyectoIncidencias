@@ -112,4 +112,15 @@ public class Incidencia extends Desactivable implements Serializable {
     @JoinColumn(name = "id_encuesta")
     private Encuesta encuesta;
 
+    public void addComentario(Comentario c){
+        comentarios.add(c);
+        c.setIncidencia(this);
+    }
+
+    public void removeComentario(Comentario c){
+        comentarios.remove(c);
+        c.setIncidencia(null);
+    }
+
+
 }

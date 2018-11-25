@@ -47,6 +47,7 @@ $(document).ready(function () {
         $(this).toggleClass('active');
 
         $('.side-navbar').toggleClass('shrinked');
+        $('#usernameSidebar').fadeToggle(1000);
         $('.content-inner').toggleClass('active');
         $(document).trigger('sidebarChanged');
 
@@ -54,6 +55,7 @@ $(document).ready(function () {
             if ($('#toggle-btn').hasClass('active')) {
                 $('.navbar-header .brand-small').hide();
                 $('.navbar-header .brand-big').show();
+
             } else {
                 $('.navbar-header .brand-small').show();
                 $('.navbar-header .brand-big').hide();

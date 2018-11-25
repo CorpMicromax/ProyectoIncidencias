@@ -16,6 +16,6 @@ public interface ComentarioService {
 
     Collection<Comentario> getComentarioByIncidencia(Incidencia idIncidencia );
 
-    public void guardarComentario(Comentario comentario, long idUsuario);
+    public Comentario guardarComentario(Comentario comentario, Usuario usuario);
 
 }

@@ -1,9 +1,9 @@
-<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaE"
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaCerrar"
          class="justify-content-center">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaViewmodel"*/-->
-    <div class="container container-fluid">
+    <div class="container-fluid">
         <div class="card card-body">
-            <form th:action="@{/incidenciaE}" th:object="${data}" method="post" class="form-horizontal">
+            <form th:action="@{/incidenciaCerrar}" th:object="${data}" method="post" class="form-horizontal">
                 <fieldset>
                     <div class="card-header">
                         <legend class="card-title  my-lg-2">
@@ -41,10 +41,7 @@
                             <label class="field-label" for="incidenciaDTO.tipoIncidencia">Tipo de Incidencia</label>
                             <select id="incidenciaDTO.tipoIncidencia" name="incidenciaDTO.tipoIncidencia" class="form-control" required="required">
                                 <option value="">--- Seleccione una ---</option>
-                                <option th:each="incidencia : ${data.tipoIncidencias}"
-                                        th:value="${incidencia.id}"
-                                        th:text="${incidencia.nombre}"
-                                        th:selected="${data.incidenciaDTO.tipoIncidencia!= null && data.incidenciaDTO.tipoIncidencia.id == incidencia.id}"></option>
+                                <option th:each="inci : ${data.tipoIncidencias}" th:value="${inci.id}" th:text="${inci.nombre}" th:selected="${data.incidenciaDTO.tipoIncidencia!= null && data.incidenciaDTO.tipoIncidencia.id == inci.id}"></option>
                             </select>
                         </div>
                     </div>
@@ -74,45 +71,41 @@
                         <div class="col-sm-6 ">
                             <h4>Tiempo estimado</h4>
                             <div class="row">
-                            <div class="form-group col-md-4">
-                                <label class="control-label" for="dias">Dias</label>
-                                <input type="number" min='0' max="100" id="dias" class="form-control"
-                                       th:field="*{incidenciaDTO.tiempoEstimado.dias}">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="control-label" for="horas">Horas</label>
-                                <input type="number" min="0" max="23" id="horas" class="form-control"
-                                       th:field="*{incidenciaDTO.tiempoEstimado.hora}">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="control-label" for="minutos">Minutos</label>
-                                <input type="number" min="0" max="59" id="minutos" class="form-control"
-                                       th:field="*{incidenciaDTO.tiempoEstimado.minutos}">
-                            </div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label" for="dias">Dias</label>
+                                    <input type="number" min='0' max="100" id="dias" class="form-control"
+                                           th:field="*{incidenciaDTO.tiempoEstimado.dias}">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label" for="horas">Horas</label>
+                                    <input type="number" min="0" max="23" id="horas" class="form-control"
+                                           th:field="*{incidenciaDTO.tiempoEstimado.hora}">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label" for="minutos">Minutos</label>
+                                    <input type="number" min="0" max="59" id="minutos" class="form-control"
+                                           th:field="*{incidenciaDTO.tiempoEstimado.minutos}">
+                                </div>
                             </div>
 
                         </div>
                     </div>
-                    <div class="form-row">
-                        <label class="control-label" for="desc">Comentario</label>
-                        <textarea class="form-control" id="comentario" th:field="*{incidenciaDTO.comentario}" required></textarea>
-                    </div>
+
                     <input id="catId" th:value="*{incidenciaDTO.categoria.id}" type="hidden">
                     <input id="dadId" th:value="*{incidenciaDTO.categoria.padre.id}" type="hidden">
                     <input type="hidden" th:field="*{incidenciaDTO.id}"/>
                     <input type="hidden" th:field="*{incidenciaDTO.status}"/>
 
-                    <div class="form-row btn-group" style="margin-top:6px;">
-                        <div class="form-group ">
+                    <div class="form-group form-row btn-group">
                         <button type="submit" id="submit" name="submit" class="btn btn-primary">Guardar</button>
-                        </div>
+
                     </div>
 
                 </fieldset>
             </form>
             <div class="form-group form-row btn-group">
-            <button id="cancel" name="cancel" class="btn btn-secondary">Cancelar</button>
-            <button id="close" name="close" class="btn btn-info">Cerrar Incidencia</button>
+                <button id="cancel" name="cancel" class="btn btn-secondary">Cancelar</button>
+                <button id="close" name="close" class="btn btn-info">Cerrar Incidencia</button>
             </div>
         </div>
         <script th:inline="javascript">

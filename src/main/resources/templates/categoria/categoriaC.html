@@ -1,26 +1,35 @@
-<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="categoriaC" class="justify-content-center">
-        <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.CategoriaViewmodel"*/-->
-    <div class="card elegant-color my-5" >
-        <form class="card-body form-horizontal" th:object="${data}" th:action="@{/admin/categoriaC}" th:method="post" th:model>
-            <fieldset>
-                <div class="card-header">
-                    <legend class="card-title text-center my-lg-2">Nueva Categoria</legend>
-                </div>
-                <div class="form-group">
-                    <label class=" label" for="nombre">Nombre</label>
-                    <input id="nombre" th:field="*{categoriaDTO.nombre}" class="form-control input-md" autofocus required="">
-                </div>
-                <div class="form-group">
-                    <label class="label" for="categoriaDTO.padre">Categoria Padre</label>
-                    <select id="categoriaDTO.padre" name="categoriaDTO.padre" class="form-control" th:field="*{categoriaDTO.padre}" required>
-                        <option value="">--- Seleccione una ---</option>
-                        <option th:each="cat : ${data.categorias}" th:value="${cat.id}" th:text="${cat.nombre}" ></option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Crear</button>
-                </div>
-            </fieldset>
-        </form>
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="categoriaC"
+     class="justify-content-center">
+
+    <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.CategoriaViewmodel"*/-->
+    <div class="container container-fluid">
+        <div class="card">
+            <form class="card-body form-horizontal" th:object="${data}" th:action="@{/admin/categoriaC}"
+                  th:method="post" th:model>
+                <fieldset>
+                    <div class="card-header">
+                        <legend class="card-title text-center my-lg-2">Nueva Categoria</legend>
+                    </div>
+                    <div class="form-group">
+                        <label class=" label" for="nombre">Nombre</label>
+                        <input id="nombre" th:field="*{categoriaDTO.nombre}" class="form-control input-md" autofocus
+                               required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="label" for="categoriaDTO.padre">Categoria Padre</label>
+                        <select id="categoriaDTO.padre" name="categoriaDTO.padre" class="form-control"
+                                th:field="*{categoriaDTO.padre}" required>
+                            <option value="">--- Seleccione una ---</option>
+                            <option th:each="cat : ${data.categorias}" th:value="${cat.id}"
+                                    th:text="${cat.nombre}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Crear
+                        </button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
     </div>
 </div>
