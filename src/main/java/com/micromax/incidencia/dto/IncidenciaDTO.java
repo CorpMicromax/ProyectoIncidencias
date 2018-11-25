@@ -6,6 +6,7 @@ import com.micromax.incidencia.domain.entities.incidencias.Categoria;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.incidencias.TipoIncidencia;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
+import com.micromax.incidencia.domain.entities.users.Usuario;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class IncidenciaDTO {
     private long categoriaId;
     private List<Tecnico> asignados;
     private String comentario;
+    private Usuario creador;
 
     public IncidenciaDTO(){}
 
@@ -37,6 +39,7 @@ public class IncidenciaDTO {
         asignados = new ArrayList<>();
         asignados.addAll(incidencia.getAsignados());
         tiempoEstimado = incidencia.getTiempoEstimado();
+        creador = incidencia.getCreador();
     }
 
 }

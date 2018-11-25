@@ -31,7 +31,8 @@ public class MainController {
         Usuario user = usuarioService.getUsuarioByUsername(nombre);
         assert(user != null);
         HomeViewmodel viewmodel = new HomeViewmodel();
-        viewmodel.setAuthenticated( auth.isAuthenticated());
+        viewmodel.setAuthenticated(auth.isAuthenticated());
+        viewmodel.setUsername(user.getUsername());
         viewmodel.setNombre(user.getPrimerNombreYPrimerApellido());
         viewmodel.setRol(user.getRol());
         viewmodel.setAdmin(user.getRol().getNombre().equalsIgnoreCase(Constants.ADMINROLE));

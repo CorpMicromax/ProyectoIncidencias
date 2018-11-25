@@ -8,6 +8,23 @@
                         <span class="fa fa-clipboard"></span>
                         <span th:text="*{incidenciaDTO.titulo}"></span>
                     </legend>
+
+                    <div class="col-auto form-group">
+                        <label class="label text-bold">Status</label>
+                        <div class="form-control text-white bg-gray col-2" th:if="*{incidencia.asignados.isEmpty() || !incidenciaDTO.status.displayName.equalsIgnoreCase('asignada')}"
+                             th:text="*{incidencia.status.getDisplayName()}"></div>
+                        <a id="status" href="#" th:unless="*{incidenciaDTO.asignados.isEmpty() || !incidenciaDTO.status.displayName.equalsIgnoreCase('asignada')}"
+                           th:class="*{!incidencia.asignados.isEmpty()}? 'bg-info text-white' : ''"
+                           th:text="*{incidencia.status.getDisplayName()}"
+                           style="text-align: center;display: block;" data-toggle="collapse"
+                           data-target="#asignados"
+                           aria-expanded="true" aria-controls="asignados"></a>
+                        <div id="asignados" th:unless="*{incidenciaDTO.asignados.isEmpty()}" class="collapse card">
+                            <ul class="card-body list-unstyled" aria-labelledby="status" data-parent="#detailsRow">
+                                <li th:each="cat : *{incidenciaDTO.asignados}" th:text="${cat.username}"></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
@@ -16,27 +33,10 @@
                             <div style="height:150px;" th:text="*{incidenciaDTO.descripcion}"
                                  class="form-control form-control-plaintext"
                                  disabled="disabled">
-
                             </div>
                         </div>
                     </div>
                     <div class="col-auto">
-                        <div class="col-auto form-group">
-                            <label class="label text-bold">Status</label>
-                            <div class="form-control form-control-plaintext" th:if="*{incidencia.asignados.isEmpty()}"
-                                 th:text="*{incidencia.status.getDisplayName()}"></div>
-                            <a id="status" href="#" th:unless="*{incidenciaDTO.asignados.isEmpty()}"
-                               th:class="*{!incidencia.asignados.isEmpty()}? 'bg-info text-white' : ''"
-                               th:text="*{incidencia.status.getDisplayName()}"
-                               style="text-align: center;display: block;" data-toggle="collapse"
-                               data-target="#asignados"
-                               aria-expanded="true" aria-controls="asignados"></a>
-                            <div id="asignados" th:unless="*{incidenciaDTO.asignados.isEmpty()}" class="collapse card">
-                                <ul class="card-body list-unstyled" aria-labelledby="status" data-parent="#detailsRow">
-                                    <li th:each="cat : *{incidenciaDTO.asignados}" th:text="${cat.username}"></li>
-                                </ul>
-                            </div>
-                        </div>
                         <div class="col-auto card-block">
                             <div class="form-group">
                                 <label class="label text-bold">Categoria</label>
@@ -51,6 +51,7 @@
                                      class="form-control form-control-plaintext" disabled></div>
                             </div>
                         </div>
+
                     </div>
                     <div class="col-auto">
                         <div class="col-auto card-block">

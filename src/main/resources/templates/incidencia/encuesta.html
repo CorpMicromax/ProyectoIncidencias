@@ -1,10 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <div th:include="fragmentos/header"></div>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Encuesta de Satisfaccion Micromax</title>
 </head>
 <body>
+<!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.EncuestaViewmodel"*/-->
+<div class="container">
+    <form th:action="@{/encuesta}" th:object="${data}" method="post">
+        <div class="card-header text-center">
+            <h2>Encuesta de Satisfacción Micromax</h2>
+        </div>
+        <div class="card-body">
+            <div class="card">
+                <div class="card-header text-justify">
+                    <span>Según su experiencia con nuestro servicio durante la atención de la incidencia <span
+                            class="text-bold" th:text="${data.idIncidencia}"></span>, por favor indique su opinión con respecto a...</span>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Nuestro tiempo de respuesta</h4>
+                    </div>
+                    <div class="card-body bg-light text-center">
+                        <div class="btn-group btn-group-toggle col-12 row" data-toggle="buttons">
+                            <div class="col-1"></div>
+                            <label class="btn btn-danger col-2">
+                                <input type="radio" name="options" id="q11" autocomplete="off" required> Muy lento
+                            </label>
+                            <label class="btn btn-warning col-2">
+                                <input type="radio" name="options" id="q12" autocomplete="off"> Lento
+                            </label>
+                            <label class="btn btn-default col-2">
+                                <input type="radio" name="options" id="q13" autocomplete="off"> Regular
+                            </label>
+                            <label class="btn btn-info col-2">
+                                <input type="radio" name="options" id="q14" autocomplete="off"> Rápido
+                            </label>
+                            <label class="btn btn-primary col-2">
+                                <input type="radio" name="options" id="q15" autocomplete="off"> Muy rápido
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card no-padding">
+                    <div class="card-header">
+                        <h4>Nuestra calidad de atención</h4>
+                    </div>
+                    <div class="card-body bg-light text-center ">
+                        <div class="btn-group btn-group-toggle col-12 row" data-toggle="buttons">
+                            <div class="col-1"></div>
+                            <label class="btn btn-danger col-2">
+                                <input type="radio" name="options2" id="q21" autocomplete="off" required> Mala
+                            </label>
+                            <label class="btn btn-warning col-2">
+                                <input type="radio" name="options2" id="q22" autocomplete="off"> Deficiente
+                            </label>
+                            <label class="btn btn-default col-2">
+                                <input type="radio" name="options2" id="q23" autocomplete="off"> Regular
+                            </label>
+                            <label class="btn btn-info col-2">
+                                <input type="radio" name="options2" id="q24" autocomplete="off"> Buena
+                            </label>
+                            <label class="btn btn-primary col-2">
+                                <input type="radio" name="options2" id="q25" autocomplete="off"> Excelente
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Su satisfacción con Micromax</h4>
+                    </div>
+                    <div class="card-body bg-light text-center">
+                        <div class="btn-group btn-group-toggle col-12 row" data-toggle="buttons">
+                            <div class="col-1"></div>
+                            <label class="btn btn-danger col-2">
+                                <input type="radio" name="options3" id="q31" autocomplete="off" required> Muy lento
+                            </label>
+                            <label class="btn btn-warning col-2">
+                                <input type="radio" name="options3" id="q32" autocomplete="off"> Lento
+                            </label>
+                            <label class="btn btn-default col-2">
+                                <input type="radio" name="options3" id="q33" autocomplete="off"> Regular
+                            </label>
+                            <label class="btn btn-info col-2">
+                                <input type="radio" name="options3" id="q34" autocomplete="off"> Rápido
+                            </label>
+                            <label class="btn btn-primary col-2">
+                                <input type="radio" name="options3" id="q35" autocomplete="off"> Muy rápido
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Opcional: Deje un mensaje para Micromax</h4>
+                    </div>
+                    <div class="card-body bg-light text-center">
+                        <textarea></textarea>
+                    </div>
+
+                </div>
+                <div class="form-row ">
+                    <div class="card-body float-right offset-9 col-3">
+                        <button class="btn btn-primary " type="submit"> Enviar respuestas</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+</div>
+</form>
+</div>
+
+<script type="text/javascript">
+
+</script>
+
+<style>
+    .btn span.fa {
+        opacity: 0;
+    }
+
+    .btn.active span.fa {
+        opacity: 1;
+    }
+</style>
 
 </body>
 </html>

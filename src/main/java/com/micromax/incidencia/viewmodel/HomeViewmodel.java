@@ -8,6 +8,7 @@ public class HomeViewmodel {
 
 
    private String nombre;
+   private String username;
    private boolean authenticated;
    private Rol rol;
    private boolean isAdmin;

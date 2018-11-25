@@ -3,9 +3,9 @@ package com.micromax.incidencia.domain;
 public enum Status {
 
     NUEVA("Nueva"),
-    ABIERTA("Abierta"),
     ASIGNADA("Asignada"),
     PROGRESO("Progreso"),
+    RESUELTA("Resuelta"),
     CERRADA("Cerrada"),
     REABIERTA("Reabierta"),
     PAUSADA("Pausada");

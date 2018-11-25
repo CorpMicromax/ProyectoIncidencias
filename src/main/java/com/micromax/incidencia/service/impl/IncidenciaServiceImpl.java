@@ -101,7 +101,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
             if(i.get().getStatus().equals(Status.NUEVA) && !i.get().getAsignados().isEmpty()){
                 i.get().setStatus(Status.ASIGNADA);
             }else if(i.get().getStatus().equals(Status.ASIGNADA) && i.get().getAsignados().isEmpty()){
-                i.get().setStatus(Status.ABIERTA);
+                i.get().setStatus(Status.NUEVA);
             }
 
             i.get().setTiempoEstimado(defaultIfNull(dto.getTiempoEstimado(), i.get().getTiempoEstimado()));
@@ -109,7 +109,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
             incidenciaRepository.save(i.get());
 
         }else{
-            log.warn("No se pudo encontrar ninguna incidencia de id= %s", dto.getId());
+            log.warn(String.format("No se pudo encontrar ninguna incidencia de id= %s", dto.getId()));
         }
     }
 
@@ -189,7 +189,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
             if(i.get().getStatus().equals(Status.NUEVA) && !i.get().getAsignados().isEmpty()){
                 i.get().setStatus(Status.ASIGNADA);
             }else if(i.get().getStatus().equals(Status.ASIGNADA) && i.get().getAsignados().isEmpty()){
-                i.get().setStatus(Status.ABIERTA);
+                i.get().setStatus(Status.NUEVA);
             }
             incidenciaRepository.save(i.get());
         }else{

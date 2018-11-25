@@ -1,6 +1,8 @@
 package com.micromax.incidencia.controller;
 
 import com.micromax.incidencia.domain.Constants;
+import com.micromax.incidencia.domain.Status;
+import com.micromax.incidencia.domain.entities.Encuesta;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
@@ -9,6 +11,7 @@ import com.micromax.incidencia.service.HistoricoService;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.ItemListService;
 import com.micromax.incidencia.service.UsuarioService;
+import com.micromax.incidencia.viewmodel.EncuestaViewmodel;
 import com.micromax.incidencia.viewmodel.IncidenciaViewmodel;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +91,7 @@ public class IncidenciaController {
     }
 
     @GetMapping("/incidenciaL")
-    public String incidenciaL(@RequestParam(value = "id", required = false) Long id, Model model){
+    public String incidenciaL(@RequestParam(value = "id", required = false) String id, Model model){
         List<Incidencia> incidencias;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario u = usuarioService.getUsuarioByUsername(auth.getName());
@@ -109,6 +112,35 @@ public class IncidenciaController {
         return mainController.homeRoute(model);
     }
 
+    @GetMapping("/encuesta/{idIncidencia}")
+    public String incidenciaCerrar(@PathVariable String idIncidencia, Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario u = usuarioService.getUsuarioByUsername(auth.getName());
+        IncidenciaDTO dto = new IncidenciaDTO();
+        dto.setStatus(Status.CERRADA);
+        dto.setId(idIncidencia);
+        incidenciaService.cambioStatus(dto, u);
+
+        EncuestaViewmodel viewmodel = new EncuestaViewmodel();
+        viewmodel.setEncuesta(new Encuesta());
+        viewmodel.setIdIncidencia(idIncidencia);
+        model = setTemplateToModel(model, INCIDENCIA,"encuesta")
+                .addAttribute(Constants.DATA, viewmodel)
+                .addAttribute(TITLE,"Encuesta de satisfacción");
+        return "incidencia/encuesta";
+    }
+
+    @GetMapping("/reopen/{idIncidencia}")
+    public String reabrirIncidencia(@PathVariable String idIncidencia, Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario u = usuarioService.getUsuarioByUsername(auth.getName());
+        IncidenciaDTO dto = new IncidenciaDTO();
+        dto.setStatus(Status.REABIERTA);
+        dto.setId(idIncidencia);
+        incidenciaService.cambioStatus(dto, u);
+        return incidenciaV(idIncidencia, model);
+    }
+
     /*=======================================+======== POSTS ========================================*/
 
     /* INCIDENCIA */
@@ -121,13 +153,19 @@ public class IncidenciaController {
     @PostMapping("/incidenciaE")
     public String postIncidenciaE(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
         incidenciaService.actualizarIncidencia(viewmodel.getIncidenciaDTO(), usuarioActual());
-        return "redirect:/incidenciaL";
+        return "redirect:/incidenciaV/"+ viewmodel.getIncidenciaDTO().getId();
     }
 
     @PostMapping("/incidenciaV")
     public String postIncidenciaV(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
         incidenciaService.comentar(viewmodel.getComentario(), viewmodel.getIncidenciaDTO(), usuarioActual());
         return "redirect:/incidenciaV/" + viewmodel.getIncidenciaDTO().getId();
+    }
+
+    @PostMapping("/encuesta")
+    public String crearEncuesta(@ModelAttribute EncuestaViewmodel viewmodel, BindingResult errors, Model model){
+
+        return "redirect:/incidenciaL";
     }
 
     private String obtenerRol(){

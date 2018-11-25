@@ -1,15 +1,40 @@
-<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaE"
-         class="justify-content-center">
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaE" class="justify-content-center">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaViewmodel"*/-->
-    <div class=" container-fluid">
+    <!--/*@thymesVar id="homeData" type="com.micromax.incidencia.viewmodel.HomeViewmodel"*/-->
+    <div class="container-fluid">
         <div class="card card-body">
-            <form th:action="@{/incidenciaE}" th:object="${data}" method="post" class="form-inline">
+            <form th:action="@{/incidenciaE}" th:object="${data}" method="post">
                 <fieldset>
                     <div class="card-header">
                         <legend class="card-title  my-lg-2">
                             <span class="fa fa-clipboard"></span>
                             <span th:text="*{incidenciaDTO.id + ': ' + incidenciaDTO.titulo}"></span>
                         </legend>
+                        <div class="col-2 card-block">
+                            <div class="form-group">
+                                <label class="label text-bold">Creador</label>
+                                <div type="text" th:text="*{incidenciaDTO.creador.getUsername()}"
+                                     class="form-control form-control-plaintext" disabled="disabled"></div>
+                            </div>
+                        </div>
+                        <div
+                            th:if="${(data.incidenciaDTO.creador.username != null
+                                && homeData != null
+                                && data.incidenciaDTO.creador.username.equalsIgnoreCase(homeData.username) || homeData.isAdmin())
+                                && data.incidenciaDTO.status.displayName.equalsIgnoreCase('resuelta')}"
+                            class="col-2 card-block"
+                        >
+                            <a id="close" name="close" class="btn btn-danger"> Cerrar Incidencia </a>
+                        </div>
+                        <div
+                                th:if="${(data.incidenciaDTO.creador.username != null
+                                && homeData != null
+                                && data.incidenciaDTO.creador.username.equalsIgnoreCase(homeData.username) || homeData.isAdmin())
+                                && data.incidenciaDTO.status.displayName.equalsIgnoreCase('cerrada')}"
+                                class="col-2 card-block"
+                        >
+                            <a id="reopen" name="reopen" class="btn btn-danger"> Reabrir Incidencia </a>
+                        </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-10 offset-1">
@@ -49,7 +74,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-row" th:if="${homeData != null && (homeData.isAdmin() || homeData.isTech())}" >
+                    <div class="form-row">
                         <div class="form-group offset-1 col-4">
                             <label class="control-label" for="categoriaDos">Categoria Específica</label>
                             <select id="categoriaDos" class="form-control" th:field="*{incidenciaDTO.categoria}"
@@ -57,7 +82,8 @@
                                 <option value="">--- Seleccione una ---</option>
                             </select>
                         </div>
-                        <div class="form-group col-6">
+                        <div class="form-group col-6"
+                             th:if="${homeData != null && (homeData.isAdmin() || homeData.isTech())}">
                             <label class="control-label" for="tecnicos">Asignaciones</label>
                             <select id="tecnicos" name="asignados" th:field="*{incidenciaDTO.asignados}"
                                     class="form-control" multiple="multiple">
@@ -71,6 +97,7 @@
                         </div>
                     </div>
                     <div class="form-row">
+
                         <div class="form-group offset-1 col-4">
                             <label class="control-label" for="incidenciaDTO.status">Status</label>
                             <select id="incidenciaDTO.status" name="incidenciaDTO.status"
@@ -82,7 +109,7 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-auto" th:if="${homeData.isAdmin() || homeData.isTech()}">
                             <div class="card-title">Tiempo estimado</div>
                             <div class="col-auto row">
                                 <div class="form-group col-md-4">
@@ -113,27 +140,29 @@
                     </div>
                     <input id="catId" th:value="*{incidenciaDTO.categoria.id}" type="hidden">
                     <input id="dadId" th:value="*{incidenciaDTO.categoria.padre.id}" type="hidden">
-                    <input type="hidden" th:field="*{incidenciaDTO.id}"/>
+                    <input id="incidenciaId" type="hidden" th:field="*{incidenciaDTO.id}"/>
                     <input type="hidden" th:field="*{incidenciaDTO.status}"/>
 
                     <div class="form-row btn-group float-right" style="margin-top:10px;">
-                            <button type="submit" id="submit" name="submit" class="btn btn-primary">Guardar</button>
-                            <button id="cancel" name="cancel" class="btn btn-secondary">Cancelar</button>
-                            <button id="close" name="close" class="btn btn-danger">Cerrar Incidencia</button>
+                        <button type="submit" id="submit" name="submit" class="btn btn-primary">Guardar</button>
+                        <button id="cancel" name="cancel" class="btn btn-secondary">Cancelar</button>
                     </div>
                 </fieldset>
             </form>
         </div>
-        <script th:inline="javascript">
-            /*<![CDATA[*/
-            $(document).ready(function () {
-                $('#categoriaUno option[value=' + $("#dadId").val() + ']').attr('selected', 'selected');
-                $('#categoriaUno').trigger("change", [{thing: true}]);
 
-            });
+    </div>
 
+    <script th:inline="javascript">
+        $('#cancel').click(function (event) {
+            event.stopPropagation();
+            window.location = "/incidenciaL";
+        });
 
+        $(document).ready(function () {
+            $('#categoriaUno option[value=' + $("#dadId").val() + ']').attr('selected', 'selected');
             $("#categoriaUno").change(function (e, data) {
+                console.log("Buscando categorias...");
                 $.ajax({
                     type: "GET",
                     url: /*[[@{/rest/incidencia/getCategoriasDos}]]*/"/rest/incidencia/getCategoriasDos",
@@ -148,18 +177,18 @@
                         }
                     }
                 });
-            });
-            $('#cancel').click(function (event) {
-                event.stopPropagation();
-                window.location = "/incidenciaL";
-            });
+            }).trigger("change", [{thing: true}]);
 
-            $('#close').click(function (event) {
-                event.stopPropagation();
-                window.location = "/incidenciaCerrar";
-            });
-            //{catId}
-            /*]]>*/
-        </script>
-    </div>
+        });
+
+        $('#close').click(function (event) {
+            event.stopPropagation();
+            window.location = "/encuesta/" + $("#incidenciaId").val();
+        });
+
+        $('#reopen').click(function (event) {
+            event.stopPropagation();
+            window.location = "/reopen/" + $("#incidenciaId").val();
+        });
+    </script>
 </section>
