@@ -98,6 +98,11 @@
                         </li>
                     </ul>
                 </li>
+                <li th:if="${homeData.isAdmin()}">
+                    <a th:href="@{/admin/reportes}">
+                        <i class="fa fa-area-chart"></i>Reportes
+                    </a>
+                </li>
             </ul>
         </nav>
         <div class="content-inner">

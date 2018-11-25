@@ -124,9 +124,13 @@ public class IncidenciaController {
         EncuestaViewmodel viewmodel = new EncuestaViewmodel();
         viewmodel.setEncuesta(new Encuesta());
         viewmodel.setIdIncidencia(idIncidencia);
+        if(u.getRol().getNombre().equalsIgnoreCase(Constants.ADMINROLE)){
+            return mainController.homeRoute(model);
+        }
+
         model = setTemplateToModel(model, INCIDENCIA,"encuesta")
                 .addAttribute(Constants.DATA, viewmodel)
-                .addAttribute(TITLE,"Encuesta de satisfacción");
+                .addAttribute(TITLE,"Encuesta de satisfacción Micromax");
         return "incidencia/encuesta";
     }
 

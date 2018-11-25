@@ -20,8 +20,14 @@ public class Encuesta extends Desactivable implements Serializable {
     @Column(name = "id_encuesta")
     private long idEncuesta;
 
-    @Column(name = "puntaje")
-    private byte puntaje;
+    @Column(name = "puntaje1")
+    private byte puntaje1;
+
+    @Column(name = "puntaje2")
+    private byte puntaje2;
+
+    @Column(name = "puntaje3")
+    private byte puntaje3;
 
     @Column(name = "mensaje", length = 4000)
     private String mensaje;

@@ -13,6 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import static com.micromax.incidencia.controller.MasterCrudController.setTemplateToModel;
+import static com.micromax.incidencia.domain.Constants.TITLE;
+
 @Controller
 public class MainController {
 
@@ -49,6 +52,15 @@ public class MainController {
         }
 
         return "home2";
+    }
+
+    @GetMapping(value = {"/admin/reportes"})
+    public String reportes(Model model){
+        HomeViewmodel viewmodel = new HomeViewmodel();
+        model = setTemplateToModel(model, "","reportes")
+                .addAttribute(Constants.DATA, viewmodel)
+                .addAttribute(TITLE,"Reportes");
+        return homeRoute(model);
     }
 
 }

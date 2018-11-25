@@ -65,7 +65,7 @@ public class Incidencia extends Desactivable implements Serializable {
     @JoinColumn(name = "id_usuario_creador")
     private Usuario creador;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_tipo_incidencia")
     private TipoIncidencia tipoIncidencia;
 
@@ -95,7 +95,7 @@ public class Incidencia extends Desactivable implements Serializable {
         return titulo.substring(0, 20) + "...";
     }
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "asignaciones",
             joinColumns = @JoinColumn(

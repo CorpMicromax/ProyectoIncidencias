@@ -4,7 +4,7 @@
 <head>
     <div th:include="fragmentos/header"></div>
     <meta charset="UTF-8">
-    <title>Encuesta de Satisfaccion Micromax</title>
+    <title th:text="${data.title}}"></title>
 </head>
 <body>
 <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.EncuestaViewmodel"*/-->
@@ -114,8 +114,8 @@
 
             </div>
         </div>
+    </form>
 </div>
-</form>
 </div>
 
 <script type="text/javascript">
