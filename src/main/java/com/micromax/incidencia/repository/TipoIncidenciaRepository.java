@@ -14,5 +14,5 @@ public interface TipoIncidenciaRepository extends CrudRepository<TipoIncidencia,
 
     Optional<TipoIncidencia> findById(long id);
 
-
+    boolean existsByNombre(String nombre);
 }

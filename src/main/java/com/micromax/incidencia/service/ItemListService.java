@@ -42,4 +42,5 @@ public interface ItemListService {
     TipoIncidencia guardar(TipoIncidencia tipoIncidencia);
 
 
+    boolean existeTipoIncidencia(TipoIncidencia tipoIncidencia1);
 }

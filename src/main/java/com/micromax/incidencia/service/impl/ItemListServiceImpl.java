@@ -109,5 +109,9 @@ public class ItemListServiceImpl implements ItemListService {
         return tipoIncidenciaRepository.save(tipoIncid);
     }
 
+    @Override
+    public boolean existeTipoIncidencia(TipoIncidencia t) {
 
+        return tipoIncidenciaRepository.existsByNombre(t.getNombre());
+    }
 }

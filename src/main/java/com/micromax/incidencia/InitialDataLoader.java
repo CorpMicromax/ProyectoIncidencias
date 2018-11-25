@@ -2,6 +2,7 @@ package com.micromax.incidencia;
 
 import com.micromax.incidencia.domain.Constants;
 import com.micromax.incidencia.domain.entities.incidencias.Categoria;
+import com.micromax.incidencia.domain.entities.incidencias.TipoIncidencia;
 import com.micromax.incidencia.domain.entities.users.Cliente;
 import com.micromax.incidencia.domain.entities.users.Rol;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
@@ -106,10 +107,20 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         crearCategoriaSiNoExiste("Reposicion consumible",  servicios);
         crearCategoriaSiNoExiste("Instalacion de red",  servicios);
 
+        crearTipoIncidenciaSiNoExiste("En sitio");
+        crearTipoIncidenciaSiNoExiste("Remoto");
 
         alreadySetup = true;
     }
 
+    @Transactional
+    public void crearTipoIncidenciaSiNoExiste(String nombre){
+        TipoIncidencia tipoIncidencia1 = new TipoIncidencia();
+        tipoIncidencia1.setNombre(nombre);
+        if(!itemListService.existeTipoIncidencia(tipoIncidencia1)) {
+            itemListService.guardar(tipoIncidencia1);
+        }
+    }
     @Transactional
     public Categoria crearCategoriaSiNoExiste(String nombre, @Nullable Categoria padre) {
         CategoriaDTO cat = new CategoriaDTO();
