@@ -1,9 +1,9 @@
 <section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="incidenciaE"
          class="justify-content-center">
     <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.IncidenciaViewmodel"*/-->
-    <div class="container container-fluid">
+    <div class=" container-fluid">
         <div class="card card-body">
-            <form th:action="@{/incidenciaE}" th:object="${data}" method="post" class="form-horizontal">
+            <form th:action="@{/incidenciaE}" th:object="${data}" method="post" class="form-inline">
                 <fieldset>
                     <div class="card-header">
                         <legend class="card-title  my-lg-2">
@@ -11,17 +11,23 @@
                             <span th:text="*{incidenciaDTO.id + ': ' + incidenciaDTO.titulo}"></span>
                         </legend>
                     </div>
-                    <div class="form-group">
-                        <label class=" control-label" for="titulo">Titulo</label>
-                        <input id="titulo" th:field="*{incidenciaDTO.titulo}" type="text" class="form-control input-md">
-                    </div>
-                    <div class="form-group">
-                        <label class=" control-label" for="desc">Descripción</label>
-                        <textarea class="form-control" id="desc" th:field="*{incidenciaDTO.descripcion} "
-                                  disabled="disabled"></textarea>
+                    <div class="form-row">
+                        <div class="form-group col-10 offset-1">
+                            <label class=" control-label" for="titulo">Titulo</label>
+                            <input id="titulo" th:field="*{incidenciaDTO.titulo}" type="text"
+                                   class="form-control input-md">
+                        </div>
+
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-8 offset-2">
+                            <label class=" control-label" for="desc">Descripción</label>
+                            <textarea class="form-control" id="desc" th:field="*{incidenciaDTO.descripcion} "
+                                      disabled="disabled" style="height:250px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group offset-1 col-4">
                             <label class=" control-label" for="categoriaUno">Categoria</label>
                             <select id="categoriaUno" name="categoriaUno" class="form-control" required="required">
                                 <option value="">--- Seleccione una ---</option>
@@ -29,27 +35,29 @@
                                         th:text="${cat.nombre}"></option>
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div th:if="${homeData != null && (homeData.isAdmin() || homeData.isTech())}" class="col-6">
+                            <div class="form-group">
+                                <label class="field-label" for="incidenciaDTO.tipoIncidencia">Tipo de Incidencia</label>
+                                <select id="incidenciaDTO.tipoIncidencia" name="incidenciaDTO.tipoIncidencia"
+                                        class="form-control" required="required">
+                                    <option value="">--- Seleccione una ---</option>
+                                    <option th:each="incidencia : ${data.tipoIncidencias}"
+                                            th:value="${incidencia.id}"
+                                            th:text="${incidencia.nombre}"
+                                            th:selected="${data.incidenciaDTO.tipoIncidencia!= null && data.incidenciaDTO.tipoIncidencia.id == incidencia.id}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row" th:if="${homeData != null && (homeData.isAdmin() || homeData.isTech())}" >
+                        <div class="form-group offset-1 col-4">
                             <label class="control-label" for="categoriaDos">Categoria Específica</label>
-                            <select id="categoriaDos" class="form-control" th:field="*{incidenciaDTO.categoria}" required="required">
+                            <select id="categoriaDos" class="form-control" th:field="*{incidenciaDTO.categoria}"
+                                    required="required">
                                 <option value="">--- Seleccione una ---</option>
                             </select>
                         </div>
-                    </div>
-                    <div th:if="${homeData != null && (homeData.isAdmin() || homeData.isTech())}" class="form-row">
-                        <div class="form-group col-md-6">
-                            <label class="field-label" for="incidenciaDTO.tipoIncidencia">Tipo de Incidencia</label>
-                            <select id="incidenciaDTO.tipoIncidencia" name="incidenciaDTO.tipoIncidencia" class="form-control" required="required">
-                                <option value="">--- Seleccione una ---</option>
-                                <option th:each="incidencia : ${data.tipoIncidencias}"
-                                        th:value="${incidencia.id}"
-                                        th:text="${incidencia.nombre}"
-                                        th:selected="${data.incidenciaDTO.tipoIncidencia!= null && data.incidenciaDTO.tipoIncidencia.id == incidencia.id}"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div th:if="${homeData != null && (homeData.isAdmin() || homeData.isTech())}" class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-6">
                             <label class="control-label" for="tecnicos">Asignaciones</label>
                             <select id="tecnicos" name="asignados" th:field="*{incidenciaDTO.asignados}"
                                     class="form-control" multiple="multiple">
@@ -61,9 +69,12 @@
                                 ></option>
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group offset-1 col-4">
                             <label class="control-label" for="incidenciaDTO.status">Status</label>
-                            <select id="incidenciaDTO.status" name="incidenciaDTO.status" th:field="*{incidenciaDTO.status}" class="form-control">
+                            <select id="incidenciaDTO.status" name="incidenciaDTO.status"
+                                    th:field="*{incidenciaDTO.status}" class="form-control">
                                 <option th:each="s : ${data.stati}"
                                         th:value="${s}"
                                         th:text="${s.getDisplayName()}"
@@ -71,56 +82,56 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="col-sm-6 ">
-                            <h4>Tiempo estimado</h4>
-                            <div class="row">
-                            <div class="form-group col-md-4">
-                                <label class="control-label" for="dias">Dias</label>
-                                <input type="number" min='0' max="100" id="dias" class="form-control"
-                                       th:field="*{incidenciaDTO.tiempoEstimado.dias}">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="control-label" for="horas">Horas</label>
-                                <input type="number" min="0" max="23" id="horas" class="form-control"
-                                       th:field="*{incidenciaDTO.tiempoEstimado.hora}">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="control-label" for="minutos">Minutos</label>
-                                <input type="number" min="0" max="59" id="minutos" class="form-control"
-                                       th:field="*{incidenciaDTO.tiempoEstimado.minutos}">
-                            </div>
+                        <div class="col-auto">
+                            <div class="card-title">Tiempo estimado</div>
+                            <div class="col-auto row">
+                                <div class="form-group col-md-4">
+                                    <label class="control-label" for="dias">Dias</label>
+                                    <input type="number" min='0' max="100" id="dias" class="form-control"
+                                           th:field="*{incidenciaDTO.tiempoEstimado.dias}">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label" for="horas">Horas</label>
+                                    <input type="number" min="0" max="23" id="horas" class="form-control"
+                                           th:field="*{incidenciaDTO.tiempoEstimado.hora}">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label" for="minutos">Minutos</label>
+                                    <input type="number" min="0" max="59" id="minutos" class="form-control"
+                                           th:field="*{incidenciaDTO.tiempoEstimado.minutos}">
+                                </div>
                             </div>
 
                         </div>
                     </div>
                     <div class="form-row">
-                        <label class="control-label" for="desc">Comentario</label>
-                        <textarea class="form-control" id="comentario" th:field="*{incidenciaDTO.comentario}" required></textarea>
+                        <div class="offset-2 col-8">
+                            <label class="control-label" for="comentario">Comentario</label>
+                            <textarea id="comentario" class="form-control" th:field="*{incidenciaDTO.comentario}"
+                                      required></textarea>
+                        </div>
                     </div>
                     <input id="catId" th:value="*{incidenciaDTO.categoria.id}" type="hidden">
                     <input id="dadId" th:value="*{incidenciaDTO.categoria.padre.id}" type="hidden">
                     <input type="hidden" th:field="*{incidenciaDTO.id}"/>
                     <input type="hidden" th:field="*{incidenciaDTO.status}"/>
 
-                    <div class="form-row btn-group" style="margin-top:6px;">
-                        <div class="form-group ">
-                        <button type="submit" id="submit" name="submit" class="btn btn-primary">Guardar</button>
-                        </div>
+                    <div class="form-row btn-group float-right" style="margin-top:10px;">
+                            <button type="submit" id="submit" name="submit" class="btn btn-primary">Guardar</button>
+                            <button id="cancel" name="cancel" class="btn btn-secondary">Cancelar</button>
+                            <button id="close" name="close" class="btn btn-danger">Cerrar Incidencia</button>
                     </div>
-
                 </fieldset>
             </form>
-            <div class="form-group form-row btn-group">
-            <button id="cancel" name="cancel" class="btn btn-secondary">Cancelar</button>
-            <button id="close" name="close" class="btn btn-info">Cerrar Incidencia</button>
-            </div>
         </div>
         <script th:inline="javascript">
             /*<![CDATA[*/
             $(document).ready(function () {
                 $('#categoriaUno option[value=' + $("#dadId").val() + ']').attr('selected', 'selected');
-                $("#categoriaUno").trigger("change", [{thing: true}]);
+                $('#categoriaUno').trigger("change", [{thing: true}]);
+
             });
+
 
             $("#categoriaUno").change(function (e, data) {
                 $.ajax({

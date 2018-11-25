@@ -23,5 +23,5 @@ public class IncidenciaViewmodel {
     private List<Tecnico> tecnicos;
     private List<Historico> historico;
     private EnumSet<Status> stati = EnumSet.allOf(Status.class);
-
+    private String comentario;
 }

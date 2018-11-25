@@ -115,7 +115,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
 
     @Override
     public Incidencia getIncidenciaById(String id) {
-        log.info("Buscando incidencia con id %s", id);
+        log.info(String.format("Buscando incidencia con id %s", id));
         return incidenciaRepository.findByIdIncidenciaAndHabilitadoIsTrue(id).orElse(null);
     }
 
@@ -125,7 +125,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
         Incidencia i = incidenciaRepository.findByIdIncidenciaAndHabilitadoIsTrue(id).orElse(  null);
         if(i != null) {
             i.setHabilitado(false);
-            log.info("Eliminada incidencia con id %s", id);
+            log.info(String.format("Eliminada incidencia con id %s", id));
             historia.guardarHistorico(
                     new Historico(i,TipoCambio.ELIMINACION_INCIDENCIA, i.getStatus(), null,null),
                     user);
@@ -193,7 +193,21 @@ public class IncidenciaServiceImpl implements IncidenciaService {
             }
             incidenciaRepository.save(i.get());
         }else{
-            log.warn("No se pudo encontrar ninguna incidencia de id= %s", dto.getId());
+            log.warn(String.format("No se pudo encontrar ninguna incidencia de id= %s", dto.getId()));
         }
+    }
+
+    @Override
+    public void comentar(String comentario, IncidenciaDTO dto, Usuario user){
+        Comentario c = comentarioService.guardarComentario(new Comentario(), user);
+        c.setContenido(comentario);
+        Optional<Incidencia> i = incidenciaRepository.findByIdIncidenciaAndHabilitadoIsTrue(dto.getId());
+        if(i.isPresent()){
+            i.get().addComentario(c);
+            incidenciaRepository.save(i.get());
+        }else{
+            log.info(String.format("No se pudo encontrar ninguna incidencia de id= %s", dto.getId()));
+        }
+
     }
 }

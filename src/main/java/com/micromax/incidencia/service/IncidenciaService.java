@@ -30,5 +30,7 @@ public interface IncidenciaService {
     DashboardViewmodel obtenerTodasIncidencias(Usuario usuario);
 
     void cambioStatus (IncidenciaDTO incidenciaDTO, Usuario user);
+
+    void comentar(String comentario, IncidenciaDTO dto, Usuario user);
 }
 

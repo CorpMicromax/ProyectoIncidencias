@@ -63,6 +63,7 @@ public class IncidenciaController {
     public String incidenciaV(@PathVariable String idIncidencia, Model model){
         IncidenciaViewmodel viewmodel = new IncidenciaViewmodel();
         viewmodel.setIncidencia(incidenciaService.getIncidenciaById(idIncidencia));
+        viewmodel.setIncidenciaDTO(new IncidenciaDTO(incidenciaService.getIncidenciaById(idIncidencia)));
         viewmodel.setHistorico(historicoService.getHistoricoByIncidencia(incidenciaService.getIncidenciaById(idIncidencia)));
         model = setTemplateToModel(model, INCIDENCIA,"incidenciaV")
                 .addAttribute(Constants.DATA, viewmodel)
@@ -121,6 +122,12 @@ public class IncidenciaController {
     public String postIncidenciaE(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
         incidenciaService.actualizarIncidencia(viewmodel.getIncidenciaDTO(), usuarioActual());
         return "redirect:/incidenciaL";
+    }
+
+    @PostMapping("/incidenciaV")
+    public String postIncidenciaV(@ModelAttribute IncidenciaViewmodel viewmodel, BindingResult errors, Model model){
+        incidenciaService.comentar(viewmodel.getComentario(), viewmodel.getIncidenciaDTO(), usuarioActual());
+        return "redirect:/incidenciaV/" + viewmodel.getIncidenciaDTO().getId();
     }
 
     private String obtenerRol(){
