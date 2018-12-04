@@ -47,6 +47,9 @@ public class IncidenciaController {
     @Autowired
     private HistoricoService historicoService;
 
+    //@Autowired
+    //private EncuestaService encuestaService;
+
     /*-------------------------------------------- INCIDENCIA -------------------------------------------------*/
     @GetMapping("/incidenciaC")
     public String incidenciaC(Model model){
@@ -169,6 +172,7 @@ public class IncidenciaController {
     @PostMapping("/encuesta")
     public String crearEncuesta(@ModelAttribute EncuestaViewmodel viewmodel, BindingResult errors, Model model){
 
+        //encuestaService.crearEncuesta(usuarioActual(), viewmodel.getIdIncidencia(), viewmodel.getEncuesta());
         return "redirect:/incidenciaL";
     }
 
