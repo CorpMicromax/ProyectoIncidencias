@@ -53,6 +53,10 @@ public class Incidencia extends Desactivable implements Serializable {
     @Column(name = "fecha_creacion")
     private Date creacion;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fecha_cierre")
+    private Date cierre;
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status")
     private Status status;

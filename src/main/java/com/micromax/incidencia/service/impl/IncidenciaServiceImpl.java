@@ -2,6 +2,7 @@ package com.micromax.incidencia.service.impl;
 
 import com.micromax.incidencia.domain.Constants;
 import com.micromax.incidencia.domain.Status;
+import com.micromax.incidencia.domain.TiempoEstimado;
 import com.micromax.incidencia.domain.Utilidades;
 import com.micromax.incidencia.domain.entities.Historico;
 import com.micromax.incidencia.domain.entities.TipoCambio;
@@ -70,6 +71,7 @@ public class IncidenciaServiceImpl implements IncidenciaService {
         i.setCreacion(new Date());
         i.setStatus(Status.NUEVA);
         i.setAsignados(new ArrayList<>());
+        i.setTiempoEstimado(new TiempoEstimado(0,0,0));
         estrategiaService.ejecutarEstrategia(i, usuarioService.getTecnicos());
         i = incidenciaRepository.save(i);
         historia.guardarHistorico(new Historico(i,TipoCambio.CREACION_INCIDENCIA, null, Status.NUEVA,null), user);
@@ -103,7 +105,9 @@ public class IncidenciaServiceImpl implements IncidenciaService {
             }else if(i.get().getStatus().equals(Status.ASIGNADA) && i.get().getAsignados().isEmpty()){
                 i.get().setStatus(Status.NUEVA);
             }
-
+            if(dto.getStatus().equals(Status.CERRADA)){
+                i.get().setCierre(new Date());
+            }
             i.get().setTiempoEstimado(defaultIfNull(dto.getTiempoEstimado(), i.get().getTiempoEstimado()));
 
             incidenciaRepository.save(i.get());
@@ -190,6 +194,9 @@ public class IncidenciaServiceImpl implements IncidenciaService {
                 i.get().setStatus(Status.ASIGNADA);
             }else if(i.get().getStatus().equals(Status.ASIGNADA) && i.get().getAsignados().isEmpty()){
                 i.get().setStatus(Status.NUEVA);
+            }
+            if(dto.getStatus().equals(Status.CERRADA)){
+                i.get().setCierre(new Date());
             }
             incidenciaRepository.save(i.get());
         }else{

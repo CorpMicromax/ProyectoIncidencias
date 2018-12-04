@@ -3,18 +3,25 @@ package com.micromax.incidencia.controller;
 import com.micromax.incidencia.domain.Constants;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.service.IncidenciaService;
+import com.micromax.incidencia.service.ReportService;
 import com.micromax.incidencia.service.UsuarioService;
 import com.micromax.incidencia.viewmodel.DashboardViewmodel;
 import com.micromax.incidencia.viewmodel.HomeViewmodel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-import static com.micromax.incidencia.controller.MasterCrudController.setTemplateToModel;
-import static com.micromax.incidencia.domain.Constants.TITLE;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.SQLException;
 
 @Controller
 public class MainController {
@@ -24,6 +31,9 @@ public class MainController {
 
     @Autowired
     private IncidenciaService incidenciaService;
+
+    @Autowired
+    private ReportService reportService;
 
     @GetMapping(value = {"/home","/"})
     public String homeRoute(Model model){
@@ -54,13 +64,25 @@ public class MainController {
         return "home2";
     }
 
-    @GetMapping(value = {"/admin/reportes"})
+    /*@GetMapping(value = {"/admin/reportes"})
     public String reportes(Model model){
         HomeViewmodel viewmodel = new HomeViewmodel();
         model = setTemplateToModel(model, "","reportes")
                 .addAttribute(Constants.DATA, viewmodel)
                 .addAttribute(TITLE,"Reportes");
         return homeRoute(model);
+    }*/
+
+    @GetMapping(value = "admin/reportes")
+    public void export(ModelAndView model, HttpServletResponse response) throws IOException, JRException, SQLException {
+        JasperPrint jasperPrint = null;
+
+        response.setContentType("application/x-download");
+        response.setHeader("Content-Disposition", String.format("attachment; filename=\"ReporteTiempoRespuesta.pdf\""));
+
+        OutputStream out = response.getOutputStream();
+        jasperPrint = reportService.exportPdfFile();
+        JasperExportManager.exportReportToPdfStream(jasperPrint, out);
     }
 
 }

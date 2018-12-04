@@ -172,7 +172,7 @@ public class IncidenciaController {
     @PostMapping("/encuesta")
     public String crearEncuesta(@ModelAttribute EncuestaViewmodel viewmodel, BindingResult errors, Model model){
 
-        //encuestaService.crearEncuesta(usuarioActual(), viewmodel.getIdIncidencia(), viewmodel.getEncuesta());
+        //encuestaService.crearEncuesta(usuarioActual(), incidenciaService.getIncidenciaById(viewmodel.getIdIncidencia()), viewmodel.getEncuesta());
         return "redirect:/incidenciaL";
     }
 
