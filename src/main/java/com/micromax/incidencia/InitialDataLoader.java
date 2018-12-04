@@ -103,9 +103,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         crearCategoriaSiNoExiste("Antivirus",  software);
         crearCategoriaSiNoExiste("Instalacion de programas",  software);
 
-
         crearCategoriaSiNoExiste("Reposicion consumible",  servicios);
         crearCategoriaSiNoExiste("Instalacion de red",  servicios);
+        crearCategoriaSiNoExiste("Mantenimiento Pág. Web",  servicios);
 
         crearTipoIncidenciaSiNoExiste("En sitio");
         crearTipoIncidenciaSiNoExiste("Remoto");
