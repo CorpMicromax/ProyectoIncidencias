@@ -98,7 +98,7 @@
                     </div>
                     <div class="form-row">
 
-                        <div class="form-group offset-1 col-4">
+                        <div th:if="${homeData.isAdmin() || homeData.isTech()}" class="form-group offset-1 col-4">
                             <label class="control-label" for="incidenciaDTO.status">Status</label>
                             <select id="incidenciaDTO.status" name="incidenciaDTO.status"
                                     th:field="*{incidenciaDTO.status}" class="form-control">

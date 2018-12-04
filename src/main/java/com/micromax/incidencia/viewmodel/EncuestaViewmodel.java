@@ -7,4 +7,5 @@ import lombok.Data;
 public class EncuestaViewmodel {
     String idIncidencia;
     Encuesta encuesta;
+    String title;
 }
