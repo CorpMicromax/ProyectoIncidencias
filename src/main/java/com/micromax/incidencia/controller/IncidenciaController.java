@@ -7,10 +7,7 @@ import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.dto.IncidenciaDTO;
-import com.micromax.incidencia.service.HistoricoService;
-import com.micromax.incidencia.service.IncidenciaService;
-import com.micromax.incidencia.service.ItemListService;
-import com.micromax.incidencia.service.UsuarioService;
+import com.micromax.incidencia.service.*;
 import com.micromax.incidencia.viewmodel.EncuestaViewmodel;
 import com.micromax.incidencia.viewmodel.IncidenciaViewmodel;
 import org.apache.commons.lang3.ObjectUtils;
@@ -47,8 +44,8 @@ public class IncidenciaController {
     @Autowired
     private HistoricoService historicoService;
 
-    //@Autowired
-    //private EncuestaService encuestaService;
+    @Autowired
+    private EncuestaService encuestaService;
 
     /*-------------------------------------------- INCIDENCIA -------------------------------------------------*/
     @GetMapping("/incidenciaC")
@@ -172,7 +169,7 @@ public class IncidenciaController {
     @PostMapping("/encuesta")
     public String crearEncuesta(@ModelAttribute EncuestaViewmodel viewmodel, BindingResult errors, Model model){
 
-        //encuestaService.crearEncuesta(usuarioActual(), viewmodel.getIdIncidencia(), viewmodel.getEncuesta());
+        encuestaService.crearEncuesta(usuarioActual(), incidenciaService.getIncidenciaById(viewmodel.getIdIncidencia()), viewmodel.getEncuesta());
         return "redirect:/incidenciaL";
     }
 
