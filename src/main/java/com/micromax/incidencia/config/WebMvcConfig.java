@@ -14,5 +14,4 @@ public class WebMvcConfig  {
         return new BCryptPasswordEncoder();
     }
 
-
 }
