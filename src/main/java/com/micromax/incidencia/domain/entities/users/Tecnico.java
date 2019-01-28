@@ -23,7 +23,7 @@ public class Tecnico extends Usuario implements Serializable {
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
-            name = "tecnico_categorias",
+            name = "categoriasTecnico",
             joinColumns = { @JoinColumn(name = "id_usuario") },
             inverseJoinColumns = { @JoinColumn(name = "id_categoria") }
     )

@@ -56,22 +56,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
                 "Admin@micromax.com",
                 adminRole));
 
-        createUsuarioIfNotFound(construirUsuario(1,
-                "Tecnico",
-                "Uno",
-                "TechUno",
-                "admin",
-                "Tecnico@micromax.com",
-                tecnico));
 
-        createUsuarioIfNotFound(construirUsuario(1,
-                "Karelis",
-                "Ramirez",
-                "KRamirez",
-                "admin",
-                "karelis.ramirez@micromax.com",
-                adminRole
-        ));
 
         Usuario c = new Cliente();
         c.setNombres("Empresa");
@@ -109,6 +94,23 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
         crearTipoIncidenciaSiNoExiste("En sitio");
         crearTipoIncidenciaSiNoExiste("Remoto");
+
+        createUsuarioIfNotFound(construirUsuario(1,
+                "Tecnico",
+                "Uno",
+                "TechUno",
+                "admin",
+                "Tecnico@micromax.com",
+                tecnico));
+
+        createUsuarioIfNotFound(construirUsuario(1,
+                "Karelis",
+                "Ramirez",
+                "KRamirez",
+                "admin",
+                "karelis.ramirez@micromax.com",
+                adminRole
+        ));
 
         alreadySetup = true;
     }

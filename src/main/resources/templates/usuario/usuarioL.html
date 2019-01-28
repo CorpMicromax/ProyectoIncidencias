@@ -1,4 +1,5 @@
 <section  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="usuarioL" class="justify-content-center">
+
     <div>
         <div class="card card-body">
             <a class="col-sm-2 btn btn-primary btn-rounded btn-sm" th:href="@{/admin/usuarioC}"><i class="fa fa-star fa-sm"></i>Nuevo usuario</a>
@@ -20,7 +21,7 @@
                     <td colspan="2"> No hay usuarios (imposible!) </td>
                 </tr>
                 <tr th:each="usuario: ${usuarios}">
-                    <td><a class="text-info" th:href="@{'/usuarioV/' + ${usuario.idUsuario}}"><i class="fa fa-link"></i><span th:text="${usuario.idUsuario}" >Id </span></a></td>
+                    <td><i class="fa fa-link"></i><span th:text="${usuario.idUsuario}" >Id </span></td>
                     <td><span th:text="${usuario.username}"> Username </span></td>
                     <td><span th:text="${usuario.nombres}">Nombres</span>  </td>
                     <td><span th:text="${usuario.apellidos}"> Apellidos </span></td>

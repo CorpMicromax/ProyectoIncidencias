@@ -2,6 +2,7 @@ package com.micromax.incidencia.service.impl;
 
 import com.micromax.incidencia.config.ConfiguracionGeneral;
 import com.micromax.incidencia.domain.Constants;
+import com.micromax.incidencia.domain.Desactivable;
 import com.micromax.incidencia.domain.Status;
 import com.micromax.incidencia.domain.entities.incidencias.Incidencia;
 import com.micromax.incidencia.domain.entities.users.Tecnico;
@@ -45,14 +46,14 @@ public class EstrategiaServiceImpl implements EstrategiaService {
         int min = 0;
         int index = 0;
         for (int i = 0; i < tecs.size(); i++){
-            int cantidad_asignaciones = tecs.get(i).getAsignaciones().stream().filter(incidencia -> incidencia.isHabilitado()).toArray().length;
+            int cantidadAsignaciones = tecs.get(i).getAsignaciones().stream().filter(Desactivable::isHabilitado).toArray().length;
 
             if(i == 0){
-                min = cantidad_asignaciones;
+                min = cantidadAsignaciones;
                 index = 0;
             }else{
-                if(cantidad_asignaciones < min) {
-                    min = cantidad_asignaciones;
+                if(cantidadAsignaciones < min) {
+                    min = cantidadAsignaciones;
                     index = i;
                 }
             }
