@@ -15,7 +15,7 @@ public class ReportService {
     @Autowired
     private ReportDAO reportDAO;
 
-    public JasperPrint exportPdfFile() throws SQLException, JRException, IOException {
-        return reportDAO.exportPdfFile();
+    public JasperPrint exportPdfFile(Integer id) throws SQLException, JRException, IOException {
+        return reportDAO.exportPdfFile(id);
     }
 }

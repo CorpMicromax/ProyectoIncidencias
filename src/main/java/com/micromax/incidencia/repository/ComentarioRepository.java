@@ -15,4 +15,6 @@ public interface ComentarioRepository extends CrudRepository<Comentario,Long> {
     Comentario findComentarioByIncidenciaAndAutorAndCreacion(Incidencia incidencia, Usuario usuario, Date fechaCreacion);
 
     List<Comentario> findAllByIncidencia(Incidencia incidencia);
+
+
 }

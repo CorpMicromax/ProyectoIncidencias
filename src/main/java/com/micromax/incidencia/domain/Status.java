@@ -2,13 +2,13 @@ package com.micromax.incidencia.domain;
 
 public enum Status {
 
-    NUEVA("Nueva"),
-    ASIGNADA("Asignada"),
-    PROGRESO("Progreso"),
-    RESUELTA("Resuelta"),
-    CERRADA("Cerrada"),
-    REABIERTA("Reabierta"),
-    PAUSADA("Pausada");
+    NUEVA("Nueva"), //0
+    ASIGNADA("Asignada"), //1
+    PROGRESO("Progreso"), //2
+    RESUELTA("Resuelta"), //3
+    CERRADA("Cerrada"), //4
+    REABIERTA("Reabierta"), //5
+    PAUSADA("Pausada"); //6
 
     private final String displayName;
 

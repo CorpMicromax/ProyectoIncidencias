@@ -11,11 +11,13 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
@@ -73,16 +75,32 @@ public class MainController {
         return homeRoute(model);
     }*/
 
-    @GetMapping(value = "admin/reportes")
-    public void export(ModelAndView model, HttpServletResponse response) throws IOException, JRException, SQLException {
-        JasperPrint jasperPrint = null;
+    @GetMapping(value = "/reportes")
+    public String reporte(Model model){
+
+        model.addAttribute("location", "/").addAttribute("template", "reportes");
+
+        return homeRoute(model);
+
+    }
+
+    @PostMapping(value = "/reportes/generar", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_PDF_VALUE)
+    public void export(int idReporte, ModelAndView model, HttpServletResponse response) throws IOException, JRException, SQLException {
 
         response.setContentType("application/x-download");
-        response.setHeader("Content-Disposition", String.format("attachment; filename=\"ReporteTiempoRespuesta.pdf\""));
-
+        if(idReporte == 2) {
+            response.setHeader("Content-Disposition", "attachment; filename=\"ReporteTiempoRespuesta.pdf\"");
+        }
+        if(idReporte == 1){
+            response.setHeader("Content-Disposition", "attachment; filename=\"ReporteHorasTrabajadas.pdf\"");
+        }
         OutputStream out = response.getOutputStream();
-        jasperPrint = reportService.exportPdfFile();
+        JasperPrint jasperPrint = reportService.exportPdfFile(idReporte);
         JasperExportManager.exportReportToPdfStream(jasperPrint, out);
     }
 
+
+    public static Model setTemplateToModel(Model model, String location, String template) {
+        return model.addAttribute("location", location + "/").addAttribute("template", template);
+    }
 }
