@@ -74,9 +74,7 @@ public class MainController {
 
     @GetMapping(value = "/admin/reportes")
     public String reporte(Model model){
-
-        model.addAttribute("location", "/").addAttribute("template", "reportes");
-
+        model.addAttribute("location", "").addAttribute("template", "reportes");
         return homeRoute(model);
 
     }
@@ -102,7 +100,7 @@ public class MainController {
 
     @GetMapping(value = "/admin/config")
     public String config(Model model){
-        model.addAttribute("location", "/").addAttribute("template", "config");
+        model.addAttribute("location", "").addAttribute("template", "config");
         model.addAttribute("configData", configuracionGeneral.obtenerViewModel());
         return homeRoute(model);
     }
