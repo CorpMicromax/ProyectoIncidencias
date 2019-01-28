@@ -72,15 +72,6 @@ public class MainController {
         return "home2";
     }
 
-    /*@GetMapping(value = {"/admin/reportes"})
-    public String reportes(Model model){
-        HomeViewmodel viewmodel = new HomeViewmodel();
-        model = setTemplateToModel(model, "","reportes")
-                .addAttribute(Constants.DATA, viewmodel)
-                .addAttribute(TITLE,"Reportes");
-        return homeRoute(model);
-    }*/
-
     @GetMapping(value = "/admin/reportes")
     public String reporte(Model model){
 
@@ -93,15 +84,16 @@ public class MainController {
     @PostMapping(value = "/admin/reportes/generar", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_PDF_VALUE)
     public void export(int idReporte, ModelAndView model, HttpServletResponse response) throws IOException, JRException, SQLException {
 
+        String header = "Content-Disposition";
         response.setContentType("application/x-download");
         if(idReporte == 2) {
-            response.setHeader("Content-Disposition", "attachment; filename=\"ReporteTiempoRespuesta.pdf\"");
+            response.setHeader(header, "attachment; filename=\"ReporteTiempoRespuesta.pdf\"");
         }
         if(idReporte == 1){
-            response.setHeader("Content-Disposition", "attachment; filename=\"ReporteHorasTrabajadas.pdf\"");
+            response.setHeader(header, "attachment; filename=\"ReporteHorasTrabajadas.pdf\"");
         }
         if(idReporte == 3){
-            response.setHeader("Content-Disposition", "attachment; filename=\"ReporteActividad.pdf\"");
+            response.setHeader(header, "attachment; filename=\"ReporteActividad.pdf\"");
         }
         OutputStream out = response.getOutputStream();
         JasperPrint jasperPrint = reportService.exportPdfFile(idReporte);
