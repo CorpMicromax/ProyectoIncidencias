@@ -1,6 +1,44 @@
-<!DOCTYPE html>
-<section th:fragment="reportes" xmlns:th="http://www.w3.org/1999/xhtml">
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="reportes"
+     class="justify-content-center">
+    <div class="container container-fluid">
+        <div class="card">
+            <form id= "reporteForm" class="card-body form-horizontal" th:action="@{/reportes/generar}" th:method="post" th:model>
+                <fieldset>
+                    <div class="card-header">
+                        <legend class="card-title text-center my-lg-2">Exportar Reportes</legend>
+                    </div>
+                    <div class="form-group">
+                        <label class="label" for="idReporte">Elija un reporte</label>
+                        <select id="idReporte" name="idReporte" class="form-control" required>
+                            <option value="">------ Escoja un Reporte ------</option>
+                            <option value="1">Reporte de Horas Trabajadas Últimos 30 días</option>
+                            <option value="2">Reporte de Estado de Incidencias Últimos 30 Días</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Generar Reporte
+                        </button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            var form = $("#reporteForm");
+
+            // $("#singlebutton").on('click', function(){
+            //     $(this).preventDefault();
+            //     $.ajax({
+            //         method: "post",
+            //         url: form.attr("action"),
+            //         success: function(data){}
+            //     })
+            // });
+
+        });
 
 
-
-</section>
+    </script>
+</div>

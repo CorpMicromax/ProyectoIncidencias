@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Transactional
 @Repository
@@ -23,19 +23,25 @@ public class ReportDAO {
     @Autowired
     private ResourceLoader resourceLoader;
 
-    public JasperPrint exportPdfFile() throws SQLException, JRException, IOException {
+    public JasperPrint exportPdfFile(Integer id) throws SQLException, JRException, IOException {
+        try {
+            String path = "";
+            if(id == 1){
+                path = resourceLoader.getResource("classpath:reports/horas_por_tecnico.jrxml").getURI().getPath();
+            }
+            if(id == 2){
+                path = resourceLoader.getResource("classpath:reports/TiempoIncidencias.jrxml").getURI().getPath();
+            }
+            JasperReport jasperReport = JasperCompileManager.compileReport(path);
 
-        Connection conn = jdbcTemplate.getDataSource().getConnection();
+            // Parameters for report
+            Map<String, Object> parameters = new HashMap<>();
 
-        String path = resourceLoader.getResource("classpath:reports/TiempoIncidencias.jrxml").getURI().getPath();
+            return JasperFillManager.fillReport(jasperReport, parameters, Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection());
+        }catch(NullPointerException e){
 
-        JasperReport jasperReport = JasperCompileManager.compileReport(path);
-
-        // Parameters for report
-        Map<String, Object> parameters = new HashMap<>();
-
-
-
-        return JasperFillManager.fillReport(jasperReport, parameters, conn);
+            System.out.print(e.getMessage());
+        }
+        return null;
     }
 }
