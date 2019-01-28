@@ -45,7 +45,7 @@ public class Usuario extends Desactivable implements Serializable, UserDetails {
     @Column(name="apellidos", nullable = false)
     private String apellidos;
 
-    @Email(message = "*Por favor introduzca un email valido")
+    @Email(message = "*Por favor introduzca un email válido")
     @NotEmpty(message = "*Por favor introduzca un email")
     @Column(name="email", nullable = false)
     private String email;
@@ -55,11 +55,11 @@ public class Usuario extends Desactivable implements Serializable, UserDetails {
     private String username;
 
 
-    @NotEmpty(message = "*Please provide your password")
+    @NotEmpty(message = "*Por favor introduzca su password")
     @Column(name="password", nullable = false)
     private String password;
 
-    @Column(name="telefono")
+    @Column(name="teléfono")
     private String telefono;
 
     @Column(name="tokenExpired", nullable = false)

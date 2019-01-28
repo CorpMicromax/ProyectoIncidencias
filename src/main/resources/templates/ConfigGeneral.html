@@ -1,0 +1,58 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="ConfigGeneral"
+     class="container justify-content-center">
+    <!--/*@thymesVar id="data" type="com.micromax.incidencia.viewmodel.ConfigGeneralViewmodel"*/-->
+    <!--/*@thymesVar id="homeData" type="com.micromax.incidencia.viewmodel.HomeViewmodel"*/-->
+    <div class="container container-fluid">
+        <div class="card">
+            <form id="crearForm" class="card-body form-horizontal" th:object="${data}"
+                  th:action="@{/admin/ConfigGeneral}" method="post">  <!-- OJO con admin -->
+                <fieldset>
+
+                    <div class="form-row">
+
+                        <div th:if="${homeData.isAdmin()}" class="form-group offset-1 col-4">
+                            <label class="control-label" for="TipoEstrategia">TipoEstrategia</label>
+                            <select id="TipoEstrategia" name="TipoEstrategia"
+                                    th:field="*{tipoEstrategia}" class="form-control">
+                                <option th:each="s : ${data.tipoEstrategia}"
+                                        th:value="${s}"
+                                        th:text="${s.getDisplayName()}"
+                                        th:selected="${data.tipoEstrategia == s}">
+                                </option>
+                            </select>
+                        </div>
+
+                    <!-- Form Name -->
+                    <div class="card-header">
+                        <legend class="card-title text-center my-lg-2">Cantidad Máxima de Incidencias Sin Cerrar</legend>
+                    </div>
+                    <!-- Nombre input-->
+                    <div class="form-group">
+                        <label class="control-label" for="cantidad">Cantidad</label>
+                        <input id="cantidad" th:field="*{maxIncResueltas}" name="cantidad" type="int" autofocus
+                               class="form-control input-md" required="required">  <!--  maxlength="50" -->
+                    </div>
+
+                        <div class="form-group row">
+                            <div class="form-group col-md-6">
+                                <label class=" control-label" for="email">E-mail de Notificación</label>
+                                <input id="email" th:field="*{email_Notif}" name="email" type="email" class="form-control input-md" required="required">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class=" control-label" for="password">Password</label>
+                                <input id="password" th:field="*{password_Notif}" name="password" type="text" class="form-control input-md" >
+                            </div>
+                        </div>
+
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Guardar
+                        </button>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
