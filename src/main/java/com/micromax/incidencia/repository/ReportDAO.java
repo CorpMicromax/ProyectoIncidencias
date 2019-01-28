@@ -32,6 +32,9 @@ public class ReportDAO {
             if(id == 2){
                 path = resourceLoader.getResource("classpath:reports/TiempoIncidencias.jrxml").getURI().getPath();
             }
+            if(id == 3){
+                path = resourceLoader.getResource("classpath:reports/ReporteActividad.jrxml").getURI().getPath();
+            }
             JasperReport jasperReport = JasperCompileManager.compileReport(path);
 
             // Parameters for report

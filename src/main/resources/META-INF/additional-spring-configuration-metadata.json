@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "micromax.incidencias.cantidadMaxima",
+      "type": "java.lang.Integer",
+      "description": "Description for micromax.incidencias.cantidadMaxima."
+    },
+    {
+      "name": "micromax.prefijo.secuencia.incidencias",
+      "type": "java.lang.String",
+      "description": "Description for micromax.prefijo.secuencia.incidencias."
+    },
+    {
+      "name": "micromax.estragegia",
+      "type": "java.lang.String",
+      "description": "Description for micromax.estragegia."
+    }
+  ] }

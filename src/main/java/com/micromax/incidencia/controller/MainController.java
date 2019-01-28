@@ -1,10 +1,12 @@
 package com.micromax.incidencia.controller;
 
+import com.micromax.incidencia.config.ConfiguracionGeneral;
 import com.micromax.incidencia.domain.Constants;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.ReportService;
 import com.micromax.incidencia.service.UsuarioService;
+import com.micromax.incidencia.viewmodel.ConfigGeneralViewmodel;
 import com.micromax.incidencia.viewmodel.DashboardViewmodel;
 import com.micromax.incidencia.viewmodel.HomeViewmodel;
 import net.sf.jasperreports.engine.JRException;
@@ -17,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,6 +39,9 @@ public class MainController {
 
     @Autowired
     private ReportService reportService;
+
+    @Autowired
+    private ConfiguracionGeneral configuracionGeneral;
 
     @GetMapping(value = {"/home","/"})
     public String homeRoute(Model model){
@@ -75,7 +81,7 @@ public class MainController {
         return homeRoute(model);
     }*/
 
-    @GetMapping(value = "/reportes")
+    @GetMapping(value = "/admin/reportes")
     public String reporte(Model model){
 
         model.addAttribute("location", "/").addAttribute("template", "reportes");
@@ -84,7 +90,7 @@ public class MainController {
 
     }
 
-    @PostMapping(value = "/reportes/generar", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_PDF_VALUE)
+    @PostMapping(value = "/admin/reportes/generar", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_PDF_VALUE)
     public void export(int idReporte, ModelAndView model, HttpServletResponse response) throws IOException, JRException, SQLException {
 
         response.setContentType("application/x-download");
@@ -94,13 +100,24 @@ public class MainController {
         if(idReporte == 1){
             response.setHeader("Content-Disposition", "attachment; filename=\"ReporteHorasTrabajadas.pdf\"");
         }
+        if(idReporte == 3){
+            response.setHeader("Content-Disposition", "attachment; filename=\"ReporteActividad.pdf\"");
+        }
         OutputStream out = response.getOutputStream();
         JasperPrint jasperPrint = reportService.exportPdfFile(idReporte);
         JasperExportManager.exportReportToPdfStream(jasperPrint, out);
     }
 
+    @GetMapping(value = "/admin/config")
+    public String config(Model model){
+        model.addAttribute("location", "/").addAttribute("template", "config");
+        model.addAttribute("configData", configuracionGeneral.obtenerViewModel());
+        return homeRoute(model);
+    }
 
-    public static Model setTemplateToModel(Model model, String location, String template) {
-        return model.addAttribute("location", location + "/").addAttribute("template", template);
+    @PostMapping(value = "/admin/config")
+    public String configPost(@ModelAttribute ConfigGeneralViewmodel viewmodel, Model model){
+        configuracionGeneral.cambiarConfig(viewmodel);
+        return config(model);
     }
 }

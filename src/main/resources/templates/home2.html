@@ -82,7 +82,7 @@
                                 <i class="fa fa-user"></i>Usuarios
                             </a>
                         </li>
-                        <li><a href="#">Estrategia</a></li>
+                        <li><a th:href="@{/admin/config}"><i class="fa fa-gear"></i>Configuración</a></li>
                     </ul>
                 </li>
                 <li th:if="${homeData.isAdmin()}">
@@ -99,7 +99,7 @@
                     </ul>
                 </li>
                 <li th:if="${homeData.isAdmin()}">
-                    <a th:href="@{/reportes}">
+                    <a th:href="@{/admin/reportes}">
                         <i class="fa fa-area-chart"></i>Reportes
                     </a>
                 </li>
