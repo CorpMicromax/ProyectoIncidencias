@@ -1,8 +1,10 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="reportes"
      class="justify-content-center">
+    <!--/*@thymesVar id="fechas" type="com.micromax.incidencia.domain.FechasDTO"*/-->
     <div class="container container-fluid">
         <div class="card">
-            <form id= "reporteForm" class="card-body form-horizontal" th:action="@{/admin/reportes/generar}" th:method="post" th:model>
+            <form id="reporteForm" class="card-body form-horizontal" th:action="@{/admin/reportes/generar}"
+                  th:method="post" th:object="${fechas}">
                 <fieldset>
                     <div class="card-header">
                         <legend class="card-title text-center my-lg-2">Exportar Reportes</legend>
@@ -11,14 +13,24 @@
                         <label class="label" for="idReporte">Elija un reporte</label>
                         <select id="idReporte" name="idReporte" class="form-control" required>
                             <option value="">------ Escoja un Reporte ------</option>
-                            <option value="1">Reporte de Horas Trabajadas Últimos 30 días</option>
-                            <option value="2">Reporte de Estado de Incidencias Últimos 30 Días</option>
-                            <option value="3">Reporte de Actividad Últimos 30 Días</option>
+                            <option value="1">Reporte de Horas Trabajadas</option>
+                            <option value="2">Reporte de Estado de Incidencias</option>
+                            <option value="3">Reporte de Actividad</option>
                         </select>
                     </div>
-
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label class="form-label" th:for="*{fechaInicio}">Fecha Inicio</label>
+                            <input class="form-control" type="date" th:field="*{fechaInicio}">
+                        </div>
+                        <div class="form-group col-6">
+                            <label class="form-label" th:for="*{fechaFin}">Fecha Final</label>
+                            <input class="form-control" type="date" th:field="*{fechaFin}" th:value="${new java.util.Date()}">
+                        </div>
+                    </div>
                     <div class="form-group">
-                        <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Generar Reporte
+                        <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Generar
+                            Reporte
                         </button>
                     </div>
                 </fieldset>
