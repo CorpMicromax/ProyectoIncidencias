@@ -2,6 +2,7 @@ package com.micromax.incidencia.controller;
 
 import com.micromax.incidencia.config.ConfiguracionGeneral;
 import com.micromax.incidencia.domain.Constants;
+import com.micromax.incidencia.domain.FechasDTO;
 import com.micromax.incidencia.domain.entities.users.Usuario;
 import com.micromax.incidencia.service.IncidenciaService;
 import com.micromax.incidencia.service.ReportService;
@@ -12,6 +13,7 @@ import com.micromax.incidencia.viewmodel.HomeViewmodel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -27,6 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 
 @Controller
 public class MainController {
@@ -74,14 +78,18 @@ public class MainController {
 
     @GetMapping(value = "/admin/reportes")
     public String reporte(Model model){
-        model.addAttribute("location", "").addAttribute("template", "reportes");
+        model
+                .addAttribute("location", "")
+                .addAttribute("template", "reportes")
+                .addAttribute("fechas", new FechasDTO(DateUtils.addDays(new Date(), -30), new Date()));
         return homeRoute(model);
 
     }
 
     @PostMapping(value = "/admin/reportes/generar", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_PDF_VALUE)
-    public void export(int idReporte, ModelAndView model, HttpServletResponse response) throws IOException, JRException, SQLException {
+    public void export(int idReporte, String fechaInicio, String fechaFin, ModelAndView model, HttpServletResponse response) throws IOException, JRException, SQLException, ParseException {
 
+        FechasDTO fechas = new FechasDTO(DateUtils.parseDate(fechaInicio, "yyyy-mm-dd"), DateUtils.parseDate(fechaFin,"yyyy-mm-dd"));
         String header = "Content-Disposition";
         response.setContentType("application/x-download");
         if(idReporte == 2) {
@@ -94,7 +102,7 @@ public class MainController {
             response.setHeader(header, "attachment; filename=\"ReporteActividad.pdf\"");
         }
         OutputStream out = response.getOutputStream();
-        JasperPrint jasperPrint = reportService.exportPdfFile(idReporte);
+        JasperPrint jasperPrint = reportService.exportPdfFile(idReporte, fechas);
         JasperExportManager.exportReportToPdfStream(jasperPrint, out);
     }
 

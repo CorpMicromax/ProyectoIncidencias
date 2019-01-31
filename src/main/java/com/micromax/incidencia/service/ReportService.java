@@ -1,5 +1,6 @@
 package com.micromax.incidencia.service;
 
+import com.micromax.incidencia.domain.FechasDTO;
 import com.micromax.incidencia.repository.ReportDAO;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -15,7 +16,7 @@ public class ReportService {
     @Autowired
     private ReportDAO reportDAO;
 
-    public JasperPrint exportPdfFile(Integer id) throws SQLException, JRException, IOException {
-        return reportDAO.exportPdfFile(id);
+    public JasperPrint exportPdfFile(Integer id, FechasDTO fechas) throws SQLException, JRException, IOException {
+        return reportDAO.exportPdfFile(id, fechas);
     }
 }

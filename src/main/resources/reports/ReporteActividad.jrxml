@@ -1,103 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteActividad" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="23feaa17-f03d-4f54-9249-4f2980130354">
-	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="incidencia"/>
-	<queryString language="SQL">
-		<![CDATA[SELECT count(*) as incidencias_nuevas, b.b as incidencias_cerradas, c.c as incidencias_reabiertas
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="ReporteActividad" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20"
+              rightMargin="20" topMargin="20" bottomMargin="20" uuid="23feaa17-f03d-4f54-9249-4f2980130354">
+    <property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="incidencia"/>
+    <parameter name="fechaInicio" class="java.util.Date">
+        <!--<defaultValueExpression><![CDATA[now() - interval 30 day]]></defaultValueExpression>-->
+    </parameter>
+    <parameter name="fechaFin" class="java.util.Date">
+        <!--<defaultValueExpression><![CDATA[now()]]></defaultValueExpression>-->
+    </parameter>
+    <queryString language="SQL">
+        <![CDATA[SELECT count(*) as incidencias_nuevas, b.b as incidencias_cerradas, c.c as incidencias_reabiertas
 FROM incidencia.historico 
 JOIN
 (
-	SELECT count(*) as b  FROM incidencia.historico where status_nuevo = 4 and momento > now() - interval 30 day and momento <= now()
+	SELECT count(*) as b  FROM incidencia.historico where status_nuevo = 4 and momento > $P{fechaInicio} and momento <= $P{fechaFin}
 ) as b
 JOIN 
 (
-	SELECT count(*) as c FROM incidencia.historico where status_nuevo = 5 and momento > now() - interval 30 day and momento <= now()
+	SELECT count(*) as c FROM incidencia.historico where status_nuevo = 5 and momento > $P{fechaInicio} and momento <= $P{fechaFin}
 ) 
 as c where status_nuevo = 0 and momento > now() - interval 30 day and momento <= now();]]>
-	</queryString>
-	<field name="incidencias_nuevas" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.label" value="incidencias_nuevas"/>
-	</field>
-	<field name="incidencias_cerradas" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.label" value="incidencias_cerradas"/>
-	</field>
-	<field name="incidencias_reabiertas" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.label" value="incidencias_reabiertas"/>
-	</field>
-	<group name="incidencias_nuevas">
-		<groupExpression><![CDATA[$F{incidencias_nuevas}]]></groupExpression>
-	</group>
-	<group name="incidencias_cerradas">
-		<groupExpression><![CDATA[$F{incidencias_cerradas}]]></groupExpression>
-	</group>
-	<group name="incidencias_reabiertas">
-		<groupExpression><![CDATA[$F{incidencias_reabiertas}]]></groupExpression>
-	</group>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
-	<title>
-		<band height="79" splitType="Stretch">
-			<staticText>
-				<reportElement x="60" y="20" width="471" height="41" uuid="5350d131-a66b-427f-bace-4bfa7c94fc6b"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="28"/>
-				</textElement>
-				<text><![CDATA[Reporte de Actividad 30 Dias]]></text>
-			</staticText>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="57" splitType="Stretch">
-			<staticText>
-				<reportElement mode="Opaque" x="0" y="20" width="100" height="30" backcolor="#54E69D" uuid="643e25d6-ec8f-41f4-893e-30381f42a4ab"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<paragraph lineSpacing="Double"/>
-				</textElement>
-				<text><![CDATA[Incidencias Nuevas]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="110" y="21" width="101" height="31" backcolor="#85B4F2" uuid="4d948824-55bf-420f-8f49-0cc5295d2b0e"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Incidencias Cerradas]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="220" y="20" width="101" height="31" backcolor="#CED4DA" uuid="8744ba08-aff3-4380-a587-67cae0f40ccb"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Incidendencias Reabiertas]]></text>
-			</staticText>
-		</band>
-	</pageHeader>
-	<columnHeader>
-		<band height="68" splitType="Stretch">
-			<textField>
-				<reportElement mode="Opaque" x="0" y="20" width="100" height="30" backcolor="#54E69D" uuid="18e5f7c7-f4e2-4f74-a480-2552739256cc"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{incidencias_nuevas}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement mode="Opaque" x="110" y="20" width="100" height="30" backcolor="#85B4F2" uuid="de955428-5ee1-40c7-811a-6fc9c437d178"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{incidencias_cerradas}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement mode="Opaque" x="220" y="20" width="100" height="30" backcolor="#CED4DA" uuid="e566ca44-fdb7-4af2-b019-e2959884efa1"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{incidencias_reabiertas}]]></textFieldExpression>
-			</textField>
-		</band>
-	</columnHeader>
-	<detail>
-		<band height="125" splitType="Stretch"/>
-	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
+    </queryString>
+    <field name="incidencias_nuevas" class="java.lang.Long">
+        <property name="com.jaspersoft.studio.field.label" value="incidencias_nuevas"/>
+    </field>
+    <field name="incidencias_cerradas" class="java.lang.Long">
+        <property name="com.jaspersoft.studio.field.label" value="incidencias_cerradas"/>
+    </field>
+    <field name="incidencias_reabiertas" class="java.lang.Long">
+        <property name="com.jaspersoft.studio.field.label" value="incidencias_reabiertas"/>
+    </field>
+    <group name="incidencias_nuevas">
+        <groupExpression><![CDATA[$F{incidencias_nuevas}]]></groupExpression>
+    </group>
+    <group name="incidencias_cerradas">
+        <groupExpression><![CDATA[$F{incidencias_cerradas}]]></groupExpression>
+    </group>
+    <group name="incidencias_reabiertas">
+        <groupExpression><![CDATA[$F{incidencias_reabiertas}]]></groupExpression>
+    </group>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="79" splitType="Stretch">
+            <staticText>
+                <reportElement x="60" y="20" width="471" height="41" uuid="5350d131-a66b-427f-bace-4bfa7c94fc6b"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="28"/>
+                </textElement>
+                <text><![CDATA[Reporte de Actividad 30 Dias]]></text>
+            </staticText>
+        </band>
+    </title>
+    <pageHeader>
+        <band height="57" splitType="Stretch">
+            <staticText>
+                <reportElement mode="Opaque" x="0" y="20" width="100" height="30" backcolor="#54E69D"
+                               uuid="643e25d6-ec8f-41f4-893e-30381f42a4ab"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <paragraph lineSpacing="Double"/>
+                </textElement>
+                <text><![CDATA[Incidencias Nuevas]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="110" y="21" width="101" height="31" backcolor="#85B4F2"
+                               uuid="4d948824-55bf-420f-8f49-0cc5295d2b0e"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[Incidencias Cerradas]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="220" y="20" width="101" height="31" backcolor="#CED4DA"
+                               uuid="8744ba08-aff3-4380-a587-67cae0f40ccb"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[Incidendencias Reabiertas]]></text>
+            </staticText>
+        </band>
+    </pageHeader>
+    <columnHeader>
+        <band height="68" splitType="Stretch">
+            <textField>
+                <reportElement mode="Opaque" x="0" y="20" width="100" height="30" backcolor="#54E69D"
+                               uuid="18e5f7c7-f4e2-4f74-a480-2552739256cc"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{incidencias_nuevas}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement mode="Opaque" x="110" y="20" width="100" height="30" backcolor="#85B4F2"
+                               uuid="de955428-5ee1-40c7-811a-6fc9c437d178"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{incidencias_cerradas}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement mode="Opaque" x="220" y="20" width="100" height="30" backcolor="#CED4DA"
+                               uuid="e566ca44-fdb7-4af2-b019-e2959884efa1"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{incidencias_reabiertas}]]></textFieldExpression>
+            </textField>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="125" splitType="Stretch"/>
+    </detail>
+    <columnFooter>
+        <band height="45" splitType="Stretch"/>
+    </columnFooter>
+    <pageFooter>
+        <band height="54" splitType="Stretch"/>
+    </pageFooter>
+    <summary>
+        <band height="42" splitType="Stretch"/>
+    </summary>
 </jasperReport>

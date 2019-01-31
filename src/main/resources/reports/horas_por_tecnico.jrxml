@@ -3,6 +3,12 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="horas_por_tecnico" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d0851189-af0b-42b9-afb0-572ec05fcefb">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="incidencia"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="fechaInicio" class="java.util.Date" >
+		<!--<defaultValueExpression><![CDATA[now() - interval 30 day]]></defaultValueExpression>-->
+	</parameter>
+	<parameter name="fechaFin" class="java.util.Date" >
+		<!--<defaultValueExpression><![CDATA[now()]]></defaultValueExpression>-->
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT 
 	creador.username AS creador,
@@ -18,7 +24,7 @@ FROM
 		historico.id_incidencia AS id_incidencia, 
 		historico.momento AS momento_inicio 
 	FROM incidencia.historico 
-	WHERE status_nuevo = 2 AND historico.momento > now() - interval 60 day
+	WHERE status_nuevo = 2 AND historico.momento > $P{fechaInicio}
 	GROUP BY id_incidencia
 	) AS a
 JOIN
@@ -28,7 +34,7 @@ JOIN
 		historico.id_usuario AS id_usuario,  
 		historico.momento AS momento_fin
 	FROM incidencia.historico
-	WHERE status_nuevo = 3 and momento <= now()
+	WHERE status_nuevo = 3 and momento <= $P{fechaFin}
     GROUP BY id_incidencia
 	) AS b
 JOIN 
@@ -39,6 +45,7 @@ JOIN
 WHERE b.id_usuario = users.id_usuario
 GROUP BY b.id_incidencia;]]>
 	</queryString>
+
 	<field name="creador" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="creador"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="usuario"/>
@@ -50,7 +57,7 @@ GROUP BY b.id_incidencia;]]>
 	<field name="incidencia" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="incidencia"/>
 	</field>
-	<field name="horas" class="java.sql.Time" >
+	<field name="horas" class="java.sql.Timestamp" >
 		<property name="com.jaspersoft.studio.field.label" value="horas"/>
 	</field>
 	<field name="dias" class="java.lang.Integer">

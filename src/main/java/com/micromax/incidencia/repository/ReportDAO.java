@@ -1,5 +1,6 @@
 package com.micromax.incidencia.repository;
 
+import com.micromax.incidencia.domain.FechasDTO;
 import net.sf.jasperreports.engine.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -23,7 +24,7 @@ public class ReportDAO {
     @Autowired
     private ResourceLoader resourceLoader;
 
-    public JasperPrint exportPdfFile(Integer id) throws SQLException, JRException, IOException {
+    public JasperPrint exportPdfFile(Integer id, FechasDTO fechas) throws SQLException, JRException, IOException {
         try {
             String path = "";
             if(id == 1){
@@ -39,7 +40,8 @@ public class ReportDAO {
 
             // Parameters for report
             Map<String, Object> parameters = new HashMap<>();
-
+            parameters.put("fechaInicio", fechas.getFechaInicio());
+            parameters.put("fechaFin", fechas.getFechaFin());
             return JasperFillManager.fillReport(jasperReport, parameters, Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection());
         }catch(NullPointerException e){
 
