@@ -93,6 +93,7 @@ public class MainController {
         if(idReporte == 3){
             response.setHeader(header, "attachment; filename=\"ReporteActividad.pdf\"");
         }
+
         OutputStream out = response.getOutputStream();
         JasperPrint jasperPrint = reportService.exportPdfFile(idReporte);
         JasperExportManager.exportReportToPdfStream(jasperPrint, out);

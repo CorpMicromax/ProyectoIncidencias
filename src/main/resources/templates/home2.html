@@ -89,7 +89,7 @@
                     <a href="#mantDropdown"
                        aria-expanded="false"
                        data-toggle="collapse">
-                        <i class="icon-interface-windows"></i>
+                        <i class="fa fa-gear"></i>
                         Mantenimiento
                     </a>
                     <ul id="mantDropdown" class="collapse list-unstyled ">
@@ -100,7 +100,12 @@
                 </li>
                 <li th:if="${homeData.isAdmin()}">
                     <a th:href="@{/admin/reportes}">
-                        <i class="fa fa-area-chart"></i>Reportes
+                        <i class="fa fa-area-chart"></i>Reporte
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/files/ManualdeUsuario.pdf}"/>
+                        <i class="fa fa-question-circle"></i>Ayuda
                     </a>
                 </li>
             </ul>

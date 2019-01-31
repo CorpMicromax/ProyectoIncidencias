@@ -10,7 +10,7 @@
     b.momento_fin,
 	users.username  AS username, 
 	b.id_incidencia AS incidencia, 
-	timediff(b.momento_fin, a.momento_inicio) AS horas, 
+	timediff(b.momento_fin, a.momento_inicio)%24 AS horas,
 	datediff(b.momento_fin, a.momento_inicio) AS dias 
 FROM 
 	(SELECT 
@@ -50,7 +50,7 @@ GROUP BY b.id_incidencia;]]>
 	<field name="incidencia" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="incidencia"/>
 	</field>
-	<field name="horas" class="java.sql.Time" >
+	<field name="horas" class="java.sql.time" >
 		<property name="com.jaspersoft.studio.field.label" value="horas"/>
 	</field>
 	<field name="dias" class="java.lang.Integer">
