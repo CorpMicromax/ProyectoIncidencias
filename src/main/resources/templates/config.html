@@ -15,7 +15,6 @@
                         <div th:if="${homeData.isAdmin()}" class="form-group col-md-6">
                             <label class="control-label" for="tipoEstrategia">TipoEstrategia</label>
                             <select id="tipoEstrategia" th:field="*{tipoEstrategia}" class="form-control">
-                                <option value=""> HOLA</option>
                                 <option th:each="s : ${configData.tiposEstrategia}"
                                         th:value="${s}"
                                         th:text="${s.getDisplayName()}"
@@ -46,9 +45,18 @@
                     <div class="form-group">
                         <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Guardar
                         </button>
+                        <button id="cancel" name="cancel" class="btn btn-secondary">Cancelar
+                        </button>
                     </div>
                 </fieldset>
             </form>
         </div>
     </div>
+
+    <script th:inline="javascript">
+        $('#cancel').click(function (event) {
+            event.stopPropagation();
+            window.location = "/home";
+        });
+    </script>
 </div>

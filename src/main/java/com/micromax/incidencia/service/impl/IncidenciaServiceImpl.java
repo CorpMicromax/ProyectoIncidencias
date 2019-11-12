@@ -105,6 +105,11 @@ public class IncidenciaServiceImpl implements IncidenciaService {
             }else if(i.get().getStatus().equals(Status.ASIGNADA) && i.get().getAsignados().isEmpty()){
                 i.get().setStatus(Status.NUEVA);
             }
+            if(i.get().getStatus().equals(Status.RESUELTA)){
+                mailService.sendEmail(i.get().getCreador().getEmail(),"Incidencia resuelta por Micromax", String.format("Se ha resuelto la incidencia %s en el Sistema de Incidencias de Micromax, con el titulo \"%s\"", i.get().getIdIncidencia(),i.get().getTitulo()));
+                log.info("Usuario %s se ha resuelto su incidencia con id %d", i.get().getIdIncidencia(), user);
+            }
+
             if(dto.getStatus().equals(Status.CERRADA)){
                 i.get().setCierre(new Date());
             }

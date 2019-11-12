@@ -5,9 +5,11 @@
     <title>Login</title>
     <div th:replace="fragmentos/header"></div>
     <link rel="stylesheet" th:href="@{/css/signin.css}"/>
+
+
 </head>
 <body>
-<div class="container">
+<div  th:style="'background:url(' + @{/img/Presentacion2.png} + ');'" class="container">
     <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div class="card card-signin my-5">

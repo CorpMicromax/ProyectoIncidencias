@@ -24,7 +24,7 @@ JOIN
 (
 	SELECT count(*) as c FROM incidencia.historico where status_nuevo = 5 and momento > $P{fechaInicio} and momento <= $P{fechaFin}
 ) 
-as c where status_nuevo = 0 and momento > now() - interval 30 day and momento <= now();]]>
+as c where status_nuevo = 0 and momento > $P{fechaInicio} and momento <= $P{fechaFin};]]>
     </queryString>
     <field name="incidencias_nuevas" class="java.lang.Long">
         <property name="com.jaspersoft.studio.field.label" value="incidencias_nuevas"/>
